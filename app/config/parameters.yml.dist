@@ -17,3 +17,16 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    # nelmio cors
+    cors_allow_origin: 'http://localhost'
+
+    # nelmio api docs
+    api_name: 'Your API name'
+    api_description: 'The full description of your API'
+
+    # lexik jwt bundle
+    jwt_private_key_path: %kernel.root_dir%/../var/jwt/private.pem   # ssh private key path
+    jwt_public_key_path:  %kernel.root_dir%/../var/jwt/public.pem    # ssh public key path
+    jwt_key_pass_phrase:  'changeme'                              # ssh key pass phrase
+    jwt_token_ttl:        86400

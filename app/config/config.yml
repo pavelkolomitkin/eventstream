@@ -2,6 +2,15 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: fos_user.yml }
+    - { resource: nelmio_cors.yml }
+    - { resource: nelmio_api_doc.yml }
+    - { resource: fos_rest.yml }
+    - { resource: jms_serializer.yml }
+    - { resource: lexik_jwt_authentication.yml }
+    - { resource: knp_paginator.yml }
+    - { resource: doctrine_migrations.yml }
+    - { resource: stof_doctrine_extensions.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -10,15 +19,17 @@ parameters:
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
+    translator: { fallbacks: ['%locale%'] }
     secret: '%secret%'
     router:
         resource: '%kernel.project_dir%/app/config/routing.yml'
         strict_requirements: ~
+    templating:
+        engines: ['twig']
     form: ~
     csrf_protection: ~
     validation: { enable_annotations: true }
-    #serializer: { enable_annotations: true }
+    serializer: { enable_annotations: true }
     default_locale: '%locale%'
     trusted_hosts: ~
     session:

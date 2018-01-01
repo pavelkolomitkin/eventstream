@@ -1,0 +1,9 @@
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: api
+    user_class: AppBundle\Entity\User
+    from_email:
+        address:        support@mywebsite.com
+        sender_name:    mr_mailer
+    service: ~
+        #mailer: user.mailer.rest

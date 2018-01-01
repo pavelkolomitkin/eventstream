@@ -1,0 +1,16 @@
+AppBundle\Entity\User:
+    user1:
+        email: 'user1@gmail.com'
+        username: 'user1'
+        password: '$2y$13$Gp/aRyQpSdmPLJ.zdsKm7.G6hTkuU4aIG3Zb8c69E6tNBeB5uLwkO' # 1234
+        enabled: true
+    user2:
+        email: 'user2@gmail.com'
+        username: 'user2'
+        password: '$2y$13$Gp/aRyQpSdmPLJ.zdsKm7.G6hTkuU4aIG3Zb8c69E6tNBeB5uLwkO' # 1234
+        enabled: true
+    user3:
+        email: 'somebody@gmail.com'
+        username: 'somebody'
+        password: '$2y$13$Gp/aRyQpSdmPLJ.zdsKm7.G6hTkuU4aIG3Zb8c69E6tNBeB5uLwkO' # 1234
+        enabled: true
