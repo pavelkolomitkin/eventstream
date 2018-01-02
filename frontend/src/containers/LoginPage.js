@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import LoginPageComponent from '../components/LoginPage';
+import LoginForm from '../components/LoginForm';
 
 class LoginPage extends Component {
 
     render = () => {
         return (
-            <div>
-                <h2>This is login page!</h2>
-        </div>);
+            <LoginPageComponent />
+            );
     }
 }
 

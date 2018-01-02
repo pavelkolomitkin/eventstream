@@ -3,3 +3,18 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.security-page
+{
+
+}
+
+.security-page .form-control
+{
+  width: 100%;
+}
+
+.security-page .submit-container
+{
+  margin-top: 15px;
+}

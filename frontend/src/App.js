@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
+
+import Header from './containers/Header';
+import Routing from './Routing';
 
 class App extends Component {
   render() {
     return (
       <div>
-          <AppBar
-              title="Event Stream"
-              iconClassNameRight="muidocs-icon-navigation-expand-more"
-          />
-
+          <Header/>
+          <Routing/>
       </div>
     );
   }
