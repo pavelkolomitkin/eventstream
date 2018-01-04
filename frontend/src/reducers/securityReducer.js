@@ -12,7 +12,7 @@ export default function (state = {}, action) {
 
         case types.USER_LOGIN_ERROR:
 
-            return {...state, loginUserError: action.error };
+            return {...state, loginUserError: action.error, loginUserData: null };
 
             break;
 
@@ -26,14 +26,26 @@ export default function (state = {}, action) {
 
         case types.USER_REGISTER_ERROR:
 
-            return {...state, registerErrors: action.errors };
+            return {...state, registerErrors: action.errors, registerResult: null };
 
             break;
 
 
         case types.USER_LOGOUT:
 
-            return {...state, loginUserData: null };
+            return {...state, loginUserData: null, registerResult: null };
+
+            break;
+
+        case types.USER_AUTHORIZED:
+
+            return {...state, authorizedData: types.data };
+
+            break;
+
+        case types.USER_UNAUTHORIZED:
+
+            return {...state, authorizedData: null };
 
             break;
 

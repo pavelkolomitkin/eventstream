@@ -15,4 +15,7 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
 export const USER_REGISTER_ERROR = 'USER_REGISTER_ERROR';
 
+export const USER_AUTHORIZED = 'USER_AUTHORIZED';
+export const USER_UNAUTHORIZED = 'USER_UNAUTHORIZED';
+
 /*===========================// SECURITY ACTIONS =============================*/

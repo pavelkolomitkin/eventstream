@@ -67,3 +67,11 @@ export function userRegisterSuccess(userData) {
 export function userRegisterError(errors) {
     return {type: types.USER_REGISTER_ERROR, errors: errors};
 }
+
+export function userAuthorized(userData) {
+    return {type: types.USER_AUTHORIZED, data: userData};
+}
+
+export function userUnAuthorized() {
+    return { type: types.USER_UNAUTHORIZED };
+}

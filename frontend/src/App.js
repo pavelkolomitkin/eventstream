@@ -5,6 +5,7 @@ import Routing from './Routing';
 
 class App extends Component {
   render() {
+      debugger;
     return (
       <div>
           <Header/>
