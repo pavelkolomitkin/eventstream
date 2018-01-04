@@ -8,7 +8,7 @@ class Header extends Component {
 
     render = () => {
         return (
-            <HeaderComponent loading={false}/>
+            <HeaderComponent loading={this.props.loading}/>
         );
     }
 }
@@ -16,8 +16,9 @@ class Header extends Component {
 Header.propTypes = {};
 
 const mapStateToProps = (state, ownProps) => {
+    //debugger;
     return {
-        /* Add new props to component from state */
+        loading: (state.serverActivity > 0)
     };
 }
 

@@ -1,12 +1,11 @@
 import { combineReducers } from 'redux';
 
-const testReducer = (state = [], action) => {
-
-    return state;
-};
+import serverActivity from './serverActivityReducer';
+import security from './securityReducer';
 
 const rootReducer = combineReducers({
-    testReducer
+    serverActivity,
+    security
 });
 
 

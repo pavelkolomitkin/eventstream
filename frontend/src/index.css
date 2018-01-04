@@ -1,12 +1,18 @@
 body {
   margin: 0;
   padding: 0;
+  padding-top: 70px;
   font-family: sans-serif;
 }
 
 .security-page
 {
 
+}
+
+.security-page h2
+{
+  margin-bottom: 0px;
 }
 
 .security-page .form-control
@@ -17,4 +23,9 @@ body {
 .security-page .submit-container
 {
   margin-top: 15px;
+}
+
+form .error
+{
+  color: red;
 }

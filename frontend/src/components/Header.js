@@ -21,16 +21,22 @@ const styles = {
         marginLeft: -12,
         marginRight: 20,
     },
+    progress: {
+        position: 'fixed',
+        left: 0,
+        top: 0,
+        right: 0
+    }
 };
 
 const Header = ({classes, loading}) => {
     return (
         <div className={classes.root}>
-            {
-                loading && <LinearProgress />
-            }
 
-            <AppBar position="static">
+            <AppBar position="fixed">
+                {
+                    loading && <LinearProgress className={classes.progress} />
+                }
                 <Toolbar>
                     <IconButton className={classes.menuButton} color="contrast" aria-label="Menu">
                         <MenuIcon />
