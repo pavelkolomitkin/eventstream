@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -45,9 +46,71 @@ class User extends BaseUser
      */
     protected $email;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Event", mappedBy="owner")
+     */
+    private $ownEvents;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Event", mappedBy="members")
+     */
+    private $participateEvents;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Event", mappedBy="likes")
+     */
+    private $likeEvents;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventPicture", mappedBy="user")
+     */
+    private $eventPictures;
 
     public function __construct()
     {
         parent::__construct();
+
+        $this->ownEvents = new ArrayCollection();
+        $this->participateEvents = new ArrayCollection();
+        $this->likeEvents = new ArrayCollection();
+        $this->eventPictures = new ArrayCollection();
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getOwnEvents()
+    {
+        return $this->ownEvents;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getParticipateEvents()
+    {
+        return $this->participateEvents;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getLikeEvents()
+    {
+        return $this->likeEvents;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEventPictures()
+    {
+        return $this->eventPictures;
+    }
+
+
 }
