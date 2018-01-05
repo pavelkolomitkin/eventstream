@@ -33,19 +33,19 @@ export default function (state = {}, action) {
 
         case types.USER_LOGOUT:
 
-            return {...state, loginUserData: null, registerResult: null };
+            return {...state, token: null };
 
             break;
 
         case types.USER_AUTHORIZED:
 
-            return {...state, authorizedData: types.data };
+            return {...state, token: action.token };
 
             break;
 
         case types.USER_UNAUTHORIZED:
 
-            return {...state, authorizedData: null };
+            return {...state, token: null };
 
             break;
 

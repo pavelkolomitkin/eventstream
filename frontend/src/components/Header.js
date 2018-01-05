@@ -11,6 +11,7 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import { LinearProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
+import { NavLink } from 'react-router-dom';
 
 import AccountCircle from 'material-ui-icons/AccountCircle';
 
@@ -45,14 +46,19 @@ class Header extends Component {
         this.setState({ anchorEl: event.currentTarget });
     }
 
-    handleClose = () => {
+    menuClose = () => {
         this.setState({ anchorEl: null });
     };
+
+    onLogoutClickHandler = (event) => {
+        this.menuClose();
+        this.props.onLogoutClick(event);
+    }
 
     render () {
 
         const classes = styles;
-        const {loading, userData, onLogoutClick } = this.props;
+        const {loading, userData } = this.props;
         const open = Boolean(this.state.anchorEl);
 
         return (
@@ -60,7 +66,7 @@ class Header extends Component {
 
                 <AppBar position="fixed">
                     {
-                        loading && <LinearProgress className={classes.progress}/>
+                        loading && <LinearProgress style={classes.progress}/>
                     }
                     <Toolbar>
                         <IconButton style={classes.menuButton} color="contrast" aria-label="Menu">
@@ -70,7 +76,7 @@ class Header extends Component {
                             Event Stream
                         </Typography>
                         {
-                            userData !== null
+                            userData
                                 ?
                                 (
                                     <div>
@@ -94,14 +100,19 @@ class Header extends Component {
                                                 horizontal: 'right',
                                             }}
                                             open={open}
-                                            onClose={this.handleClose}
+                                            onClose={this.menuClose}
                                         >
-                                            {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
-                                            <MenuItem onClick={onLogoutClick}>Logout</MenuItem>
+                                            <MenuItem onClick={this.onLogoutClickHandler}>Logout</MenuItem>
                                         </Menu>
                                     </div>
                                 )
-                                : <Button color="contrast">Login</Button>
+                                :
+                                (
+                                    <div>
+                                        <Button component={NavLink} to="/login" color="contrast">Login</Button>
+                                        <Button component={NavLink} to="/register" color="contrast">Register</Button>
+                                    </div>
+                                )
                         }
 
                     </Toolbar>

@@ -31,7 +31,7 @@ class LoginPage extends Component {
 
     componentWillUpdate(nextProps, nextState)
     {
-        if (nextProps.loginUserData)
+        if (nextProps.token)
         {
             this.props.history.push('/');
             return false;
@@ -57,7 +57,7 @@ class LoginPage extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         error: state.security.loginUserError,
-        loginUserData: state.security.loginUserData
+        token: state.security.token
     };
 }
 

@@ -38,7 +38,7 @@ class RegisterPage extends Component {
 
     componentWillUpdate(nextProps, nextState)
     {
-        if (nextProps.registerResult)
+        if (nextProps.token)
         {
             this.props.history.push('/');
             return false;
@@ -62,7 +62,7 @@ class RegisterPage extends Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        registerResult: state.security.registerResult,
+        token: state.security.token,
         errors: state.security.registerErrors ? state.security.registerErrors : {}
     };
 }

@@ -15,7 +15,8 @@ export function loginUser(username, password) {
             username,
             password,
             (data) => {
-                dispatch(userLoginSuccess(data));
+                //dispatch(userLoginSuccess(data));
+                dispatch(userAuthorized(data.token));
                 dispatch(serverActions.serverResponse());
             },
             (error) => {
@@ -37,7 +38,8 @@ export function registerUser(username, email, password, passwordRepeat) {
             password,
             passwordRepeat,
             (data) => {
-                dispatch(userRegisterSuccess(data));
+                //dispatch(userRegisterSuccess(data));
+                dispatch(userAuthorized(data.token));
                 dispatch(serverActions.serverResponse());
             },
             (errors) => {
@@ -68,10 +70,10 @@ export function userRegisterError(errors) {
     return {type: types.USER_REGISTER_ERROR, errors: errors};
 }
 
-export function userAuthorized(userData) {
-    return {type: types.USER_AUTHORIZED, data: userData};
+export function userAuthorized(token) {
+    return {type: types.USER_AUTHORIZED, token};
 }
 
 export function userUnAuthorized() {
-    return { type: types.USER_UNAUTHORIZED };
+    return { type: types.USER_UNAUTHORIZED, token: null };
 }

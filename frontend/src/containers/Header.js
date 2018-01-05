@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import HeaderComponent from '../components/Header';
+import SessionManager from '../services/SessionManager';
 
 import * as securityActions from '../actions/securityActions';
 
@@ -16,7 +17,7 @@ class Header extends Component {
 
     onLogoutClick = () => {
         this.props.actions.userLogout();
-        this.props.history.push('/login');
+        this.props.history.replace('/');
     }
 
     render = () => {
@@ -33,10 +34,9 @@ class Header extends Component {
 Header.propTypes = {};
 
 const mapStateToProps = (state, ownProps) => {
-    //debugger;
     return {
         loading: (state.serverActivity > 0),
-        userData: state.security.authorizedData
+        userData: SessionManager.getSessionData()
     };
 }
 
