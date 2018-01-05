@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * EventTagRepository
  *
@@ -10,4 +12,26 @@ namespace AppBundle\Repository;
  */
 class EventTagRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTagsSearchQuery(array $criteria = [])
+    {
+        $queryBuilder = $this->createQueryBuilder('tag');
+
+        $this
+            ->filterByTitle($queryBuilder, $criteria)
+            ->orderBy('tag.title', 'ASC');
+
+        return $queryBuilder->getQuery();
+    }
+
+    private function filterByTitle(QueryBuilder $queryBuilder, array $criteria)
+    {
+        if (isset($criteria['title']))
+        {
+            $queryBuilder
+                ->andWhere('tag.title LIKE :title')
+                ->setParameter('title', $criteria['title'] . '%');
+        }
+
+        return $queryBuilder;
+    }
 }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import HeaderComponent from '../components/Header';
-import SessionManager from '../services/SessionManager';
+import HeaderComponent from '../../components/common/Header';
+import SessionManager from '../../services/SessionManager';
 
-import * as securityActions from '../actions/securityActions';
+import * as securityActions from '../../actions/securityActions';
 
 class Header extends Component {
 

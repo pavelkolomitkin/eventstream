@@ -9,3 +9,7 @@ registration:
 event:
     type: annotation
     resource: AppBundle\Controller\EventController
+
+tag:
+    type: annotation
+    resource: AppBundle\Controller\EventTagController

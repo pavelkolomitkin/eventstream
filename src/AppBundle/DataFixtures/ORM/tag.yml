@@ -1,0 +1,31 @@
+AppBundle\Entity\EventTag:
+  tag1:
+    title: 'Have rest'
+
+  tag2:
+    title: 'Мода'
+
+  tag3:
+    title: 'Всё про бизнес'
+
+  tag4:
+    title: 'Здоровье и красота'
+
+  tag5:
+    title: 'Путешествия'
+
+  tag6:
+    title: 'English for life'
+
+  tag7:
+    title: 'Автомобили'
+
+  tag8:
+    title: 'Горнолыжный спорт'
+
+  tag9:
+    title: 'Вечеринка'
+
+  tag10:
+    title: 'Знакомства и развлечения'
+

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Header from './containers/Header';
+import Header from './containers/common/Header';
 import Routing from './Routing';
 
 class App extends Component {
