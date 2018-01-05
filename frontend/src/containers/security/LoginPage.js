@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as securityActions from '../actions/securityActions';
+import * as securityActions from '../../actions/securityActions';
 import { bindActionCreators } from 'redux';
-import SecurityPage from '../components/SecurityPage';
-import LoginForm from '../components/LoginForm';
+import SecurityPage from '../../components/layout/SecurityPage';
+import LoginForm from '../../components/security/LoginForm';
 
 class LoginPage extends Component {
     state = {

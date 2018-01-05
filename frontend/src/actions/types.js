@@ -19,3 +19,10 @@ export const USER_AUTHORIZED = 'USER_AUTHORIZED';
 export const USER_UNAUTHORIZED = 'USER_UNAUTHORIZED';
 
 /*===========================// SECURITY ACTIONS =============================*/
+
+/*============================= EVENT ACTIONS =============================*/
+
+export const EVENT_CREATE_SUCCESS = 'EVENT_CREATE_SUCCESS';
+export const EVENT_CREATE_ERROR = 'EVENT_CREATE_ERROR';
+
+/*===========================// EVENT ACTIONS =============================*/

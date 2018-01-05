@@ -11,7 +11,9 @@ import Menu, { MenuItem } from 'material-ui/Menu';
 import { LinearProgress } from 'material-ui/Progress';
 import Button from 'material-ui/Button';
 import MenuIcon from 'material-ui-icons/Menu';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+
+import AddIcon from 'material-ui-icons/Add';
 
 import AccountCircle from 'material-ui-icons/AccountCircle';
 
@@ -35,7 +37,6 @@ const styles = {
     }
 };
 
-//const Header = ({classes, loading, userData}) => {
 class Header extends Component {
 
     state = {
@@ -80,6 +81,11 @@ class Header extends Component {
                                 ?
                                 (
                                     <div>
+                                        <Button component={Link} to="/event/new" color="contrast">
+                                            <AddIcon/>
+                                            Add Event
+                                        </Button>
+
                                         <IconButton
                                             aria-owns={open ? 'menu-appbar' : null}
                                             aria-haspopup="true"

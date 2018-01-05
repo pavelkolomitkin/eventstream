@@ -1,0 +1,2 @@
+event:
+    time_range_invalid: 'Start time could not be greater than end time of event'

@@ -1,0 +1,4 @@
+event:
+    created: 'Event was created'
+    updated: 'Event was updated'
+    deleted: 'Event was deleted'

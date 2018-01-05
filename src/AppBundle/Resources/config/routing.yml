@@ -1,0 +1,11 @@
+login:
+    type: rest
+    resource: AppBundle\Controller\RestLoginController
+
+registration:
+    type: rest
+    resource: AppBundle\Controller\RestRegistrationController
+
+event:
+    type: annotation
+    resource: AppBundle\Controller\EventController

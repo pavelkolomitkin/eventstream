@@ -5,6 +5,11 @@ body {
   font-family: sans-serif;
 }
 
+.common-page
+{
+
+}
+
 .security-page
 {
 
@@ -15,7 +20,7 @@ body {
   margin-bottom: 0px;
 }
 
-.security-page .form-control
+.form-control
 {
   width: 100%;
 }
@@ -28,4 +33,15 @@ body {
 form .error
 {
   color: red;
+}
+
+form .date-time-field
+{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+form legend
+{
+  color: #000ccc !important;
 }

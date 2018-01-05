@@ -4,21 +4,28 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use JMS\Serializer\Annotation as JMSSerializer;
+use Symfony\Component\Validator\Constraints as Assert;
+use AppBundle\Validator\Constraints as AppAssert;
 
 /**
  * Event
  *
  * @ORM\Table(name="event")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventRepository")
+ * @JMSSerializer\ExclusionPolicy("all")
  */
 class Event
 {
+    use TimestampableEntity;
     /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMSSerializer\Expose
      */
     private $id;
 
@@ -26,6 +33,8 @@ class Event
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Assert\NotBlank()
+     * @JMSSerializer\Expose
      */
     private $title;
 
@@ -33,6 +42,8 @@ class Event
      * @var string
      *
      * @ORM\Column(name="description", type="text")
+     * @Assert\NotBlank()
+     * @JMSSerializer\Expose
      */
     private $description;
 
@@ -47,12 +58,17 @@ class Event
     /**
      * @var \DateTime
      * @ORM\Column(name="timeStart", type="datetime", nullable=false)
+     * @Assert\NotBlank()
+     * @AppAssert\EventTimeRangeConstraint()
+     * @JMSSerializer\Expose
      */
     private $timeStart;
 
     /**
      * @var \DateTime
      * @ORM\Column(name="timeEnd", type="datetime", nullable=false)
+     * @Assert\NotBlank()
+     * @JMSSerializer\Expose
      */
     private $timeEnd;
 

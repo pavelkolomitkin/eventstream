@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as securityActions from '../actions/securityActions';
+import * as securityActions from '../../actions/securityActions';
 
-import SecurityPage from '../components/SecurityPage';
-import RegisterForm from '../components/RegisterForm';
+import SecurityPage from '../../components/layout/SecurityPage';
+import RegisterForm from '../../components/security/RegisterForm';
 
 class RegisterPage extends Component {
 
