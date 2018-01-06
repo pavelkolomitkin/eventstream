@@ -1,0 +1,23 @@
+services:
+  event.manager:
+    class: AppBundle\Service\EventManager
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@form.factory'
+      - '@form_error_extractor.helper'
+      - '@tag.manager'
+    public: true
+
+  tag.manager:
+    class: AppBundle\Service\EventTagManager
+    arguments: ['@doctrine.orm.entity_manager']
+    public: true
+
+  event.form:
+    class: AppBundle\Form\Type\EventType
+    tags: [form.type]
+    public: true
+
+  form_error_extractor.helper:
+    class: AppBundle\Service\FormErrorExtractor
+    public: true

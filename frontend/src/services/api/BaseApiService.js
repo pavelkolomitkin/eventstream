@@ -21,6 +21,17 @@ class BaseApiService
     {
         return {};
     }
+
+    buildQueryString(params)
+    {
+        const queryComponents = [];
+        for (const param in params)
+        {
+            queryComponents.push(encodeURIComponent(param) + '=' + encodeURIComponent(params[param]));
+        }
+
+        return queryComponents.join('&');
+    }
 }
 
 export default BaseApiService;

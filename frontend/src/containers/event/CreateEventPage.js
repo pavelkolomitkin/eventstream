@@ -12,7 +12,8 @@ class CreateEventPage extends Component {
         title: '',
         description: '',
         timeStart: new Date(),
-        timeEnd: new Date()
+        timeEnd: new Date(),
+        tags: []
     }
 
     constructor(props, context)
@@ -31,14 +32,16 @@ class CreateEventPage extends Component {
     }
 
     onSubmitHandler = (event) => {
-        event.preventDefault();
         //debugger;
+        event.preventDefault();
+
 
         this.props.actions.create(
             this.state.title,
             this.state.description,
             this.state.timeStart,
             this.state.timeEnd,
+            this.state.tags
         );
     }
 
@@ -53,6 +56,13 @@ class CreateEventPage extends Component {
         return true;
     }
 
+    onFormKeyPressHandler = (event) => {
+        //TODO вынести функционал в общую форму - компонент
+        if (event.which == 13)
+        {
+            event.preventDefault();
+        }
+    };
 
     render = () => {
         return (
@@ -63,8 +73,10 @@ class CreateEventPage extends Component {
                     description={this.state.description}
                     timeStart={this.state.timeStart}
                     timeEnd={this.state.timeEnd}
+                    tags={this.state.tags}
                     onFieldChangeHandler={this.onFieldChangeHandler}
                     onSubmitHandler={this.onSubmitHandler}
+                    onFormKeyPressHandler={this.onFormKeyPressHandler}
                 />
             </CommonLayout>
             );

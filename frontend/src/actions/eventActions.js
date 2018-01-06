@@ -4,7 +4,7 @@ import * as serverActions from './serverActions';
 import EventService from '../services/api/EventService';
 import SessionManager from '../services/SessionManager';
 
-export function create (title, description, timeStart, timeEnd) {
+export function create (title, description, timeStart, timeEnd, tags) {
     return (dispatch) => {
 
         dispatch(serverActions.serverRequest());
@@ -15,6 +15,7 @@ export function create (title, description, timeStart, timeEnd) {
             description,
             timeStart,
             timeEnd,
+            tags,
             (data) => {
                 dispatch(createEventSuccess(data));
                 dispatch(serverActions.serverResponse());

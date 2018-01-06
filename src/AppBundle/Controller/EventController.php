@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Event;
+use AppBundle\Exception\EventException;
 use AppBundle\Form\Type\EventType;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -21,29 +22,23 @@ class EventController extends FOSRestController
      */
     public function createAction(Request $request)
     {
-        $event = new Event();
-
-        $form = $this->createForm(EventType::class, $event);
-        $form->submit($request->request->all(), false);
-
-        if ($form->isValid())
+        try
         {
-            /** @var Event $event */
-            $event = $form->getData();
-            $event->setOwner($this->getUser());
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($event);
-            $entityManager->flush();
+            $event = $this
+                ->get('event.manager')
+                ->create($request->request->all(), $this->getUser());
 
             return $this->handleView($this->view([
                 'event' => $event,
                 'message' => $this->get('translator')->trans('event.created')
             ], Response::HTTP_CREATED));
         }
-
-        return $this->handleView($this->view([
-            'form' => $form
-        ], Response::HTTP_BAD_REQUEST));
+        catch (EventException $exception)
+        {
+            return $this->handleView($this->view([
+                    'errors' => $exception->getErrors()
+                ], Response::HTTP_BAD_REQUEST)
+            );
+        }
     }
 }

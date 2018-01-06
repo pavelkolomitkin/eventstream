@@ -110,6 +110,7 @@ class Event
 
     public function __construct()
     {
+        $this->tags = new ArrayCollection();
         $this->members = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->pictures = new ArrayCollection();

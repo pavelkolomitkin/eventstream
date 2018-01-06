@@ -8,15 +8,15 @@ import {
 } from 'material-ui';
 
 import { FormLabel } from 'material-ui/Form';
-
 import { DateTimePicker } from 'material-ui-pickers';
-
 import Button from 'material-ui/Button';
 
-const EventForm = ({errors, title, description, timeStart, timeEnd, onFieldChangeHandler, onSubmitHandler}) => {
+import TagArrayFormControl from '../../containers/common/form/TagArrayFormControl';
+
+const EventForm = ({errors, title, description, timeStart, timeEnd, tags, onFieldChangeHandler, onSubmitHandler, onFormKeyPressHandler}) => {
     return (
         <div>
-            <form onSubmit={onSubmitHandler}>
+            <form onSubmit={onSubmitHandler} onKeyPress={onFormKeyPressHandler}>
                 <h2>Create new event</h2>
 
                 <FormControl className="form-control" error aria-describedby="title-error">
@@ -67,9 +67,15 @@ const EventForm = ({errors, title, description, timeStart, timeEnd, onFieldChang
                         value={timeEnd}
                     />
                     {errors.timeEnd && <FormHelperText id="time-end-error">{errors.timeEnd}</FormHelperText>}
+                </FormControl>
 
+                <FormControl className="form-control">
+                    <FormLabel component="legend">Tags</FormLabel>
+                    <TagArrayFormControl tags={tags} />
 
                 </FormControl>
+
+
                 <FormControl className="form-control submit-container">
                     <div>
                         <Button raised color="primary" style={{marginRight: 10}} type="submit">Submit</Button>
@@ -87,7 +93,8 @@ EventForm.propTypes = {
     timeStart: PropTypes.object.isRequired,
     timeEnd: PropTypes.object.isRequired,
     onFieldChangeHandler: PropTypes.func.isRequired,
-    onSubmitHandler: PropTypes.func.isRequired
+    onSubmitHandler: PropTypes.func.isRequired,
+    tags: PropTypes.array.isRequired
 };
 
 export default EventForm;
