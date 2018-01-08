@@ -21,3 +21,9 @@ services:
   form_error_extractor.helper:
     class: AppBundle\Service\FormErrorExtractor
     public: true
+
+  event_picture.serialize.listener:
+    class: AppBundle\EventListener\EventPictureSerializeSubscriber
+    arguments: ['@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager']
+    public: true
+    tags: [jms_serializer.event_subscriber]

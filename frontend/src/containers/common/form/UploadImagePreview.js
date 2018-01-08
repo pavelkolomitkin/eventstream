@@ -11,7 +11,8 @@ class UploadImagePreview extends Component {
     state = {
         isComplete: false,
         progressPercentValue: 0,
-        isError: false
+        isError: false,
+        picture: null
     };
 
     constructor(props, context)
@@ -30,14 +31,6 @@ class UploadImagePreview extends Component {
                     progressPercentValue: event.percent
                 });
 
-                /* the event is:
-                {
-                  direction: "upload" or "download"
-                  percent: 0 to 100 // may be missing if file size is unknown
-                  total: // total file size, may be missing
-                  loaded: // bytes downloaded or uploaded so far
-                } */
-
             })
             .end((error, result) => {
                 if (error)
@@ -50,7 +43,8 @@ class UploadImagePreview extends Component {
                 {
                     console.log(result);
                     this.setState({
-                        isComplete: true
+                        isComplete: true,
+                        picture: result.body.picture
                     });
                 }
             });
@@ -58,31 +52,50 @@ class UploadImagePreview extends Component {
 
     renderPreview()
     {
+        if (this.state.picture)
+        {
+            return (
+                <div className="upload-picture-container">
+                    <img src={this.state.picture.thumbs.preview}  />
+                </div>
+            );
+        }
+
         return (
             <div className="upload-picture-container">
-
+                <img src={this.state.picture.thumbs.preview}  />
             </div>
         );
     }
+
+    onPictureLoad = (event) => {
+        this.setState({
+            isComplete: true
+        });
+    };
 
     render = () => {
 
         return (
             <div className="upload-image-preview upload-image-preview-inline">
                 {
-                    this.state.isComplete || this.state.isError
-                        ?
-                        this.renderPreview()
-                        :
-                        <div className="upload-progress-container">
-                            <CircularProgress className="upload-infinity-progress" />
-                            <LinearProgress
-                                className="upload-linear-progress"
-                                mode="determinate"
-                                value={this.state.progressPercentValue}
-                            />
-                        </div>
+                    this.state.picture !== null
+                    &&
+                    <div className="upload-picture-container">
+                        <img src={this.state.picture.thumbs.preview} onLoad={this.onPictureLoad}/>
+                    </div>
                 }
+                {   this.state.isComplete === false &&
+                    <div className="upload-progress-container">
+                        <CircularProgress className="upload-infinity-progress" />
+                        <LinearProgress
+                            className="upload-linear-progress"
+                            mode="determinate"
+                            value={this.state.progressPercentValue}
+                        />
+                    </div>
+                }
+
             </div>);
     }
 }

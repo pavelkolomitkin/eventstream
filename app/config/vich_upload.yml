@@ -4,7 +4,7 @@ vich_uploader:
     mappings:
         event_picture:
             uri_prefix: /images/eventpicture
-            upload_destination: '%kernel.project_dir%/web/images/eventpictures'
+            upload_destination: '%kernel.project_dir%/web/images/eventpicture'
             inject_on_load: true
             delete_on_update: true
             delete_on_remove: true

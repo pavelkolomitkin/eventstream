@@ -40,3 +40,12 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+
+services:
+    acme.imagine.cache.resolver.proxy:
+        class: Liip\ImagineBundle\Imagine\Cache\Resolver\ProxyResolver
+        arguments:
+            - "@liip_imagine.cache.resolver.default"
+            - [ '%develop.server.host%' ]
+        tags:
+            - { name: 'liip_imagine.cache.resolver', resolver: 'proxy' }
