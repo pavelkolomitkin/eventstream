@@ -12,6 +12,7 @@ import { DateTimePicker } from 'material-ui-pickers';
 import Button from 'material-ui/Button';
 
 import TagArrayFormControl from '../../containers/common/form/TagArrayFormControl';
+import UploadPictureControl from '../../containers/common/form/ImageUploadControl';
 
 const EventForm = ({errors, title, description, timeStart, timeEnd, tags, onFieldChangeHandler, onSubmitHandler, onFormKeyPressHandler}) => {
     return (
@@ -73,6 +74,11 @@ const EventForm = ({errors, title, description, timeStart, timeEnd, tags, onFiel
                     <FormLabel component="legend">Tags</FormLabel>
                     <TagArrayFormControl tags={tags} />
 
+                </FormControl>
+
+                <FormControl className="form-control">
+                    <FormLabel component="legend">Pictures</FormLabel>
+                    <UploadPictureControl />
                 </FormControl>
 
 

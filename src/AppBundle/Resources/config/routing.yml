@@ -13,3 +13,7 @@ event:
 tag:
     type: annotation
     resource: AppBundle\Controller\EventTagController
+
+picture:
+    type: annotation
+    resource: AppBundle\Controller\EventPictureController

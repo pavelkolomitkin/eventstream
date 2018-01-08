@@ -27,6 +27,29 @@ body {
 
 }
 
+.form-control .upload-button-container
+{
+  position: relative;
+}
+
+.form-control .upload-button-container .file-upload-input,
+.form-control .upload-button-container .file-upload-button
+{
+    position: absolute !important;
+    top: 0;
+    left: 0;
+}
+
+.form-control .upload-button-container .file-upload-input
+{
+  z-index: 2;
+}
+
+.form-control .upload-button-container .file-upload-button
+{
+  z-index: 1;
+}
+
 .security-page .submit-container
 {
   margin-top: 15px;
@@ -46,4 +69,49 @@ form .date-time-field
 form legend
 {
   color: #000ccc !important;
+}
+
+.upload-images-list
+{
+  clear: both;
+}
+
+.upload-images-list .upload-image-preview
+{
+  width: 150px;
+  height: 150px;
+  padding: 1px;
+}
+
+.upload-images-list .upload-image-preview:hover
+{
+  border: 1px solid #CCCCCC;
+  padding: 0;
+}
+
+.upload-images-list .upload-image-preview-inline
+{
+  float: left;
+  margin: 10px;
+}
+
+.upload-images-list .upload-image-preview .upload-progress-container
+{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  opacity: 0.5;
+}
+
+.upload-images-list .upload-image-preview .upload-progress-container .upload-infinity-progress
+{
+  margin: auto auto;
+}
+.upload-images-list .upload-image-preview .upload-progress-container .upload-linear-progress
+{
+  position: absolute !important;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }

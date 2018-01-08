@@ -11,6 +11,7 @@ imports:
     - { resource: knp_paginator.yml }
     - { resource: doctrine_migrations.yml }
     - { resource: stof_doctrine_extensions.yml }
+    - { resource: vich_upload.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration

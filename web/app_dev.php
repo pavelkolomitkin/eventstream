@@ -27,6 +27,8 @@ if (PHP_VERSION_ID < 70000) {
 }
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
-$response->headers->set('Access-Control-Allow-Origin', '*');
+$response->headers->set('Access-Control-Allow-Origin', 'http://localhost:3000');
+$response->headers->set('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
+//$response->headers->set('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, X-File-Name, X-File-Size, X-File-Type');
 $response->send();
 $kernel->terminate($request, $response);

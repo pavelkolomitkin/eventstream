@@ -16,7 +16,7 @@ class AuthorizedApiService extends BaseApiService
 
     getRequestHeaders()
     {
-        let result = super.getRequestHeaders();
+        const result = super.getRequestHeaders();
 
         result['Authorization'] = 'Bearer ' + this.getAuthToken();
 
