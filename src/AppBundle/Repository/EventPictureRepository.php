@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+
 /**
  * EventUploadedPictureRepository
  *
@@ -10,4 +12,18 @@ namespace AppBundle\Repository;
  */
 class EventPictureRepository extends \Doctrine\ORM\EntityRepository
 {
+    private function getUserUnlinkedEventPicturesQuery(User $user)
+    {
+        return $this->createQueryBuilder('picture')
+            ->where('picture.user = :user')
+            ->andWhere('picture.event IS NULL')
+            ->setParameter('user', $user)
+            ->getQuery();
+    }
+
+    public function getUserAllUnlinkedEventPictures(User $user)
+    {
+        return $this->getUserUnlinkedEventPicturesQuery($user)->getResult();
+    }
+
 }

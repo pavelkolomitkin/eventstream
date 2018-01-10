@@ -61,9 +61,13 @@ class EventPictureSerializeSubscriber implements EventSubscriberInterface
 
         $originalAsset = $this->uploaderHelper->asset($picture, 'imageFile');
 
-        $event->getVisitor()->addData('thumbs', [
-            'preview' => $this->pictureManager->getBrowserPath($originalAsset, 'event_picture_preview')
-        ]);
+        $thumbs = [];
+        if (!empty($originalAsset))
+        {
+            $thumbs['preview'] = $this->pictureManager->getBrowserPath($originalAsset, 'event_picture_preview');
+        }
+
+        $event->getVisitor()->addData('thumbs', $thumbs);
 
     }
 }

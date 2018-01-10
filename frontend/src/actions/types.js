@@ -26,3 +26,10 @@ export const EVENT_CREATE_SUCCESS = 'EVENT_CREATE_SUCCESS';
 export const EVENT_CREATE_ERROR = 'EVENT_CREATE_ERROR';
 
 /*===========================// EVENT ACTIONS =============================*/
+
+/*============================= EVENT PICTURE ACTIONS =============================*/
+
+export const EVENT_PICTURES_ALL_UNLINKED_SUCCESS = 'EVENT_PICTURES_ALL_UNLINKED_SUCCESS';
+export const EVENT_PICTURES_ALL_UNLINKED_ERROR = 'EVENT_PICTURES_ALL_UNLINKED_ERROR';
+
+/*===========================// EVENT PICTURE ACTIONS =============================*/

@@ -18,7 +18,7 @@ class FileUploadService extends AuthorizedApiService
     };
 
     uploadEventPicture = (file) => {
-        return this.uploadFile('picture/create', file, 'imageFile').end();
+        return this.uploadFile('picture/create', file, 'imageFile');
     }
 }
 

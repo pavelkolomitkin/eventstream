@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as eventActions from '../../actions/eventActions';
+import * as eventPicturesActions from '../../actions/eventPictureActions';
 
 import EventForm from '../../components/event/EventForm';
 import CommonLayout from '../../components/layout/CommonPage';
@@ -21,6 +22,7 @@ class CreateEventPage extends Component {
         super(props, context);
 
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
+        this.onNewPictureUploaded = this.onNewPictureUploaded.bind(this);
     }
 
     onFieldChangeHandler = (name, value) => {
@@ -32,18 +34,21 @@ class CreateEventPage extends Component {
     }
 
     onSubmitHandler = (event) => {
-        //debugger;
         event.preventDefault();
 
+        this.state.pictures = this.props.unlinkedPictures;
 
         this.props.actions.create(
             this.state.title,
             this.state.description,
             this.state.timeStart,
             this.state.timeEnd,
-            this.state.tags
+            this.state.tags,
+            this.state.pictures.map((picture) => {
+                return picture.id;
+            })
         );
-    }
+    };
 
     componentWillUpdate(nextProps, nextState)
     {
@@ -56,6 +61,11 @@ class CreateEventPage extends Component {
         return true;
     }
 
+    componentDidMount()
+    {
+        this.props.pictureActions.loadAllUnlinkedPictures();
+    }
+
     onFormKeyPressHandler = (event) => {
         //TODO вынести функционал в общую форму - компонент
         if (event.which == 13)
@@ -63,6 +73,12 @@ class CreateEventPage extends Component {
             event.preventDefault();
         }
     };
+
+    onNewPictureUploaded(picture)
+    {
+        this.props.pictureActions.loadAllUnlinkedPictures();
+    }
+
 
     render = () => {
         return (
@@ -77,6 +93,9 @@ class CreateEventPage extends Component {
                     onFieldChangeHandler={this.onFieldChangeHandler}
                     onSubmitHandler={this.onSubmitHandler}
                     onFormKeyPressHandler={this.onFormKeyPressHandler}
+                    images={this.props.unlinkedPictures}
+                    maxUploadedImageSize={5242880} // TODO вынести в конфиг
+                    onPictureUploaded={this.onNewPictureUploaded}
                 />
             </CommonLayout>
             );
@@ -88,14 +107,16 @@ CreateEventPage.propTypes = {};
 const mapStateToProps = (state, ownProps) => {
     return {
         errors: state.event.eventErrors ? state.event.eventErrors : {},
-        eventData: state.event.eventData
+        eventData: state.event.eventData,
+        unlinkedPictures: state.eventPicture.unlinkedPictures ? state.eventPicture.unlinkedPictures : []
     };
-}
+};
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        actions: bindActionCreators(eventActions, dispatch)
+        actions: bindActionCreators(eventActions, dispatch),
+        pictureActions: bindActionCreators(eventPicturesActions, dispatch)
     }
-}
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateEventPage);

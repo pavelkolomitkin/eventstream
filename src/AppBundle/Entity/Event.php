@@ -103,7 +103,7 @@ class Event
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventPicture", mappedBy="event")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventPicture", mappedBy="event", cascade={"persist", "remove"})
      */
     private $pictures;
 
@@ -356,11 +356,48 @@ class Event
     }
 
     /**
+     * Get pictures
+     *
      * @return ArrayCollection
      */
     public function getPictures()
     {
         return $this->pictures;
+    }
+
+    /**
+     * Set pictures
+     *
+     * @param $pictures
+     * @return $this
+     */
+    public function setPictures($pictures)
+    {
+        $this->pictures = $pictures;
+
+        return $this;
+    }
+
+    public function addPicture(EventPicture $picture)
+    {
+        if (!$this->pictures->contains($picture))
+        {
+            $this->pictures->add($picture);
+            $picture->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(EventPicture $picture)
+    {
+        if ($this->pictures->contains($picture))
+        {
+            $this->pictures->removeElement($picture);
+            $picture->setEvent(null);
+        }
+
+        return $this;
     }
 }
 

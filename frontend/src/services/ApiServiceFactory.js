@@ -1,5 +1,6 @@
 import SessionManager from './SessionManager';
 import FileUploadService from './api/FileUploadService';
+import EventPictureService from './api/EventPictureService';
 
 
 class ApiServiceFactory {
@@ -10,6 +11,10 @@ class ApiServiceFactory {
 
     static createFileUploader = () => {
         return ApiServiceFactory.createAuthService(FileUploadService);
+    }
+
+    static createEventPictureService = () => {
+        return ApiServiceFactory.createAuthService(EventPictureService);
     }
 
 }

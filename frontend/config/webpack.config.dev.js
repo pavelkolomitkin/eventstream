@@ -19,7 +19,7 @@ var publicPath = '/';
 // Omit trailing slash as %PUBLIC_PATH%/xyz looks better than %PUBLIC_PATH%xyz.
 var publicUrl = '';
 // Get environment variables to inject into our app.
-var baseApiUrl = 'http://127.0.0.1:8000/app_dev.php/api/';
+var baseApiUrl = 'http://127.0.0.1:8000/api/';
 var env = getClientEnvironment(publicUrl, baseApiUrl);
 
 // This is the development configuration.

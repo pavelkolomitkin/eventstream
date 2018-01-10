@@ -5,6 +5,11 @@ import PropTypes from 'prop-types';
 
 import { CircularProgress } from 'material-ui/Progress';
 import { LinearProgress } from 'material-ui/Progress';
+import Badge from 'material-ui/Badge';
+import IconButton from 'material-ui/IconButton';
+import DeleteIcon from 'material-ui-icons/Delete';
+import UploadImageAdapter from './UploadedImageAdapter';
+
 
 class UploadImagePreview extends Component {
 
@@ -12,7 +17,6 @@ class UploadImagePreview extends Component {
         isComplete: false,
         progressPercentValue: 0,
         isError: false,
-        picture: null
     };
 
     constructor(props, context)
@@ -22,85 +26,66 @@ class UploadImagePreview extends Component {
 
     componentDidMount()
     {
-        this
-            .props
-            .image
-            .on('progress', (event) => {
+        const {image} = this.props.image;
 
-                this.setState({
-                    progressPercentValue: event.percent
-                });
-
-            })
-            .end((error, result) => {
-                if (error)
-                {
-                    this.setState({
-                        isError: true
-                    });
-                }
-                else
-                {
-                    console.log(result);
-                    this.setState({
-                        isComplete: true,
-                        picture: result.body.picture
-                    });
-                }
-            });
-    }
-
-    renderPreview()
-    {
-        if (this.state.picture)
+        if (!this.props.image.isReady())
         {
-            return (
-                <div className="upload-picture-container">
-                    <img src={this.state.picture.thumbs.preview}  />
-                </div>
-            );
-        }
+            this
+                .props
+                .image
+                .onUploadingProgress((event) => {
+                    this.setState({
+                        progressPercentValue: event.percent
+                    });
 
-        return (
-            <div className="upload-picture-container">
-                <img src={this.state.picture.thumbs.preview}  />
-            </div>
-        );
+                })
+                .onUploadingComplete((result) => {
+                    this.setState({
+                        isComplete: true
+                    });
+                });
+        }
+        else
+        {
+            this.setState({
+                isComplete: true
+            });
+        }
     }
 
-    onPictureLoad = (event) => {
-        this.setState({
-            isComplete: true
-        });
-    };
 
     render = () => {
+
+        const { progressPercentValue } = this.state;
+        const { image, onDeleteImageHandler} = this.props;
+
 
         return (
             <div className="upload-image-preview upload-image-preview-inline">
                 {
-                    this.state.picture !== null
-                    &&
+                    image.isReady()
+                     ?
                     <div className="upload-picture-container">
-                        <img src={this.state.picture.thumbs.preview} onLoad={this.onPictureLoad}/>
+                        <img src={image.getThumbs().preview}/>
                     </div>
+                        :
+                        <div className="upload-progress-container">
+                            <CircularProgress className="upload-infinity-progress" />
+                            <LinearProgress
+                                className="upload-linear-progress"
+                                mode="determinate"
+                                value={progressPercentValue}
+                            />
+                        </div>
                 }
-                {   this.state.isComplete === false &&
-                    <div className="upload-progress-container">
-                        <CircularProgress className="upload-infinity-progress" />
-                        <LinearProgress
-                            className="upload-linear-progress"
-                            mode="determinate"
-                            value={this.state.progressPercentValue}
-                        />
-                    </div>
-                }
-
             </div>);
     }
 }
 
-UploadImagePreview.propTypes = {};
+UploadImagePreview.propTypes = {
+    image: PropTypes.object.isRequired,
+    onDeleteImageHandler: PropTypes.func.isRequired
+};
 
 const mapStateToProps = (state, ownProps) => {
     return {

@@ -43,7 +43,7 @@ class EventPicture
 
     /**
      * @var Event
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="pictures")
      * @ORM\JoinColumn(name="eventId", nullable=true)
      */
     private $event;
@@ -150,6 +150,11 @@ class EventPicture
     public function getImage(): ?EmbeddedFile
     {
         return $this->image;
+    }
+
+    public function __toString()
+    {
+        return $this->getImage()->getOriginalName();
     }
 }
 

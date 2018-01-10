@@ -27,3 +27,8 @@ services:
     arguments: ['@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager']
     public: true
     tags: [jms_serializer.event_subscriber]
+
+
+  event_picture.data_transformer:
+    class: AppBundle\Form\DataTransformer\EventPictureTransformer
+    arguments: ['@doctrine.orm.entity_manager']

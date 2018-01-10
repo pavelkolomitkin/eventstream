@@ -2,3 +2,8 @@ event:
     created: 'Event was created'
     updated: 'Event was updated'
     deleted: 'Event was deleted'
+
+event_picture:
+    delete:
+        success: 'Picture has been removed!'
+        accessDeny: 'You can not delete this picture!'

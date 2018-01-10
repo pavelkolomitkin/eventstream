@@ -64,7 +64,10 @@ class EventManager
     {
         $result = new Event();
 
-        $form = $this->formFactory->create(EventType::class, $result);
+        $form = $this->formFactory->create(EventType::class, $result, [
+            'user' => $owner,
+            'entity_manager' => $this->entityManager
+        ]);
         $form->submit($fields, false);
 
         if (!$form->isValid())
@@ -78,7 +81,7 @@ class EventManager
         $this->processTags($result, $fields);
 
         $this->entityManager->persist($result);
-        $this->entityManager->flush($result);
+        $this->entityManager->flush();
 
         return $result;
     }
