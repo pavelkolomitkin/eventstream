@@ -80,13 +80,18 @@ form legend
 {
   width: 150px;
   height: 150px;
-  padding: 1px;
+  position: relative;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .upload-images-list .upload-image-preview:hover
 {
-  border: 1px solid #CCCCCC;
-  padding: 0;
+}
+
+.upload-images-list .upload-image-preview .deleting-picture
+{
+  opacity: 0.5;
 }
 
 .upload-images-list .upload-image-preview-inline
@@ -102,6 +107,19 @@ form legend
   position: relative;
   display: flex;
   opacity: 0.5;
+}
+
+.upload-images-list .upload-image-preview .remove-button
+{
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  display: none;
+}
+
+.upload-images-list .upload-image-preview:hover .remove-button
+{
+  display: flex;
 }
 
 .upload-images-list .upload-image-preview .upload-progress-container .upload-infinity-progress

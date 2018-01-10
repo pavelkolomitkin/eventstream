@@ -7,6 +7,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import { LinearProgress } from 'material-ui/Progress';
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
+import Button from 'material-ui/Button'
 import DeleteIcon from 'material-ui-icons/Delete';
 import UploadImageAdapter from './UploadedImageAdapter';
 
@@ -17,12 +18,24 @@ class UploadImagePreview extends Component {
         isComplete: false,
         progressPercentValue: 0,
         isError: false,
+        deleting: false
     };
 
     constructor(props, context)
     {
         super(props, context);
     }
+
+    onDeleteButtonHandler = (event) => {
+
+        if (!this.state.deleting) {
+            this.props.onDeleteImageHandler(this.props.image);
+        }
+
+        this.setState({
+            deleting: true
+        });
+    };
 
     componentDidMount()
     {
@@ -56,8 +69,8 @@ class UploadImagePreview extends Component {
 
     render = () => {
 
-        const { progressPercentValue } = this.state;
-        const { image, onDeleteImageHandler} = this.props;
+        const { deleting, progressPercentValue } = this.state;
+        const { image } = this.props;
 
 
         return (
@@ -66,7 +79,10 @@ class UploadImagePreview extends Component {
                     image.isReady()
                      ?
                     <div className="upload-picture-container">
-                        <img src={image.getThumbs().preview}/>
+                            <Button disabled={deleting} fab mini className="remove-button" onClick={this.onDeleteButtonHandler}>
+                                <DeleteIcon />
+                            </Button>
+                        <img src={image.getThumbs().preview} className={deleting ? 'deleting-picture' : ''}/>
                     </div>
                         :
                         <div className="upload-progress-container">

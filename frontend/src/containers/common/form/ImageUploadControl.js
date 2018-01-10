@@ -64,13 +64,33 @@ class ImageUploadControl extends Component {
 
 
     onDeletePictureHandler = (picture) => {
+        const self = this;
         this.eventPictureService.remove(
-            picture.id,
+            picture.getId(),
             (result) => {
 
-            },
-            () => {
+                // удалить из props
+                let imageIndex = self.props.images.findIndex((image) => {
+                    return (image.id === picture.getId());
+                });
 
+                self.props.images.splice(imageIndex, 1);
+
+
+                // удалить из state
+                imageIndex = self.state.pictures.findIndex((image) => {
+                    return (image.getId() === picture.getId());
+                });
+
+                let newPictures = self.state.pictures;
+                newPictures.splice(imageIndex, 1);
+
+                this.setState({
+                    pictures: newPictures
+                });
+            },
+            (error) => {
+                console.log(error);
             }
             );
     };
