@@ -9,6 +9,12 @@ import Dropzone from 'react-dropzone';
 import ApiServiceFactory from '../../../services/ApiServiceFactory';
 import UploadedImageList from './UploadedImageList';
 import UploadedImageAdapter from './UploadedImageAdapter';
+import { Carousel } from 'react-responsive-carousel';
+import Typography from 'material-ui/Typography';
+import Modal from 'material-ui/Modal';
+import ModalWindow from "../../../components/common/ModalWindow";
+import FileUpload from 'material-ui-icons/FileUpload';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 class ImageUploadControl extends Component {
 
@@ -17,14 +23,31 @@ class ImageUploadControl extends Component {
         super(props, context);
         this.state = {
             pictures: [],
-            selectedFiles: {}
+            selectedFiles: {},
+            isCarouselOpen: false,
+            selectedPictureIndex: 0
         };
 
         this.eventPictureService = ApiServiceFactory.createEventPictureService();
 
         this.onDropUploadFilesHandler = this.onDropUploadFilesHandler.bind(this);
         this.onDeletePictureHandler = this.onDeletePictureHandler.bind(this);
+        this.onPreviewClickHandler = this.onPreviewClickHandler.bind(this);
+        this.onCloseCarouselWindow = this.onCloseCarouselWindow.bind(this);
     }
+
+    onCloseCarouselWindow = () => {
+        this.setState({
+            isCarouselOpen: false
+        });
+    };
+
+    onPreviewClickHandler = (image, index) => {
+        this.setState({
+            isCarouselOpen: true,
+            selectedPictureIndex: index
+        });
+    };
 
     onDropUploadFilesHandler = (acceptedFiles, rejectedFiles) => {
         const uploadWorkers = acceptedFiles
@@ -102,18 +125,48 @@ class ImageUploadControl extends Component {
 
         return (
             <div>
+                <ModalWindow isOpen={this.state.isCarouselOpen} onCloseHandler={this.onCloseCarouselWindow}>
+                    <Carousel showArrows={true} showThumbs={false} selectedItem={this.state.selectedPictureIndex}>
+
+                        {
+                            this.state.pictures.map((picture, index) => {
+
+                                const thumbs = picture.getThumbs();
+                                return (
+
+                                        thumbs !== null ?
+                                        <div key={index}>
+                                            <img src={thumbs.normal} />
+                                        </div>
+                                        : null
+                                    );
+                                })
+                        }
+                    </Carousel>
+                </ModalWindow>
+
 
                 <div className="upload-images-list">
 
                     {this.state.pictures.map((picture, index) => {
 
-                        return (<UploadImagePreview key={picture.getId()} image={picture} onDeleteImageHandler={this.onDeletePictureHandler} />);
+                        return (<UploadImagePreview
+                            key={picture.getId()}
+                            image={picture}
+                            onImageClickHandler={(image) => {this.onPreviewClickHandler(image, index)}}
+                            onDeleteImageHandler={this.onDeletePictureHandler}
+                        />);
                     })}
 
                 </div>
                 <div style={{clear: 'both'}}/>
                 <div className="upload-button-container">
-                    <Dropzone maxSize={this.props.maxImageSize} onDrop={this.onDropUploadFilesHandler} multiple={true} />
+                    <Dropzone maxSize={this.props.maxImageSize} onDrop={this.onDropUploadFilesHandler} multiple={true}>
+                        <Button raised color="default">
+                            Upload
+                            <FileUpload />
+                        </Button>
+                    </Dropzone>
                 </div>
             </div>
         );

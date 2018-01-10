@@ -16,40 +16,6 @@ import Chip from 'material-ui/Chip';
 
 import TagArrayFormControlComponent from '../../../components/common/form/TagArrayFormControl';
 
-const styles = theme => ({
-    container: {
-        flexGrow: 1,
-        position: 'relative',
-        height: 200,
-    },
-    suggestionsContainerOpen: {
-        position: 'absolute',
-        marginTop: theme.spacing.unit,
-        marginBottom: theme.spacing.unit * 3,
-        left: 0,
-        right: 0,
-    },
-    suggestion: {
-        display: 'block',
-    },
-    suggestionsList: {
-        margin: 0,
-        padding: 0,
-        listStyleType: 'none',
-    },
-    textField: {
-        width: '100%',
-    },
-    chip: {
-        margin: theme.spacing.unit / 2,
-    },
-    row: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-});
-
-
 class TagArrayFormControl extends Component {
 
     state = {
@@ -167,4 +133,4 @@ TagArrayFormControl.propTypes = {
 };
 
 
-export default withStyles(styles)(TagArrayFormControl);
+export default TagArrayFormControl;

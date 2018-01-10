@@ -30,6 +30,7 @@ body {
 .form-control .upload-button-container
 {
   position: relative;
+  margin-top: 15px;
 }
 
 .form-control .upload-button-container .file-upload-input,
@@ -94,6 +95,11 @@ form legend
   opacity: 0.5;
 }
 
+.upload-images-list .upload-image-preview img
+{
+  cursor: pointer;
+}
+
 .upload-images-list .upload-image-preview-inline
 {
   float: left;
@@ -132,4 +138,18 @@ form legend
   left: 0;
   right: 0;
   bottom: 0;
+}
+
+.modal-window-content
+{
+  width: 75%;
+  margin: auto auto;
+}
+
+.form-control .upload-button-container > div
+{
+  display: inline !important;
+  width: inherit !important;
+  height: inherit !important;
+  border: none !important;
 }

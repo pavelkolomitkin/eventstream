@@ -60,7 +60,7 @@ class UploadedImageAdapter
 
     getThumbs()
     {
-        return this.picture.thumbs ? this.picture.thumbs : null;
+        return this.picture && this.picture.thumbs ? this.picture.thumbs : null;
     }
 
     isReady()

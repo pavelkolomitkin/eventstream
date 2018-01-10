@@ -17,8 +17,12 @@ liip_imagine:
 
 
         event_picture_preview:
-
           quality: 75
-
           filters:
             thumbnail: { size: [150, 150], mode: outbound }
+
+        event_picture_normal:
+          quality: 75
+          filters:
+            scale:
+              dim: [640, 480]

@@ -24,9 +24,13 @@ class UploadImagePreview extends Component {
     constructor(props, context)
     {
         super(props, context);
+
+        this.onDeleteButtonHandler = this.onDeleteButtonHandler.bind(this);
     }
 
     onDeleteButtonHandler = (event) => {
+
+        event.stopPropagation();
 
         if (!this.state.deleting) {
             this.props.onDeleteImageHandler(this.props.image);
@@ -70,7 +74,7 @@ class UploadImagePreview extends Component {
     render = () => {
 
         const { deleting, progressPercentValue } = this.state;
-        const { image } = this.props;
+        const { image, onImageClickHandler } = this.props;
 
 
         return (
@@ -78,11 +82,11 @@ class UploadImagePreview extends Component {
                 {
                     image.isReady()
                      ?
-                    <div className="upload-picture-container">
+                    <div className="upload-picture-container" onClick={() => {onImageClickHandler(image)}}>
                             <Button disabled={deleting} fab mini className="remove-button" onClick={this.onDeleteButtonHandler}>
                                 <DeleteIcon />
                             </Button>
-                        <img src={image.getThumbs().preview} className={deleting ? 'deleting-picture' : ''}/>
+                        <img src={image.getThumbs().preview} className={deleting ? 'deleting-picture' : ''} />
                     </div>
                         :
                         <div className="upload-progress-container">
@@ -100,7 +104,8 @@ class UploadImagePreview extends Component {
 
 UploadImagePreview.propTypes = {
     image: PropTypes.object.isRequired,
-    onDeleteImageHandler: PropTypes.func.isRequired
+    onDeleteImageHandler: PropTypes.func.isRequired,
+    onImageClickHandler: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {
