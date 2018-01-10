@@ -28,6 +28,13 @@ services:
     public: true
     tags: [jms_serializer.event_subscriber]
 
+  video_link.manager:
+    class: AppBundle\Service\Video\VideoLinkManager
+    arguments: ['@doctrine.orm.entity_manager', '@video_link.provider.factory']
+    public: true
+
+  video_link.provider.factory:
+    class: AppBundle\Service\Video\VideoProviderFactory
 
   event_picture.data_transformer:
     class: AppBundle\Form\DataTransformer\EventPictureTransformer

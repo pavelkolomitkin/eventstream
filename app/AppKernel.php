@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
+            new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle(),
 
             new AppBundle\AppBundle(),
         ];
@@ -36,7 +37,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
             $bundles[] = new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle();
-            $bundles[] = new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle();
+            //$bundles[] = new Csa\Bundle\GuzzleBundle\CsaGuzzleBundle();
             $bundles[] = new \Hautelook\AliceBundle\HautelookAliceBundle();
 
             if ('dev' === $this->getEnvironment()) {

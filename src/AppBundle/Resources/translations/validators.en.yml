@@ -1,5 +1,8 @@
 event:
     time_range_invalid: 'Start time could not be greater than end time of event'
-
-event:
     cannot_add_not_own_pictures: 'Can not add not own pictures to event'
+
+video_link:
+    unsupported_source: 'Can not parse video from this source'
+
+
