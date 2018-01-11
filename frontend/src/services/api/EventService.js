@@ -2,17 +2,14 @@ import AuthorizedApiService from './AuthorizedApiService';
 
 class EventService extends AuthorizedApiService
 {
-    create = (title, description, timeStart, timeEnd, tags, pictures, onSuccessHandler, onErrorHandler) => {
+    create = (title, description, timeStart, timeEnd, tags, pictures, videos, onSuccessHandler, onErrorHandler) => {
         this.makeRequest(
             'POST',
             'event',
             {
-                title, description, timeStart, timeEnd, tags, pictures
+                title, description, timeStart, timeEnd, tags, pictures, videos
             },
             (response) => {
-
-                //debugger;
-
                 onSuccessHandler(response.data);
             },
             (error) => {
@@ -20,7 +17,7 @@ class EventService extends AuthorizedApiService
                 //debugger;
                 const errors = {};
 
-                const fields = ['title', 'description', 'timeStart', 'timeEnd', 'tags', 'pictures'];
+                const fields = ['title', 'description', 'timeStart', 'timeEnd', 'tags', 'pictures', 'videos'];
                 const fieldErrors = error.response.data.errors;
 
                 fields.forEach((field) => {

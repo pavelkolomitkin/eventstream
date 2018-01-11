@@ -2,7 +2,7 @@ import * as types from './types';
 import * as serverActions from './serverActions';
 import ApiServiceFactory from '../services/ApiServiceFactory';
 
-export function create (title, description, timeStart, timeEnd, tags, pictures) {
+export function create (title, description, timeStart, timeEnd, tags, pictures, videos) {
     return (dispatch) => {
 
         dispatch(serverActions.serverRequest());
@@ -15,6 +15,7 @@ export function create (title, description, timeStart, timeEnd, tags, pictures) 
             timeEnd,
             tags,
             pictures,
+            videos,
             (data) => {
                 dispatch(createEventSuccess(data));
                 dispatch(serverActions.serverResponse());

@@ -27,10 +27,10 @@ class VideoService extends AuthorizedApiService
                 url: urlLink
             },
             (result) => {
-                onSuccessHandler(result.data);
+                onSuccessHandler(result.data.video);
             },
             (error) => {
-                onErrorHandler(error.response.data);
+                onErrorHandler(error.response.data.error);
             }
         );
     }

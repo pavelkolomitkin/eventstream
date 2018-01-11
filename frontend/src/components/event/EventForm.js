@@ -27,7 +27,6 @@ const EventForm = ({
                        onFormKeyPressHandler,
                        images,
                        maxUploadedImageSize,
-                       onPictureUploaded,
                        videos
     }) => {
     return (
@@ -93,7 +92,7 @@ const EventForm = ({
 
                 <FormControl className="form-control">
                     <FormLabel component="legend">Pictures</FormLabel>
-                    <UploadPictureControl images={images} maxImageSize={maxUploadedImageSize} onImageUploadHandler={onPictureUploaded} />
+                    <UploadPictureControl images={images} maxImageSize={maxUploadedImageSize}/>
                 </FormControl>
 
                 <FormControl className="form-control">
@@ -122,7 +121,6 @@ EventForm.propTypes = {
     tags: PropTypes.array.isRequired,
     images: PropTypes.array.isRequired,
     maxUploadedImageSize: PropTypes.number.isRequired,
-    onPictureUploaded: PropTypes.func.isRequired,
     videos: PropTypes.array.isRequired
 };
 

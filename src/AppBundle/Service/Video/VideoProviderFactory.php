@@ -33,7 +33,7 @@ class VideoProviderFactory
 
         if (!$result)
         {
-            throw new ProvideVideoException('video_link.unsupported_source');
+            throw new ProvideVideoException('video.unsupported_source');
         }
 
         return $result;

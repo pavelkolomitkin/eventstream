@@ -175,7 +175,6 @@ class ImageUploadControl extends Component {
 
 ImageUploadControl.propTypes = {
     maxImageSize: PropTypes.number.isRequired,
-    onImageUploadHandler: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, ownProps) => {

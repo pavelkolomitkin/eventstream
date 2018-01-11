@@ -5,8 +5,10 @@ namespace AppBundle\Form\Type;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventPicture;
+use AppBundle\Entity\VideoLink;
 use AppBundle\Form\DataTransformer\EventPictureTransformer;
 use AppBundle\Validator\Constraints\EventPictureListConstraint;
+use AppBundle\Validator\Constraints\EventVideoListConstraint;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -33,6 +35,13 @@ class EventType extends AbstractType
                 'constraints' => [new EventPictureListConstraint($user)],
                 'multiple' => true,
                 'class' => EventPicture::class,
+                'expanded' => true,
+                'by_reference' => false
+            ])
+            ->add('videos', EntityType::class, [
+                'constraints' => [new EventVideoListConstraint($user)],
+                'multiple' => true,
+                'class' => VideoLink::class,
                 'expanded' => true,
                 'by_reference' => false
             ]);

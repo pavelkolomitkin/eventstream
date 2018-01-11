@@ -11,7 +11,7 @@ class YoutubeLinkRecognizer extends BaseLinkRecognizer
 {
     public function recognized($url): bool
     {
-        preg_match('/www\.youtube\.(com|ru)\/watch\?v=([A-Za-z0-9]+)/', $url, $matches);
+        preg_match('/www\.youtube\.(com|ru)\/watch\?v=([A-Za-z0-9\-\_]+)/', $url, $matches);
 
         return !empty($matches[2]);
     }

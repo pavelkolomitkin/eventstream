@@ -107,6 +107,12 @@ class Event
      */
     private $pictures;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\VideoLink", mappedBy="event", cascade={"persist", "remove"})
+     */
+    private $videos;
+
 
     public function __construct()
     {
@@ -114,6 +120,7 @@ class Event
         $this->members = new ArrayCollection();
         $this->likes = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     /**
@@ -399,5 +406,47 @@ class Event
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getVideos(): ArrayCollection
+    {
+        return $this->videos;
+    }
+
+    /**
+     * @param ArrayCollection $videos
+     * @return Event
+     */
+    public function setVideos(ArrayCollection $videos): Event
+    {
+        $this->videos = $videos;
+        return $this;
+    }
+
+    public function addVideo(VideoLink $videoLink)
+    {
+        if (!$this->videos->contains($videoLink))
+        {
+            $this->videos->add($videoLink);
+            $videoLink->setEvent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(VideoLink $videoLink)
+    {
+        if ($this->videos->contains($videoLink))
+        {
+            $this->videos->removeElement($videoLink);
+            $videoLink->setEvent(null);
+        }
+
+        return $this;
+
+    }
+
 }
 

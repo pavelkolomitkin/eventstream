@@ -12,3 +12,5 @@ video:
     delete:
         success: 'Video has been removed!'
         accessDeny: 'You can not delete this video!'
+
+    unsupported_source: 'Unsupported video source!'

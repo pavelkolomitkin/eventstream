@@ -5,12 +5,13 @@ import VideoPreview from './VideoPreview';
 
 const VideoList = ({videos}) => {
     return (
-        <div>
+        <div className="video-list-container">
             {videos.map((video, index) => {
                 return (
-                    <VideoPreview key={index} video={video}/>
+                    <VideoPreview key={video.video_id + '' + index} video={video}/>
                 );
             })}
+            <div style={{clear: 'both'}}/>
         </div>
     );
 };

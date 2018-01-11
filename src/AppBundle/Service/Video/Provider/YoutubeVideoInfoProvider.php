@@ -16,7 +16,7 @@ class YoutubeVideoInfoProvider extends BaseVideoInfoProvider
 
     private function getVideoId()
     {
-        preg_match('/www\.youtube\.(com|ru)\/watch\?v=([A-Za-z0-9]+)/', $this->url, $matches);
+        preg_match('/www\.youtube\.(com|ru)\/watch\?v=([A-Za-z0-9\-\_]+)/', $this->url, $matches);
         return $matches[2];
     }
 
@@ -34,7 +34,7 @@ class YoutubeVideoInfoProvider extends BaseVideoInfoProvider
         }
 
         $videoLinkData = json_decode($response->getBody()->getContents(), true);
-        if (!empty($videoLinkData))
+        if (empty($videoLinkData))
         {
             throw new ProvideVideoException();
         }
@@ -42,6 +42,7 @@ class YoutubeVideoInfoProvider extends BaseVideoInfoProvider
         $result
             ->setSource(VideoLink::YOUTUBE_SOURCE_TYPE)
             ->setTitle($videoLinkData['title'])
+            ->setPreviewImageUrl($videoLinkData['thumbnail_url'])
             ->setPreviewImageWidth($videoLinkData['thumbnail_width'])
             ->setPreviewImageHeight($videoLinkData['thumbnail_height'])
             ->setFrameHeight($videoLinkData['height'])

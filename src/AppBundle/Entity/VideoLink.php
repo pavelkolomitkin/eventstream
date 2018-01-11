@@ -92,8 +92,8 @@ class VideoLink
 
     /**
      * @var Event
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event")
-     * @ORM\JoinColumn(name="eventId", nullable=false)
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Event", inversedBy="videos")
+     * @ORM\JoinColumn(name="eventId", nullable=true)
      */
     private $event;
 
@@ -151,7 +151,7 @@ class VideoLink
      * @param Event $event
      * @return VideoLink
      */
-    public function setEvent($event)
+    public function setEvent(Event $event = null)
     {
         $this->event = $event;
         return $this;
@@ -339,5 +339,9 @@ class VideoLink
     }
 
 
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 }
 

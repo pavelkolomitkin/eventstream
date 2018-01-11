@@ -28,7 +28,7 @@ class VideoLinkController extends FOSRestController
 
         return $this->handleView($this->view([
             'videos' => $videos
-        ]), Response::HTTP_OK);
+        ], Response::HTTP_OK));
     }
 
     /**
@@ -51,9 +51,9 @@ class VideoLinkController extends FOSRestController
         }
         catch (ProvideVideoException $e)
         {
-            $this->handleView($this->view([
+            return $this->handleView($this->view([
                 'error' => $this->get('translator')->trans($e->getMessage())
-            ]), Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_BAD_REQUEST));
         }
     }
 

@@ -27,10 +27,14 @@ body {
 
 }
 
+.form-control legend
+{
+  margin-bottom: 15px;
+}
+
 .form-control .upload-button-container
 {
   position: relative;
-  margin-top: 15px;
 }
 
 .form-control .upload-button-container .file-upload-input,
@@ -152,4 +156,38 @@ form legend
   width: inherit !important;
   height: inherit !important;
   border: none !important;
+}
+
+.video-form-container
+{
+  padding: 25px;
+  position: relative;
+}
+
+.video-form-container .progress
+{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.video-list-container
+{
+
+}
+
+.video-list-container .video-item-preview
+{
+  float: left;
+  width: 200px;
+  height: 150px;
+  box-sizing: border-box;
+  cursor: pointer;
+  margin: 15px;
+  overflow: hidden;
+}
+
+.video-list-container .video-item-preview .picture
+{
+  width: 100%;
 }

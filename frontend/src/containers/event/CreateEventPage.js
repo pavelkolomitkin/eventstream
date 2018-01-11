@@ -23,7 +23,6 @@ class CreateEventPage extends Component {
         super(props, context);
 
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
-        this.onNewPictureUploaded = this.onNewPictureUploaded.bind(this);
     }
 
     onFieldChangeHandler = (name, value) => {
@@ -38,6 +37,15 @@ class CreateEventPage extends Component {
         event.preventDefault();
 
         this.state.pictures = this.props.unlinkedPictures;
+        this.state.videos = this.props.unlinkedVideos;
+
+        const pictureIds = this.state.pictures.map((picture) => {
+            return picture.id;
+        });
+
+        const videoIds = this.state.videos.map((video) => {
+            return video.id;
+        });
 
         this.props.actions.create(
             this.state.title,
@@ -45,9 +53,8 @@ class CreateEventPage extends Component {
             this.state.timeStart,
             this.state.timeEnd,
             this.state.tags,
-            this.state.pictures.map((picture) => {
-                return picture.id;
-            })
+            pictureIds,
+            videoIds
         );
     };
 
@@ -65,6 +72,7 @@ class CreateEventPage extends Component {
     componentDidMount()
     {
         this.props.pictureActions.loadAllUnlinkedPictures();
+        this.props.videoActions.loadAllUnlinkedVideos();
     }
 
     onFormKeyPressHandler = (event) => {
@@ -74,12 +82,6 @@ class CreateEventPage extends Component {
             event.preventDefault();
         }
     };
-
-    onNewPictureUploaded(picture)
-    {
-        this.props.pictureActions.loadAllUnlinkedPictures();
-        this.state.videoActions.loadAllUnlinkedVideos();
-    }
 
 
     render = () => {
@@ -97,7 +99,6 @@ class CreateEventPage extends Component {
                     onFormKeyPressHandler={this.onFormKeyPressHandler}
                     images={this.props.unlinkedPictures}
                     maxUploadedImageSize={5242880}
-                    onPictureUploaded={this.onNewPictureUploaded}
                     videos={this.props.unlinkedVideos}
                 />
             </CommonLayout>
