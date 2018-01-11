@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import Popover from 'material-ui/Popover';
 import AddIcon from 'material-ui-icons/Add';
-import VideoList from '../../../components/common/video/VideoList';
+import VideoList from '../../../components/common/form/VideoList';
 import Paper from 'material-ui/Paper';
 import { CircularProgress } from 'material-ui/Progress';
 import Input, { InputLabel } from 'material-ui/Input';
@@ -35,12 +35,18 @@ class VideoManagerControl extends Component {
 
         this.formButton = null;
         this.videoService = ApiServiceFactory.createVideoService();
+
+        this.onDeleteVideoHandler = this.onDeleteVideoHandler.bind(this);
     }
 
     handleClose = () => {
         this.setState({
             formOpen: false
         });
+    }
+
+    onDeleteVideoHandler = (video) => {
+        console.log(video);
     }
 
     onFormButtonClickHandler = (event) => {
@@ -98,7 +104,7 @@ class VideoManagerControl extends Component {
         const { videos } = this.props;
         return (
             <div>
-                <VideoList videos={videos} />
+                <VideoList videos={videos} onDeleteItemHandler={this.onDeleteVideoHandler} />
                 <div>
                     <Button onClick={this.onFormButtonClickHandler} ref={(button) => { this.formButton = button; }} raised color="default">
                         <AddIcon/>Add video

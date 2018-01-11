@@ -119,7 +119,8 @@ form legend
   opacity: 0.5;
 }
 
-.upload-images-list .upload-image-preview .remove-button
+.upload-images-list .upload-image-preview .remove-button,
+.video-list-container .video-item-preview .remove-button
 {
   position: absolute;
   top: -15px;
@@ -127,7 +128,8 @@ form legend
   display: none;
 }
 
-.upload-images-list .upload-image-preview:hover .remove-button
+.upload-images-list .upload-image-preview:hover .remove-button,
+.video-list-container .video-item-preview:hover .remove-button
 {
   display: flex;
 }
@@ -184,7 +186,7 @@ form legend
   box-sizing: border-box;
   cursor: pointer;
   margin: 15px;
-  overflow: hidden;
+  position: relative;
 }
 
 .video-list-container .video-item-preview .picture
