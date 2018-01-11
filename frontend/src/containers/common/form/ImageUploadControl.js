@@ -126,23 +126,25 @@ class ImageUploadControl extends Component {
         return (
             <div>
                 <ModalWindow isOpen={this.state.isCarouselOpen} onCloseHandler={this.onCloseCarouselWindow}>
-                    <Carousel showArrows={true} showThumbs={false} selectedItem={this.state.selectedPictureIndex}>
+                    <div className="modal-picture-content">
+                        <Carousel showArrows={true} showThumbs={false} selectedItem={this.state.selectedPictureIndex}>
 
-                        {
-                            this.state.pictures.map((picture, index) => {
+                            {
+                                this.state.pictures.map((picture, index) => {
 
-                                const thumbs = picture.getThumbs();
-                                return (
+                                    const thumbs = picture.getThumbs();
+                                    return (
 
-                                        thumbs !== null ?
-                                        <div key={index}>
-                                            <img src={thumbs.normal} />
-                                        </div>
-                                        : null
-                                    );
-                                })
-                        }
-                    </Carousel>
+                                            thumbs !== null ?
+                                            <div key={index}>
+                                                <img src={thumbs.normal} />
+                                            </div>
+                                            : null
+                                        );
+                                    })
+                            }
+                        </Carousel>
+                    </div>
                 </ModalWindow>
 
 

@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import VideoPreview from './VideoPreview';
 
-const VideoList = ({videos, onDeleteItemHandler}) => {
+const VideoList = ({videos, onDeleteItemHandler, onVideoSelect}) => {
     return (
         <div className="video-list-container">
             {videos.map((video, index) => {
                 return (
-                    <VideoPreview key={video.id} video={video} onDeleteButtonHandler={
+                    <VideoPreview onVideoClickHandler={onVideoSelect} key={video.id} video={video} onDeleteButtonHandler={
                         () => {
                             onDeleteItemHandler(video)
                         }
@@ -22,7 +22,8 @@ const VideoList = ({videos, onDeleteItemHandler}) => {
 
 VideoList.propTypes = {
     videos: PropTypes.array.isRequired,
-    onDeleteItemHandler: PropTypes.func.isRequired
+    onDeleteItemHandler: PropTypes.func.isRequired,
+    onVideoSelect: PropTypes.func.isRequired
 };
 
 export default VideoList;

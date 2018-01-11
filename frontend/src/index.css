@@ -148,9 +148,17 @@ form legend
 
 .modal-window-content
 {
+  margin: auto auto;
+  border: none;
+}
+
+.modal-picture-content
+{
   width: 75%;
   margin: auto auto;
+  border: none;
 }
+
 
 .form-control .upload-button-container > div
 {
@@ -197,4 +205,15 @@ form legend
 .video-list-container .video-item-preview .picture
 {
   width: 100%;
+}
+
+.modal-video-content
+{
+  text-align: center;
+}
+
+.modal-video-content iframe
+{
+  min-width: 640px !important;
+  min-height: 480px !important;
 }

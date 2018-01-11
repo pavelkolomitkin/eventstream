@@ -9,6 +9,7 @@ import Popover from 'material-ui/Popover';
 import AddIcon from 'material-ui-icons/Add';
 import VideoList from '../../../components/common/form/VideoList';
 import Paper from 'material-ui/Paper';
+import ModalWindow from "../../../components/common/ModalWindow";
 import { CircularProgress } from 'material-ui/Progress';
 import Input, { InputLabel } from 'material-ui/Input';
 import {
@@ -30,7 +31,9 @@ class VideoManagerControl extends Component {
             anchorEl: null,
             videoUrl: '',
             videoPreparing: false,
-            preparingErrorMessage: ''
+            preparingErrorMessage: '',
+            isModalOpen: false,
+            selectedVideo: null
         };
 
         this.formButton = null;
@@ -43,6 +46,19 @@ class VideoManagerControl extends Component {
         this.setState({
             formOpen: false
         });
+    }
+
+    onModalCloseHandler = () => {
+        this.setState({
+            isModalOpen: false
+        });
+    }
+
+    onVideoSelectHandler = (video) => {
+        this.setState({
+            selectedVideo: video,
+            isModalOpen: true
+        })
     }
 
     onDeleteVideoHandler = (video) => {
@@ -115,11 +131,21 @@ class VideoManagerControl extends Component {
 
     render = () => {
 
-        const { formOpen, anchorEl, videoPreparing, preparingErrorMessage } = this.state;
+        const { formOpen, anchorEl, videoPreparing, preparingErrorMessage, selectedVideo } = this.state;
         const { videos } = this.props;
         return (
             <div>
-                <VideoList videos={videos} onDeleteItemHandler={this.onDeleteVideoHandler} />
+                <ModalWindow className="video-modal-window" isOpen={this.state.isModalOpen} onCloseHandler={this.onModalCloseHandler}>
+                    {
+                        selectedVideo !== null
+                        ?
+                            <div className="modal-video-content" dangerouslySetInnerHTML={{__html: selectedVideo.html_frame}} />
+
+                            : null
+                    }
+                </ModalWindow>
+
+                <VideoList videos={videos} onVideoSelect={this.onVideoSelectHandler} onDeleteItemHandler={this.onDeleteVideoHandler} />
                 <div>
                     <Button onClick={this.onFormButtonClickHandler} ref={(button) => { this.formButton = button; }} raised color="default">
                         <AddIcon/>Add video
@@ -152,7 +178,6 @@ class VideoManagerControl extends Component {
                                             label="Video url"
                                             onChange={this.onVideoUrlChangeHandler}
                                         />
-                                        {/*<Input id="name-disabled" value={this.state.videoUrl} disabled={videoPreparing} onChange={this.onVideoUrlChangeHandler} />*/}
                                         { preparingErrorMessage !== '' && <FormHelperText id="video-url-error">{ preparingErrorMessage }</FormHelperText> }
                                     </FormControl>
                                     <FormControl className="form-control">

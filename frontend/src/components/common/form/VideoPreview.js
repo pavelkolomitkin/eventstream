@@ -17,9 +17,15 @@ class VideoPreview extends Component
         this.props.onDeleteButtonHandler(this.props.video);
     }
 
+    onPictureClick = (event) => {
+        event.stopPropagation();
+
+        this.props.onVideoClickHandler(this.props.video);
+    }
+
     render()
     {
-        const {video, onDeleteButtonHandler} = this.props;
+        const {video} = this.props;
         const { deleting } = this.state;
 
         const className = 'video-item-preview' + (deleting ? ' deleting' : '');
@@ -29,7 +35,7 @@ class VideoPreview extends Component
                 <Button fab mini disabled={deleting} className="remove-button" onClick={this.onDeleteHandler}>
                     <DeleteIcon />
                 </Button>
-                <img src={video.preview_image_url} className="picture" title={video.title} />
+                <img onClick={this.onPictureClick} src={video.preview_image_url} className="picture" title={video.title} />
             </div>
         );
     }
@@ -37,7 +43,8 @@ class VideoPreview extends Component
 
 VideoPreview.propTypes = {
     video: PropTypes.object.isRequired,
-    onDeleteButtonHandler: PropTypes.func.isRequired
+    onDeleteButtonHandler: PropTypes.func.isRequired,
+    onVideoClickHandler: PropTypes.func.isRequired
 };
 
 export default VideoPreview;
