@@ -1,27 +1,45 @@
+
 import AuthorizedApiService from './AuthorizedApiService';
 
-class EventPictureService extends AuthorizedApiService
+class VideoService extends AuthorizedApiService
 {
     getAllUnlinkedList(onSuccessHandler, onErrorHandler)
     {
         this.makeRequest(
             'GET',
-            'picture/allunlinkedlist',
+            'video/allunlinkedlist',
             {},
             (result) => {
-                onSuccessHandler(result.data.pictures);
+                onSuccessHandler(result.data.videos);
             },
             (error) => {
                 onErrorHandler(error.response.data);
             }
-            );
+        );
+    }
+
+    create(urlLink, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'POST',
+            'video/create',
+            {
+                url: urlLink
+            },
+            (result) => {
+                onSuccessHandler(result.data);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
     }
 
     remove(id, onSuccessHandler, onErrorHandler)
     {
         this.makeRequest(
             'DELETE',
-            'picture/' + id + '/delete',
+            'video/' + id + '/delete',
             {},
             (result) => {
                 onSuccessHandler(result.data);
@@ -33,4 +51,4 @@ class EventPictureService extends AuthorizedApiService
     }
 }
 
-export default EventPictureService;
+export default VideoService;

@@ -1,15 +1,13 @@
 import * as types from './types';
 import * as serverActions from './serverActions';
-
-import EventService from '../services/api/EventService';
-import SessionManager from '../services/SessionManager';
+import ApiServiceFactory from '../services/ApiServiceFactory';
 
 export function create (title, description, timeStart, timeEnd, tags, pictures) {
     return (dispatch) => {
 
         dispatch(serverActions.serverRequest());
 
-        const apiService = new EventService(SessionManager.getAuthToken());
+        const apiService = ApiServiceFactory.createEventService();
         apiService.create(
             title,
             description,

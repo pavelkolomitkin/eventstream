@@ -13,6 +13,7 @@ import Button from 'material-ui/Button';
 
 import TagArrayFormControl from '../../containers/common/form/TagArrayFormControl';
 import UploadPictureControl from '../../containers/common/form/ImageUploadControl';
+import VideoManagerControl from '../../containers/common/form/VideoManagerControl';
 
 const EventForm = ({
                        errors,
@@ -26,7 +27,8 @@ const EventForm = ({
                        onFormKeyPressHandler,
                        images,
                        maxUploadedImageSize,
-                       onPictureUploaded
+                       onPictureUploaded,
+                       videos
     }) => {
     return (
         <div>
@@ -94,6 +96,10 @@ const EventForm = ({
                     <UploadPictureControl images={images} maxImageSize={maxUploadedImageSize} onImageUploadHandler={onPictureUploaded} />
                 </FormControl>
 
+                <FormControl className="form-control">
+                    <FormLabel component="legend">Videos</FormLabel>
+                    <VideoManagerControl videos={videos} />
+                </FormControl>
 
                 <FormControl className="form-control submit-container">
                     <div>
@@ -116,7 +122,8 @@ EventForm.propTypes = {
     tags: PropTypes.array.isRequired,
     images: PropTypes.array.isRequired,
     maxUploadedImageSize: PropTypes.number.isRequired,
-    onPictureUploaded: PropTypes.func.isRequired
+    onPictureUploaded: PropTypes.func.isRequired,
+    videos: PropTypes.array.isRequired
 };
 
 export default EventForm;

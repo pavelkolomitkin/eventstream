@@ -1,6 +1,8 @@
 import SessionManager from './SessionManager';
 import FileUploadService from './api/FileUploadService';
 import EventPictureService from './api/EventPictureService';
+import EventService from './api/EventService';
+import VideoService from './api/VideoService';
 
 
 class ApiServiceFactory {
@@ -9,12 +11,20 @@ class ApiServiceFactory {
         return new classConstructor(SessionManager.getAuthToken());
     }
 
+    static createEventService = () => {
+        return ApiServiceFactory.createAuthService(EventService);
+    }
+
     static createFileUploader = () => {
         return ApiServiceFactory.createAuthService(FileUploadService);
     }
 
     static createEventPictureService = () => {
         return ApiServiceFactory.createAuthService(EventPictureService);
+    }
+
+    static createVideoService = () => {
+        return ApiServiceFactory.createAuthService(VideoService);
     }
 
 }

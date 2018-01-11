@@ -17,3 +17,7 @@ tag:
 picture:
     type: annotation
     resource: AppBundle\Controller\EventPictureController
+
+video:
+    type: annotation
+    resource: AppBundle\Controller\VideoLinkController

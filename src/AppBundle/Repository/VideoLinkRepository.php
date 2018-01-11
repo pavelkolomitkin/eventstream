@@ -10,4 +10,17 @@ namespace AppBundle\Repository;
  */
 class VideoLinkRepository extends \Doctrine\ORM\EntityRepository
 {
+    private function getUserUnlinkedVideosQuery(User $user)
+    {
+        return $this->createQueryBuilder('video')
+            ->where('video.user = :user')
+            ->andWhere('video.event IS NULL')
+            ->setParameter('user', $user)
+            ->getQuery();
+    }
+
+    public function getUserAllUnlinkedVideos(User $user)
+    {
+        return $this->getUserUnlinkedVideosQuery($user)->getResult();
+    }
 }

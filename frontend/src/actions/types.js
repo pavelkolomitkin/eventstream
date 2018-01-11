@@ -33,3 +33,13 @@ export const EVENT_PICTURES_ALL_UNLINKED_SUCCESS = 'EVENT_PICTURES_ALL_UNLINKED_
 export const EVENT_PICTURES_ALL_UNLINKED_ERROR = 'EVENT_PICTURES_ALL_UNLINKED_ERROR';
 
 /*===========================// EVENT PICTURE ACTIONS =============================*/
+
+/*============================= VIDEO ACTIONS =============================*/
+
+export const VIDEOS_ALL_UNLINKED_SUCCESS = 'VIDEOS_ALL_UNLINKED_SUCCESS';
+export const VIDEOS_ALL_UNLINKED_ERROR = 'VIDEOS_ALL_UNLINKED_ERROR';
+
+export const VIDEO_CREATE_SUCCESS = 'VIDEO_CREATE_SUCCESS';
+export const VIDEO_CREATE_ERROR = 'VIDEO_CREATE_ERROR';
+
+/*===========================// EVENT PICTURE ACTIONS =============================*/
