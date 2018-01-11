@@ -46,7 +46,22 @@ class VideoManagerControl extends Component {
     }
 
     onDeleteVideoHandler = (video) => {
-        console.log(video);
+
+        const self = this;
+        this.videoService.remove(
+            video.id,
+            (result) => {
+                const videoIndex = self.props.videos.findIndex((item) => {
+                    return (item.id === video.id);
+                });
+
+                self.props.videos.splice(videoIndex, 1);
+                this.setState({});
+            },
+            (error) => {
+                console.log(error);
+            }
+        )
     }
 
     onFormButtonClickHandler = (event) => {

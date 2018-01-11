@@ -189,6 +189,11 @@ form legend
   position: relative;
 }
 
+.video-list-container .video-item-preview.deleting
+{
+  opacity: 0.5;
+}
+
 .video-list-container .video-item-preview .picture
 {
   width: 100%;

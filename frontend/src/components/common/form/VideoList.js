@@ -8,8 +8,10 @@ const VideoList = ({videos, onDeleteItemHandler}) => {
         <div className="video-list-container">
             {videos.map((video, index) => {
                 return (
-                    <VideoPreview key={video.video_id + '' + index} video={video} onDeleteButtonHandler={
-                        () => { onDeleteItemHandler(video) }
+                    <VideoPreview key={video.id} video={video} onDeleteButtonHandler={
+                        () => {
+                            onDeleteItemHandler(video)
+                        }
                     }/>
                 );
             })}
