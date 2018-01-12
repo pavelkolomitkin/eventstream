@@ -35,7 +35,7 @@ const EventListItem = ({event, classes}) => {
     return (
         <div className="profile-event-item">
             <div className="event-actions-container">
-                <Button>
+                <Button component={Link} to={'/event/' + event.id + '/edit'}>
                     <ModeEditIcon /> Edit
                 </Button>
             </div>

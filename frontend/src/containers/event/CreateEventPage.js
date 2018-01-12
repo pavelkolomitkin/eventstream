@@ -15,7 +15,8 @@ class CreateEventPage extends Component {
         description: '',
         timeStart: new Date(),
         timeEnd: new Date(),
-        tags: []
+        tags: [],
+        submitted: false
     }
 
     constructor(props, context)
@@ -56,17 +57,19 @@ class CreateEventPage extends Component {
             pictureIds,
             videoIds
         );
+
+        this.setState({
+            submitted: true
+        });
     };
 
-    componentWillUpdate(nextProps, nextState)
+    componentWillReceiveProps(nextProps)
     {
-        if (nextProps.eventData)
+        if (nextProps.event && this.state.submitted)
         {
-            this.props.history.push('/event/' + nextProps.eventData.event.id);
-            return false;
+            this.props.history.push('/event/' + nextProps.event.id);
+            return;
         }
-
-        return true;
     }
 
     componentDidMount()
@@ -100,8 +103,8 @@ CreateEventPage.propTypes = {};
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        errors: state.event.eventErrors ? state.event.eventErrors : {},
-        eventData: state.event.eventData,
+        errors: state.event.createEventError ? state.event.createEventError : {},
+        event: state.event.createdEvent,
         unlinkedPictures: state.eventPicture.unlinkedPictures ? state.eventPicture.unlinkedPictures : [],
         unlinkedVideos: state.video.unlinkedVideos ? state.video.unlinkedVideos : []
     };

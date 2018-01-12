@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const Form = (props) => {
     return (
-        <form onSubmit={(event) => {if (event.which == 13) {event.preventDefault()}}} {...props}>
+        <form onKeyPress={(event) => {if (event.which == 13) {event.preventDefault()}}} {...props}>
             { props.children }
         </form>
     );

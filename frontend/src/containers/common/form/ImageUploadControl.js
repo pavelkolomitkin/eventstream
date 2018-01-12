@@ -85,6 +85,15 @@ class ImageUploadControl extends Component {
         });
     }
 
+    componentDidMount()
+    {
+        this.setState({
+            pictures: this.props.images.map((image) => {
+                return UploadedImageAdapter.createFromUploadedImage(image);
+            })
+        });
+    }
+
 
     onDeletePictureHandler = (picture) => {
         const self = this;
@@ -117,9 +126,6 @@ class ImageUploadControl extends Component {
             }
             );
     };
-
-
-
 
     render = () => {
 

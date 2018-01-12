@@ -131,7 +131,7 @@ export function getEventError(error) {
 }
 
 export function getOwnEventSuccess(event) {
-    return { type: types.EVENT_GET_OWN_SUCCESS, ownEvent: event };
+    return { type: types.EVENT_GET_OWN_SUCCESS, event: event };
 }
 
 export function getOwnEventError(error) {

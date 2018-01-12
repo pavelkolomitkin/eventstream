@@ -15,11 +15,7 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 
 class MyEventListPage extends Component {
 
-    tabIndexes = {
-        'all': 0,
-        'future': 1,
-        'past': 2
-    }
+    tabs = ['all', 'future', 'past'];
 
     constructor(props, context)
     {
@@ -50,7 +46,7 @@ class MyEventListPage extends Component {
     }
 
     getTabIndex = () => {
-        return this.tabIndexes[this.props.timeFilter] !== null ? this.tabIndexes[this.props.timeFilter] : 0;
+        return this.tabs.indexOf(this.props.timeFilter);
     }
 
     render = () => {

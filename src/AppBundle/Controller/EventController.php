@@ -42,7 +42,7 @@ class EventController extends FOSRestController
     }
 
     /**
-     * @Route(name="event_create", path="/event/{id}")
+     * @Route(name="event_update", path="/event/{id}")
      * @ParamConverter("event", class="AppBundle\Entity\Event")
      * @Method({"PUT"})
      * @param Request $request

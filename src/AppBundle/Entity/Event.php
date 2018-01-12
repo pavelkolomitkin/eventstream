@@ -415,7 +415,7 @@ class Event
     /**
      * @return ArrayCollection
      */
-    public function getVideos(): ArrayCollection
+    public function getVideos()
     {
         return $this->videos;
     }
@@ -424,7 +424,7 @@ class Event
      * @param ArrayCollection $videos
      * @return Event
      */
-    public function setVideos(ArrayCollection $videos): Event
+    public function setVideos(ArrayCollection $videos)
     {
         $this->videos = $videos;
         return $this;

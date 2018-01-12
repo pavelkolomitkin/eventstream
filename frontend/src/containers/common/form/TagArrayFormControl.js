@@ -28,16 +28,13 @@ class TagArrayFormControl extends Component {
         super(props, context);
 
         this.apiTagService = new EventTagService(SessionManager.getAuthToken());
+        this.onSuggestionSelected = this.onSuggestionSelected.bind(this);
+        this.onKeyPressHandler = this.onKeyPressHandler.bind(this);
     }
 
-    onKeyPressHandler = (event) => {
-
-        if (event.which !== 13)
-        {
-            return;
-        }
-
-        const tag = event.target.value.trim();
+    appendTag(tag)
+    {
+        tag = tag.trim();
         if (tag === '')
         {
             return;
@@ -50,6 +47,16 @@ class TagArrayFormControl extends Component {
                 value: ''
             });
         }
+    }
+
+    onKeyPressHandler = (event) => {
+
+        if (event.which !== 13)
+        {
+            return;
+        }
+
+        this.appendTag(event.target.value);
     };
 
 
@@ -81,21 +88,7 @@ class TagArrayFormControl extends Component {
 
     onSuggestionSelected = (event, { suggestion, suggestionValue, suggestionIndex, sectionIndex, method}) => {
 
-        suggestion = suggestion.trim();
-        if (suggestion === '')
-        {
-            return;
-        }
-
-        if (this.props.tags.indexOf(suggestion) === -1)
-        {
-            this.props.tags.push(suggestion);
-        }
-
-
-        this.setState({
-            value: ''
-        });
+        this.appendTag(suggestion);
     };
 
     onDeleteTagHandler = (tag) => () => {
