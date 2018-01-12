@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { Link, NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import * as eventActions from '../../actions/eventActions';
 import URLSearchParams from 'url-search-params';
@@ -9,7 +10,16 @@ import Pagination from '../common/Pagination';
 import CommonLayout from '../../components/layout/CommonPage';
 import EventListItem from '../../components/profile/EventListItem';
 
+import AppBar from 'material-ui/AppBar';
+import Tabs, { Tab } from 'material-ui/Tabs';
+
 class MyEventListPage extends Component {
+
+    tabIndexes = {
+        'all': 0,
+        'future': 1,
+        'past': 2
+    }
 
     constructor(props, context)
     {
@@ -25,6 +35,10 @@ class MyEventListPage extends Component {
         if ((prevProps.timeFilter !== timeFilter) || (prevProps.page !== page)) {
             this.props.actions.getOwnEvents(timeFilter, page);
         }
+        else
+        {
+            window.scrollTo(0, 0);
+        }
     }
 
 
@@ -35,13 +49,24 @@ class MyEventListPage extends Component {
         this.props.actions.getOwnEvents(timeFilter, page);
     }
 
-    render = () => {
+    getTabIndex = () => {
+        return this.tabIndexes[this.props.timeFilter] !== null ? this.tabIndexes[this.props.timeFilter] : 0;
+    }
 
+    render = () => {
 
         const { events, eventsTotal, page, history, eventsPerPage, timeFilter } = this.props;
 
         return (
             <CommonLayout>
+                <AppBar position="static">
+                    <Tabs value={this.getTabIndex()} >
+                        <Tab label="Все" component={NavLink} to="/me/myevents/all" />
+                        <Tab label="Актуальные" component={NavLink} to="/me/myevents/future" />
+                        <Tab label="Прошедшие" component={NavLink} to="/me/myevents/past" />
+                    </Tabs>
+                </AppBar>
+
                 <div className="profile-event-list">
 
                     {
@@ -63,9 +88,6 @@ class MyEventListPage extends Component {
                         totalItems={eventsTotal}
                         currentPage={page}
                         itemsPerPage={eventsPerPage}
-                        // urlBuilder={(pageNumber) => {
-                        //     return '/me/myevents/' + timeFilter + '/' + pageNumber;
-                        // }}
                     />
                 </div>
             </CommonLayout>
