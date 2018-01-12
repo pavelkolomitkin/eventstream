@@ -10,6 +10,7 @@ use AppBundle\Exception\EventException;
 use AppBundle\Form\Type\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormFactoryInterface;
 
@@ -60,13 +61,10 @@ class EventManager
         }
     }
 
-    public function create(array $fields, User $owner)
+    private function updateEvent(Event $event, User $user, array $fields)
     {
-        $result = new Event();
-
-        $form = $this->formFactory->create(EventType::class, $result, [
-            'user' => $owner,
-            'entity_manager' => $this->entityManager
+        $form = $this->formFactory->create(EventType::class, $event, [
+            'user' => $user
         ]);
         $form->submit($fields, false);
 
@@ -77,12 +75,29 @@ class EventManager
 
         /** @var Event $result */
         $result = $form->getData();
-        $result->setOwner($owner);
-        $this->processTags($result, $fields);
+        $result->setOwner($user);
+        $this->processTags($event, $fields);
 
-        $this->entityManager->persist($result);
+        $this->entityManager->persist($event);
         $this->entityManager->flush();
+    }
+
+    public function create(array $fields, User $owner)
+    {
+        $result = new Event();
+
+        $this->updateEvent($result, $owner, $fields);
 
         return $result;
+    }
+
+    public function update(Event $event, User $editor, array $fields)
+    {
+        if ($event->getOwner()->getId() !== $editor->getId())
+        {
+            throw new AccessDeniedException();
+        }
+
+        $this->updateEvent($event, $editor, $fields);
     }
 }

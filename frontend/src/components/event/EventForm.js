@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Form from '../common/form/Form';
 
 import {
     TextField,
@@ -24,14 +25,13 @@ const EventForm = ({
                        tags,
                        onFieldChangeHandler,
                        onSubmitHandler,
-                       onFormKeyPressHandler,
                        images,
                        maxUploadedImageSize,
                        videos
     }) => {
     return (
         <div>
-            <form onSubmit={onSubmitHandler} onKeyPress={onFormKeyPressHandler}>
+            <Form onSubmit={onSubmitHandler}>
                 <h2>Create new event</h2>
 
                 <FormControl className="form-control" error aria-describedby="title-error">
@@ -105,7 +105,7 @@ const EventForm = ({
                         <Button raised color="primary" style={{marginRight: 10}} type="submit">Submit</Button>
                     </div>
                 </FormControl>
-            </form>
+            </Form>
         </div>
     );
 };

@@ -75,15 +75,6 @@ class CreateEventPage extends Component {
         this.props.videoActions.loadAllUnlinkedVideos();
     }
 
-    onFormKeyPressHandler = (event) => {
-        //TODO вынести функционал в общую форму - компонент
-        if (event.which == 13)
-        {
-            event.preventDefault();
-        }
-    };
-
-
     render = () => {
         return (
             <CommonLayout>
@@ -96,7 +87,6 @@ class CreateEventPage extends Component {
                     tags={this.state.tags}
                     onFieldChangeHandler={this.onFieldChangeHandler}
                     onSubmitHandler={this.onSubmitHandler}
-                    onFormKeyPressHandler={this.onFormKeyPressHandler}
                     images={this.props.unlinkedPictures}
                     maxUploadedImageSize={5242880}
                     videos={this.props.unlinkedVideos}

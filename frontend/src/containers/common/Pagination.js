@@ -107,7 +107,7 @@ class Pagination extends Component {
         const totalPages = Math.ceil(totalItems / itemsPerPage);
 
 
-        if (totalPages === 0)
+        if (totalPages < 2)
         {
             return null;
         }

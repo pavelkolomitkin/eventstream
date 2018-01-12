@@ -20,7 +20,6 @@ class EventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $user = $options['user'];
-        $entityManager = $options['entity_manager'];
 
         $builder
             ->add('title')
@@ -53,10 +52,9 @@ class EventType extends AbstractType
             'data_class' => Event::class,
             'csrf_protection' => false,
             'allow_extra_fields' => true,
-            'user' => null,
-            'entity_manager' => null
+            'user' => null
         ]);
 
-        $resolver->setRequired(['user', 'entity_manager']);
+        $resolver->setRequired(['user']);
     }
 }

@@ -28,6 +28,15 @@ export const EVENT_CREATE_ERROR = 'EVENT_CREATE_ERROR';
 export const EVENTS_OWN_LIST_LOAD_SUCCESS = 'EVENTS_OWN_LIST_LOAD_SUCCESS';
 export const EVENTS_OWN_LIST_LOAD_ERROR = 'EVENTS_OWN_LIST_LOAD_ERROR';
 
+export const EVENT_GET_SUCCESS = 'EVENT_GET_SUCCESS';
+export const EVENT_GET_ERROR = 'EVENT_GET_ERROR';
+
+export const EVENT_GET_OWN_SUCCESS = 'EVENT_GET_OWN_SUCCESS';
+export const EVENT_GET_OWN_ERROR = 'EVENT_GET_OWN_ERROR';
+
+export const EVENT_UPDATE_SUCCESS = 'EVENT_UPDATE_SUCCESS';
+export const EVENT_UPDATE_ERROR = 'EVENT_UPDATE_ERROR';
+
 /*===========================// EVENT ACTIONS =============================*/
 
 /*============================= EVENT PICTURE ACTIONS =============================*/

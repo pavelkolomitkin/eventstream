@@ -2,6 +2,18 @@ import AuthorizedApiService from './AuthorizedApiService';
 
 class EventService extends AuthorizedApiService
 {
+    static eventFields = [
+        'title',
+        'description',
+        'timeStart',
+        'timeEnd',
+        'tags',
+        'pictures',
+        'videos'
+    ];
+
+    static eventDatetimeFields = ['timeStart', 'timeEnd'];
+
     create = (title, description, timeStart, timeEnd, tags, pictures, videos, onSuccessHandler, onErrorHandler) => {
         this.makeRequest(
             'POST',
@@ -9,30 +21,36 @@ class EventService extends AuthorizedApiService
             {
                 title, description, timeStart, timeEnd, tags, pictures, videos
             },
-            (response) => {
-                debugger;
-                this.transformObjectTimestampFieldsToDate(response.data, ['timeStart', 'timeEnd']);
-                onSuccessHandler(response.data);
+            (result) => {
+                const { event } = result.data;
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
             },
             (error) => {
-
-                //debugger;
-                const errors = {};
-
-                const fields = ['title', 'description', 'timeStart', 'timeEnd', 'tags', 'pictures', 'videos'];
-                const fieldErrors = error.response.data.errors;
-
-                fields.forEach((field) => {
-                    if (fieldErrors[field] && (fieldErrors[field].length > 0))
-                    {
-                        errors[field] = fieldErrors[field][0];
-                    }
-                });
-
-
+                const errors = this.getErrorFromResponse(error, EventService.eventFields);
                 onErrorHandler(errors);
             }
         )
+    }
+
+    update(event, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'PUT',
+            'event/' + event.id,
+            event,
+            (result) => {
+                const { event } = result.data;
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
+            },
+            (error) => {
+                const errors = this.getErrorFromResponse(error, EventService.eventFields);
+                onErrorHandler(errors);
+            }
+        );
     }
 
     getOwnList(timeFilter, page, onSuccessHandler, onErrorHandler)
@@ -47,10 +65,46 @@ class EventService extends AuthorizedApiService
 
                 const { events, total } = result.data;
                 events.forEach((event) => {
-                    this.transformObjectTimestampFieldsToDate(event, ['timeStart', 'timeEnd']);
+                    this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
                 });
 
                 onSuccessHandler(events, total, page);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
+
+    get(id, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'GET',
+            'event/' + id,
+            {},
+            (result) => {
+                const { event } = result.data;
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
+
+    getOwn(id, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'GET',
+            'event/own/' + id,
+            {},
+            (result) => {
+                const { event } = result.data;
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
             },
             (error) => {
                 onErrorHandler(error.response.data);

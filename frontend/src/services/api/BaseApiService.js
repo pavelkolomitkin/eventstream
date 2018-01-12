@@ -45,6 +45,21 @@ class BaseApiService
             target[field] = this.getDateObject(target[field]);
         }
     }
+
+    getErrorFromResponse(response, fields)
+    {
+        const result = {};
+
+        const fieldErrors = response.response.data.errors;
+        fields.forEach((field) => {
+            if (fieldErrors[field] && (fieldErrors[field].length > 0))
+            {
+                result[field] = fieldErrors[field][0];
+            }
+        });
+
+        return result;
+    }
 }
 
 export default BaseApiService;

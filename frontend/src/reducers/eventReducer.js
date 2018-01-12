@@ -28,6 +28,43 @@ const eventReducer = (state = {}, action) => {
 
             break;
 
+        case types.EVENT_GET_SUCCESS:
+
+            return {...state, event: action.event};
+
+            break;
+
+        case types.EVENT_GET_ERROR:
+
+            return {...state, error: action.error};
+
+            break;
+
+        case types.EVENT_GET_OWN_SUCCESS:
+
+            return {...state, ownEvent: action.event};
+
+            break;
+
+
+        case types.EVENT_GET_OWN_ERROR:
+
+            return {...state, ownEventError: action.error};
+
+            break;
+
+        case types.EVENT_UPDATE_SUCCESS:
+
+            return {...state, updatedEvent: action.event};
+
+            break;
+
+        case types.EVENT_UPDATE_ERROR:
+
+            return {...state, updateEventErrors: action.error};
+
+            break;
+
         default:
 
             return state;

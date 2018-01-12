@@ -49,6 +49,63 @@ export function getOwnEvents(timeFilter, page = 1) {
     }
 }
 
+export function getEvent(id) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.get(
+            id,
+            (event) => {
+                dispatch(getEventSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(getEventError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        );
+    }
+}
+
+export function getOwnEvent(id) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.getOwn(
+            id,
+            (event) => {
+                dispatch(getOwnEventSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(getOwnEventError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        );
+    }
+}
+
+export function updateEvent(event) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.update(
+            event,
+            (event) => {
+                dispatch(updateEventSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(updateEventError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        )
+    }
+}
+
 export function createEventSuccess(data) {
     return { type: types.EVENT_CREATE_SUCCESS, eventData: data };
 }
@@ -63,4 +120,28 @@ export function getOwnEventsSuccess(events, total, page) {
 
 export function getOwnEventsError(error, page) {
     return { type: types.EVENTS_OWN_LIST_LOAD_ERROR, error: error, page: page };
+}
+
+export function getEventSuccess(event) {
+    return { type: types.EVENT_GET_SUCCESS, event: event };
+}
+
+export function getEventError(error) {
+    return { type: types.EVENT_GET_ERROR, error: error };
+}
+
+export function getOwnEventSuccess(event) {
+    return { type: types.EVENT_GET_OWN_SUCCESS, ownEvent: event };
+}
+
+export function getOwnEventError(error) {
+    return { type: types.EVENT_GET_OWN_ERROR, error: error };
+}
+
+export function updateEventSuccess(event) {
+    return { type: types.EVENT_UPDATE_SUCCESS, event: event };
+}
+
+export function updateEventError(error) {
+    return { type: types.EVENT_UPDATE_ERROR, error: error };
 }

@@ -69,7 +69,7 @@ class EventPictureController extends FOSRestController
     /**
      * @Route(name="event_picture_delete", path="/picture/{id}/delete")
      * @Method({"DELETE"})
-     * @ParamConverter("post", class="AppBundle\Entity\EventPicture")
+     * @ParamConverter("picture", class="AppBundle\Entity\EventPicture")
      * @param EventPicture $picture
      * @return Response
      */
