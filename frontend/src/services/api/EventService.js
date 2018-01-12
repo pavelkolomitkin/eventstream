@@ -10,6 +10,8 @@ class EventService extends AuthorizedApiService
                 title, description, timeStart, timeEnd, tags, pictures, videos
             },
             (response) => {
+                debugger;
+                this.transformObjectTimestampFieldsToDate(response.data, ['timeStart', 'timeEnd']);
                 onSuccessHandler(response.data);
             },
             (error) => {
@@ -31,6 +33,29 @@ class EventService extends AuthorizedApiService
                 onErrorHandler(errors);
             }
         )
+    }
+
+    getOwnList(timeFilter, page, onSuccessHandler, onErrorHandler)
+    {
+        const url = 'event/ownlist/' + timeFilter + '?page=' + page;
+
+        this.makeRequest(
+            'GET',
+            url,
+            {},
+            (result) => {
+
+                const { events, total } = result.data;
+                events.forEach((event) => {
+                    this.transformObjectTimestampFieldsToDate(event, ['timeStart', 'timeEnd']);
+                });
+
+                onSuccessHandler(events, total, page);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
     }
 }
 

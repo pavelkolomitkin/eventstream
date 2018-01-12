@@ -25,6 +25,9 @@ export const USER_UNAUTHORIZED = 'USER_UNAUTHORIZED';
 export const EVENT_CREATE_SUCCESS = 'EVENT_CREATE_SUCCESS';
 export const EVENT_CREATE_ERROR = 'EVENT_CREATE_ERROR';
 
+export const EVENTS_OWN_LIST_LOAD_SUCCESS = 'EVENTS_OWN_LIST_LOAD_SUCCESS';
+export const EVENTS_OWN_LIST_LOAD_ERROR = 'EVENTS_OWN_LIST_LOAD_ERROR';
+
 /*===========================// EVENT ACTIONS =============================*/
 
 /*============================= EVENT PICTURE ACTIONS =============================*/

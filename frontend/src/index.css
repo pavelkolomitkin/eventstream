@@ -5,6 +5,11 @@ body {
   font-family: sans-serif;
 }
 
+.clearfix
+{
+  clear: both;
+}
+
 .common-page
 {
 
@@ -216,4 +221,114 @@ form legend
 {
   min-width: 640px !important;
   min-height: 480px !important;
+}
+
+.profile-event-list
+{
+
+}
+
+.profile-event-list .profile-event-item
+{
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.profile-event-list .profile-event-item .header
+{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+
+.profile-event-list .profile-event-item .description
+{
+  margin-bottom: 15px;
+}
+
+
+.profile-event-list .profile-event-item .event-actions-container
+{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  z-index: 500;
+  display: none;
+}
+
+.profile-event-list .profile-event-item:hover .event-actions-container
+{
+  display: block;
+}
+
+.profile-event-list .profile-event-item .event-actions-container
+{
+  padding: 16px;
+  text-align: right;
+  width: 100%;
+}
+
+.profile-event-list .profile-event-item .event-actions-container button
+{
+  margin-right: 5px;
+}
+
+.profile-event-list .profile-event-item .picture-list
+{
+
+}
+
+.profile-event-list .profile-event-item .picture-list .picture-list-item
+{
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-event-list .event-item-video-list
+{
+
+}
+
+.profile-event-list .event-item-video-list .video-list-item
+{
+  width: 150px;
+  float: left;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+
+.profile-event-list .event-item-video-list .video-list-item .preview
+{
+  width: 100%;
+
+}
+
+
+.profile-event-list .event-item-video-list .video-list-item .icon-container
+{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.profile-event-list .event-item-video-list .video-list-item .icon-container .play-icon
+{
+  margin-left: -50%;
+  margin-top: -50%;
+  width: 50px;
+  height: 50px;
+}
+
+.profile-event-list .tag-list
+{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.profile-event-list .tag-list .tag-item
+{
+  margin: 2px;
 }

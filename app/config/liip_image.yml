@@ -26,3 +26,8 @@ liip_imagine:
           filters:
             scale:
               dim: [640, 480]
+
+        event_picture_list_preview:
+          quality: 75
+          filters:
+            thumbnail: { size: [75, 50], mode: outbound }

@@ -61,6 +61,7 @@ class Event
      * @Assert\NotBlank()
      * @AppAssert\EventTimeRangeConstraint()
      * @JMSSerializer\Expose
+     * @JMSSerializer\SerializedName("timeStart")
      */
     private $timeStart;
 
@@ -69,6 +70,7 @@ class Event
      * @ORM\Column(name="timeEnd", type="datetime", nullable=false)
      * @Assert\NotBlank()
      * @JMSSerializer\Expose
+     * @JMSSerializer\SerializedName("timeEnd")
      */
     private $timeEnd;
 
@@ -79,6 +81,7 @@ class Event
      * @ORM\JoinTable(name="event_event_tag",
      *     joinColumns={@ORM\JoinColumn(name="eventId", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="tagId", referencedColumnName="id")})
+     * @JMSSerializer\Expose
      */
     private $tags;
 
@@ -104,12 +107,14 @@ class Event
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventPicture", mappedBy="event", cascade={"persist", "remove"})
+     * @JMSSerializer\Expose
      */
     private $pictures;
 
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\VideoLink", mappedBy="event", cascade={"persist", "remove"})
+     * @JMSSerializer\Expose
      */
     private $videos;
 

@@ -2,6 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\User;
+use Doctrine\ORM\QueryBuilder;
+
 /**
  * EventRepository
  *
@@ -10,4 +13,49 @@ namespace AppBundle\Repository;
  */
 class EventRepository extends \Doctrine\ORM\EntityRepository
 {
+    const EVENT_TIME_FILTER_PAST = 'past';
+
+    const EVENT_TIME_FILTER_FUTURE = 'future';
+
+    public function getUserOwnEventsQuery(User $user, array $criteria = [])
+    {
+        $queryBuilder = $this
+            ->createQueryBuilder('event')
+            ->where('event.owner = :user')
+            ->setParameter('user', $user);
+
+        $this->filterEventsByTime($queryBuilder, $criteria);
+
+        $queryBuilder->orderBy('event.timeStart', 'DESC');
+
+        return $queryBuilder->getQuery();
+    }
+
+    /**
+     * @param QueryBuilder $builder
+     * @param array $criteria
+     * @return QueryBuilder
+     */
+    private function filterEventsByTime(QueryBuilder $builder, array $criteria)
+    {
+        if (isset($criteria['time_filter']))
+        {
+            switch ($criteria['time_filter'])
+            {
+                case self::EVENT_TIME_FILTER_FUTURE:
+
+                    $builder->andWhere('event.timeEnd > CURRENT_TIMESTAMP()');
+
+                    break;
+
+                case self::EVENT_TIME_FILTER_PAST:
+
+                    $builder->andWhere('event.timeEnd < CURRENT_TIMESTAMP()');
+
+                    break;
+            }
+        }
+
+        return $builder;
+    }
 }

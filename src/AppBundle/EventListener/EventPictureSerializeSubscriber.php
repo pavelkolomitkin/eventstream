@@ -65,6 +65,7 @@ class EventPictureSerializeSubscriber implements EventSubscriberInterface
         if (!empty($originalAsset))
         {
             $thumbs['preview'] = $this->pictureManager->getBrowserPath($originalAsset, 'event_picture_preview');
+            $thumbs['list_preview'] = $this->pictureManager->getBrowserPath($originalAsset, 'event_picture_list_preview');
             $thumbs['normal'] = $this->pictureManager->getBrowserPath($originalAsset, 'event_picture_normal');
         }
 

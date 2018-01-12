@@ -16,6 +16,18 @@ const eventReducer = (state = {}, action) => {
 
             break;
 
+        case types.EVENTS_OWN_LIST_LOAD_SUCCESS:
+
+            return {...state, ownEvents: action.events, page: action.page};
+
+            break;
+
+        case types.EVENTS_OWN_LIST_LOAD_ERROR:
+
+            return {...state, ownEventsError: action.error, page: action.page};
+
+            break;
+
         default:
 
             return state;

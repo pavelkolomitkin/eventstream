@@ -108,6 +108,7 @@ class Header extends Component {
                                             open={open}
                                             onClose={this.menuClose}
                                         >
+                                            <MenuItem component={NavLink} to="/me/myevents/all">My Events</MenuItem>
                                             <MenuItem onClick={this.onLogoutClickHandler}>Logout</MenuItem>
                                         </Menu>
                                     </div>

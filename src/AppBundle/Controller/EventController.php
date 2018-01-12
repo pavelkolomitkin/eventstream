@@ -38,4 +38,40 @@ class EventController extends FOSRestController
             );
         }
     }
+
+    /**
+     * @param Request $request
+     * @Route(
+     *     name="event_user_own_event",
+     *     path="/event/ownlist/{timefilter}",
+     *     defaults={"timefilter" = "all"},
+     *     requirements={"timefilter" = "all|past|future"}
+     * )
+     * @Method({"GET"})
+     * @return Response
+     */
+    public function userOwnEventsAction(Request $request, $timefilter)
+    {
+        $eventListQuery = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Event')
+            ->getUserOwnEventsQuery($this->getUser(), [
+                'time_filter' => $timefilter
+            ]);
+
+        $paginator = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $eventListQuery,
+            $request->query->getInt('page', 1)
+        );
+
+
+        $view = $this->view([
+            'events' => $pagination->getItems(),
+            'total' => $pagination->getTotalItemCount()
+        ]);
+
+        return $this->handleView($view);
+    }
 }

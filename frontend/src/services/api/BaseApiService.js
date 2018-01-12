@@ -32,6 +32,19 @@ class BaseApiService
 
         return queryComponents.join('&');
     }
+
+    getDateObject(timeStampFieldValue)
+    {
+        return new Date(timeStampFieldValue * 1000);
+    }
+
+    transformObjectTimestampFieldsToDate(target, fields)
+    {
+        for (const field of fields)
+        {
+            target[field] = this.getDateObject(target[field]);
+        }
+    }
 }
 
 export default BaseApiService;
