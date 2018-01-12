@@ -58,7 +58,7 @@ export function createEventError(errors) {
 }
 
 export function getOwnEventsSuccess(events, total, page) {
-    return { type: types.EVENTS_OWN_LIST_LOAD_SUCCESS, events: events, total, page: page };
+    return { type: types.EVENTS_OWN_LIST_LOAD_SUCCESS, events: events, total:total, page: page };
 }
 
 export function getOwnEventsError(error, page) {

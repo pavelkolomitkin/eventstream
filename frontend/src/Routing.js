@@ -15,7 +15,8 @@ const Routing = (props) => {
             <Route path="/register" component={RegisterPage} />
             <Route exact path="/event/new" component={CreateEventPage} />
             <Route path="/event/:id" component={EventDetailsPage} />
-            <Route path="/me/myevents/:timeFilter" exact component={MyEventListPage} />
+            <Route path="/me/myevents/:timeFilter" component={MyEventListPage} />
+            {/*<Route path="/me/myevents/:timeFilter/:page" component={MyEventListPage} />*/}
         </Switch>
     );
 };

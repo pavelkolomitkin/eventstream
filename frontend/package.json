@@ -21,6 +21,7 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "react-tap-event-plugin": "^3.0.2",
     "react-transition-group": "^2.2.1",
+    "react-ultimate-pagination": "^1.0.3",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "superagent": "^3.8.2",

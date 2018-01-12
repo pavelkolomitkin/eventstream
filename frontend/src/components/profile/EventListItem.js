@@ -41,7 +41,7 @@ const EventListItem = ({event, classes}) => {
             </div>
             <Card>
                 <CardContent>
-                    <Link to={'/event/' + event.id}><h2 className="header">{ event.title }</h2></Link>
+                    <h2 className="header"><Link to={'/event/' + event.id}>{ event.title }</Link></h2>
                     <Typography className={classes.pos}>{ event.timeStart.toLocaleString() } - {event.timeEnd.toLocaleString()}</Typography>
                     <Typography component="p" className="description">
                         { event.description }
