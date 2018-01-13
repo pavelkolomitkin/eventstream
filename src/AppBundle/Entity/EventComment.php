@@ -49,7 +49,6 @@ class EventComment
      * @var User
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="authorId", nullable=false)
-     * @JMSSerializer\Expose
      */
     private $author;
 
@@ -143,6 +142,17 @@ class EventComment
         return $this->updatedAt;
     }
 
-
+    /**
+     * @return array
+     * @JMSSerializer\VirtualProperty()
+     * @JMSSerializer\SerializedName("author")
+     */
+    public function getSerializedAuthor()
+    {
+        return [
+            'id' => $this->getAuthor()->getId(),
+            'username' => $this->getAuthor()->getUsername(),
+        ];
+    }
 }
 

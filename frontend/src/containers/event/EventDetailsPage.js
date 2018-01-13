@@ -11,6 +11,7 @@ import Paper from 'material-ui/Paper';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import EventTagList from  '../../components/tag/EventItemTagList';
+import CommentManager from '../comment/CommentManager';
 
 const styles = theme => ({
 
@@ -28,7 +29,7 @@ class EventDetailsPage extends Component {
 
         this.state = {
             event: null,
-            comments: null
+            needLoadComments: false
         };
 
     }
@@ -54,7 +55,7 @@ class EventDetailsPage extends Component {
     render = () => {
 
         const {classes} = this.props;
-        const { event } = this.state;
+        const { event, needLoadComments } = this.state;
 
         if (!event)
         {
@@ -114,9 +115,8 @@ class EventDetailsPage extends Component {
                             }
                         </Paper>
 
-                        <div className="comment-list">
 
-                        </div>
+                        <CommentManager event={event} />
                     </div>
 
                 </CommonLayout>

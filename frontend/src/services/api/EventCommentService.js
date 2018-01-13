@@ -12,8 +12,14 @@ class EventCommentService extends AuthorizedApiService
             'GET',
             'comment/list/' + eventId + '?page=' + page,
             {},
-            (response) => {
-                onSuccessHandler(response.data.events);
+            (result) => {
+
+                const { comments, total } = result.data;
+                comments.forEach((comment) => {
+                    return this.transformObjectTimestampFieldsToDate(comment, EventCommentService.dateFields);
+                });
+
+                onSuccessHandler(comments, total, page);
             },
             (error) => {
                 onErrorHandler(error.response.data);

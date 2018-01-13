@@ -6,9 +6,9 @@ class CommentList extends Component {
 
     render = ({comments, onCommentEditHandler}) => {
         return (
-            <div>
+            <div className="comment-list">
                 {comments.map((comment) => {
-                    return <CommentListItem comment={comment} onEditHandler={onCommentEditHandler}/>
+                    return <CommentListItem key={comment.id} comment={comment} onEditHandler={onCommentEditHandler}/>
                 })}
 
             </div>);

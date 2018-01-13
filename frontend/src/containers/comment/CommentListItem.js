@@ -11,7 +11,7 @@ import {
     FormControl
 } from 'material-ui';
 import { FormLabel } from 'material-ui/Form';
-import Form from '../common/form/Form';
+import Form from '../../components/common/form/Form';
 
 class CommentListItem extends Component {
 
@@ -103,7 +103,7 @@ class CommentListItem extends Component {
                                         multiline
                                         rows={3}
                                         value={comment.text}
-                                        onChange={(event) => { onFieldChangeHandler('description', event.target.value) }}
+                                        onChange={this.onChangeTextHandler}
                                     />
 
                                     {errors.text && <FormHelperText id="description-error">{errors.text}</FormHelperText>}
