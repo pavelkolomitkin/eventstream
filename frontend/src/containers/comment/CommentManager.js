@@ -159,6 +159,7 @@ class CommentManager extends Component {
 
         return (
             <div className="comment-manager">
+                <h3>Comments</h3>
 
                 <CommentForm comment={newComment} onSubmitHandler={this.onSubmitNewCommentHandler} />
 

@@ -98,6 +98,7 @@ class CommentForm extends Component {
                             value={comment.text}
                             onChange={this.onTextChangeHandler}
                             disabled={saving}
+                            autoFocus={true}
                         />
 
                         {errors.text && <FormHelperText id="message-error">{errors.text}</FormHelperText>}
