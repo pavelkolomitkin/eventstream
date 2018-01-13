@@ -5,12 +5,14 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation as JMSSerializer;
 
 /**
  * EventComment
  *
  * @ORM\Table(name="event_comment")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EventCommentRepository")
+ * @JMSSerializer\ExclusionPolicy("all")
  */
 class EventComment
 {
@@ -22,6 +24,7 @@ class EventComment
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @JMSSerializer\Expose
      */
     private $id;
 
@@ -31,6 +34,7 @@ class EventComment
      * @ORM\Column(name="text", type="text")
      * @Assert\NotBlank()
      * @Assert\Length(max="5000")
+     * @JMSSerializer\Expose
      */
     private $text;
 
@@ -45,9 +49,9 @@ class EventComment
      * @var User
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="comments")
      * @ORM\JoinColumn(name="authorId", nullable=false)
+     * @JMSSerializer\Expose
      */
     private $author;
-
 
     /**
      * Get id
@@ -118,5 +122,27 @@ class EventComment
         $this->author = $author;
         return $this;
     }
+
+    /**
+     * @return \DateTime
+     * @JMSSerializer\VirtualProperty()
+     * @JMSSerializer\SerializedName("createdAt")
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     * @JMSSerializer\VirtualProperty()
+     * @JMSSerializer\SerializedName("updatedAt")
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+
 }
 

@@ -18,6 +18,7 @@ class EventCommentRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('comment')
             ->where('comment.event = :event')
             ->setParameter('event', $event)
+            ->orderBy('comment.createdAt', 'DESC')
             ->getQuery();
     }
 

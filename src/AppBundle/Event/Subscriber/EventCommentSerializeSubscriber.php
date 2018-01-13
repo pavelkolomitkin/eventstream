@@ -41,7 +41,7 @@ class EventCommentSerializeSubscriber implements EventSubscriberInterface
             [
                 'event' => 'serializer.post_serialize',
                 'method' => 'onPostSerializeHandler',
-                'class' => 'AppBundle\\Entity\\Event',
+                'class' => 'AppBundle\\Entity\\EventComment',
                 'format' => 'json',
                 'priority' => 0
             ]

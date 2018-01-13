@@ -3,6 +3,7 @@ import FileUploadService from './api/FileUploadService';
 import EventPictureService from './api/EventPictureService';
 import EventService from './api/EventService';
 import VideoService from './api/VideoService';
+import EventCommentService from './api/EventCommentService';
 
 
 class ApiServiceFactory {
@@ -25,6 +26,10 @@ class ApiServiceFactory {
 
     static createVideoService = () => {
         return ApiServiceFactory.createAuthService(VideoService);
+    }
+
+    static createCommentService = () => {
+        return ApiServiceFactory.createAuthService(EventCommentService);
     }
 
 }

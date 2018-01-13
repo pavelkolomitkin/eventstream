@@ -27,7 +27,8 @@ class EventDetailsPage extends Component {
         super(props, context);
 
         this.state = {
-            event: null
+            event: null,
+            comments: null
         };
 
     }
@@ -112,7 +113,12 @@ class EventDetailsPage extends Component {
                                 <EventTagList tags={event.tags}/>
                             }
                         </Paper>
+
+                        <div className="comment-list">
+
+                        </div>
                     </div>
+
                 </CommonLayout>
             );
     }
