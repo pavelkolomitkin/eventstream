@@ -23,7 +23,10 @@ class CommentManager extends Component {
         this.state = {
             comments: [],
             commentListPageNumber: 1,
-            noMoreComments: false
+            noMoreComments: false,
+            newComment: {
+                text: ''
+            }
         };
     }
 
@@ -38,11 +41,18 @@ class CommentManager extends Component {
                     comment.text,
                     event.id,
                     (comment) => {
+
+                        const emptyComment = {
+                            text: ''
+                        };
+
+                        resolve(emptyComment);
+
                         self.state.comments.unshift(comment);
                         self.setState({
-                            comments: self.state.comments
+                            comments: self.state.comments,
+                            newComment: emptyComment
                         });
-                        resolve(comment);
                     },
                     (errors) => {
                         reject(errors);
@@ -61,6 +71,21 @@ class CommentManager extends Component {
                 comment,
                 (comment) => {
                     resolve(comment);
+
+                    const comments = self.state.comments;
+
+                    const editedCommentIndex = comments.findIndex((currentComment) => {
+                        return (comment.id === currentComment.id);
+                    });
+
+                    if (editedCommentIndex !== -1)
+                    {
+                        comments[editedCommentIndex] = comment;
+                    }
+
+                    this.setState({
+                        comments: comments
+                    });
                 },
                 (errors) => {
                     reject(errors);
@@ -104,12 +129,12 @@ class CommentManager extends Component {
 
     render = () => {
 
-        const { comments, noMoreComments} = this.state;
+        const { comments, noMoreComments, newComment} = this.state;
 
         return (
             <div className="comment-manager">
 
-                <CommentForm onSubmitHandler={this.onSubmitNewCommentHandler} />
+                <CommentForm comment={newComment} onSubmitHandler={this.onSubmitNewCommentHandler} />
 
 
                 <InfiniteScroll

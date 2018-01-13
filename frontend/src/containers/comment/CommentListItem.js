@@ -12,6 +12,7 @@ import {
 } from 'material-ui';
 import { FormLabel } from 'material-ui/Form';
 import Form from '../../components/common/form/Form';
+import CommentForm from './CommentForm';
 
 class CommentListItem extends Component {
 
@@ -20,14 +21,11 @@ class CommentListItem extends Component {
         super(props, context);
 
         this.onEditButtonClickHandler = this.onEditButtonClickHandler.bind(this);
-        this.onChangeTextHandler = this.onChangeTextHandler.bind(this);
-        this.onSubmitComment = this.onSubmitComment.bind(this);
+        this.onCancelHandler = this.onCancelHandler.bind(this);
+        this.onEditCompleteHandler = this.onEditCompleteHandler.bind(this);
 
         this.state = {
-            editing: false,
-            saving: false,
-            comment: props.comment,
-            errors: {}
+            editing: false
         }
     }
 
@@ -37,44 +35,24 @@ class CommentListItem extends Component {
         });
     }
 
-    onChangeTextHandler = (event) => {
-
-        const {comment} = this.state;
-        comment.text = event.target.value;
-
+    onCancelHandler = () => {
         this.setState({
-            comment
+            editing: false
         });
     }
 
-    onSubmitComment = (event) => {
-
+    onEditCompleteHandler = () => {
         this.setState({
-            saving: true
+            editing: false
         });
-
-        this
-            .props
-            .onEditHandler(this.state.comment)
-            .then((comment) => {
-                this.setState({
-                    editing: false,
-                    saving: false,
-                    comment: comment
-                })
-            })
-            .catch((errors) => {
-                this.setState({
-                    saving: false,
-                    errors: errors
-                });
-            })
-        ;
     }
 
     render = () => {
 
-        const { editing, comment, errors } = this.state;
+        const { editing } = this.state;
+
+        const { comment, onEditHandler } = this.props;
+        const clonedComment = Object.assign({}, comment);
 
         return (
             <div className="comment-list-item">
@@ -92,33 +70,12 @@ class CommentListItem extends Component {
                 <span>{comment.createdAt.toLocaleString()}</span>
                 {
                     editing ?
-                        <div className="comment-editing-form">
-
-                            <Form>
-                                <FormControl className="form-control" error aria-describedby="description-error">
-                                    <TextField
-                                        label="Text"
-                                        margin="normal"
-                                        name="text"
-                                        multiline
-                                        rows={3}
-                                        value={comment.text}
-                                        onChange={this.onChangeTextHandler}
-                                    />
-
-                                    {errors.text && <FormHelperText id="description-error">{errors.text}</FormHelperText>}
-
-
-                                </FormControl>
-
-                                <FormControl className="form-control submit-container">
-                                    <div>
-                                        <Button raised color="primary" style={{marginRight: 10}} >Save</Button>
-                                    </div>
-                                </FormControl>
-
-                            </Form>
-                        </div>
+                        <CommentForm
+                            comment={clonedComment}
+                            onSubmitHandler={onEditHandler}
+                            onCancelHandler={this.onCancelHandler}
+                            onSaveComplete={this.onEditCompleteHandler}
+                        />
                         :
                         <div>{comment.text}</div>
                 }

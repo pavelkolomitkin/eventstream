@@ -25,26 +25,40 @@ class CommentForm extends Component {
         this.onSubmitHandler = this.onSubmitHandler.bind(this);
 
         this.state = {
-            text: '',
+            comment: props.comment,
             errors: {},
             saving: false
         };
+    }
+
+    componentWillReceiveProps(nextProps)
+    {
+        this.setState({
+            comment: nextProps.comment
+        });
     }
 
     onSubmitHandler = (event) => {
         this.setState({
             saving: true
         });
-        this.props.onSubmitHandler({
-                text: this.state.text
-            })
+
+        const {onSaveComplete} = this.props;
+        this
+            .props
+            .onSubmitHandler(this.state.comment)
             .then((comment) => {
 
                 this.setState({
-                    text: '',
+                    comment: comment,
                     errors: {},
                     saving:false
                 });
+
+                if (onSaveComplete)
+                {
+                    onSaveComplete();
+                }
 
             })
             .catch((errors) => {
@@ -56,14 +70,19 @@ class CommentForm extends Component {
     }
 
     onTextChangeHandler = (event) => {
+
+        const {comment} = this.state;
+        comment.text = event.target.value;
+
         this.setState({
-            text: event.target.value
+            comment: comment
         });
     }
 
     render = () => {
 
-        const { text, errors, saving } = this.state;
+        const { comment, errors, saving } = this.state;
+        const { onCancelHandler } = this.props;
 
         return (
             <div>
@@ -71,12 +90,12 @@ class CommentForm extends Component {
                     { saving &&  <CircularProgress className="progress" /> }
                     <FormControl className="form-control" error aria-describedby="message-error">
                         <TextField
-                            label="Add comment"
+                            label="Comment text"
                             margin="normal"
                             name="text"
                             multiline
                             rows={4}
-                            value={text}
+                            value={comment.text}
                             onChange={this.onTextChangeHandler}
                             disabled={saving}
                         />
@@ -87,7 +106,12 @@ class CommentForm extends Component {
                     </FormControl>
                     <FormControl className="form-control submit-container">
                         <div>
-                            <Button disabled={saving} raised color="primary" style={{marginRight: 10}} type="submit">Add</Button>
+                            <Button disabled={saving} raised color="primary" style={{marginRight: 10}} type="submit">
+                                Save
+                            </Button>
+                            {onCancelHandler &&
+                                <Button color="default" onClick={onCancelHandler}>Cancel</Button>
+                            }
                         </div>
                     </FormControl>
                 </Form>
@@ -97,7 +121,10 @@ class CommentForm extends Component {
 }
 
 CommentForm.propTypes = {
-    onSubmitHandler: PropTypes.func.isRequired
+    onSubmitHandler: PropTypes.func.isRequired,
+    onCancelHandler: PropTypes.func,
+    comment: PropTypes.object.isRequired,
+    onSaveComplete: PropTypes.func
 };
 
 const mapStateToProps = (state, ownProps) => {

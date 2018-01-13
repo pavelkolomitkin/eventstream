@@ -53,7 +53,9 @@ class EventCommentService extends AuthorizedApiService
         this.makeRequest(
             'PUT',
             'comment/' + comment.id + '/edit',
-            comment,
+            {
+                text: comment.text
+            },
             (result) => {
                 const { comment } = result.data;
                 this.transformObjectTimestampFieldsToDate(comment, EventCommentService.dateFields);

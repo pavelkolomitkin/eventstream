@@ -103,7 +103,7 @@ class EventCommentController extends FOSRestController
         $form = $this->createForm(EventCommentType::class, $comment);
         $form->submit($request->request->all(), false);
 
-        if (!$form->isValid())
+        if ($form->isValid())
         {
             $entityManager = $this->getDoctrine()->getManager();
 
