@@ -34,6 +34,12 @@ services:
     public: true
     tags: [jms_serializer.event_subscriber]
 
+  event_comment.serialize.listener:
+    class: AppBundle\Event\Subscriber\EventCommentSerializeSubscriber
+    arguments: ['@security.token_storage']
+    public: true
+    tags: [jms_serializer.event_subscriber]
+
   video_link.manager:
     class: AppBundle\Service\Video\VideoLinkManager
     arguments: ['@doctrine.orm.entity_manager', '@video_link.provider.factory']

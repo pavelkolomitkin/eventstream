@@ -8,6 +8,11 @@ event_picture:
         success: 'Picture has been removed!'
         accessDeny: 'You can not delete this picture!'
 
+event_comment:
+    delete:
+        success: 'Comment has been removed!'
+        accessDeny: 'You can not delete this comment!'
+
 video:
     delete:
         success: 'Video has been removed!'

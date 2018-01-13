@@ -70,6 +70,12 @@ class User extends BaseUser
      */
     private $eventPictures;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventComment", mappedBy="author")
+     */
+    private $comments;
+
     public function __construct()
     {
         parent::__construct();
@@ -78,6 +84,7 @@ class User extends BaseUser
         $this->participateEvents = new ArrayCollection();
         $this->likeEvents = new ArrayCollection();
         $this->eventPictures = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -112,5 +119,11 @@ class User extends BaseUser
         return $this->eventPictures;
     }
 
-
+    /**
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
 }

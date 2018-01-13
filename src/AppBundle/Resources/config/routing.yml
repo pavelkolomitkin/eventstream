@@ -21,3 +21,7 @@ picture:
 video:
     type: annotation
     resource: AppBundle\Controller\VideoLinkController
+
+comment:
+    type: annotation
+    resource: AppBundle\Controller\EventCommentController

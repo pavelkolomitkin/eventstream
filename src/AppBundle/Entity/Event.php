@@ -34,6 +34,7 @@ class Event
      *
      * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
+     * @Assert\Length(max="255")
      * @JMSSerializer\Expose
      */
     private $title;
@@ -119,6 +120,13 @@ class Event
     private $videos;
 
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventComment", mappedBy="event", cascade={"persist", "remove"})
+     */
+    private $comments;
+
+
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -126,6 +134,7 @@ class Event
         $this->likes = new ArrayCollection();
         $this->pictures = new ArrayCollection();
         $this->videos = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -452,6 +461,26 @@ class Event
         return $this;
 
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getComments(): ArrayCollection
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param ArrayCollection $comments
+     * @return Event
+     */
+    public function setComments(ArrayCollection $comments): Event
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+
+
 
 }
 
