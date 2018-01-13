@@ -69,11 +69,11 @@ class EventCommentService extends AuthorizedApiService
         );
     }
 
-    remove(id, onSuccessHandler, onErrorHandler)
+    remove(comment, onSuccessHandler, onErrorHandler)
     {
         this.makeRequest(
             'DELETE',
-            'comment/' + id + '/delete',
+            'comment/' + comment.id + '/delete',
             {},
             (result) => {
                 onSuccessHandler(result.data);

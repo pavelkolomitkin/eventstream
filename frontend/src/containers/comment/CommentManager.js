@@ -16,6 +16,7 @@ class CommentManager extends Component {
 
         this.onSubmitNewCommentHandler = this.onSubmitNewCommentHandler.bind(this);
         this.onCommentEditHandler = this.onCommentEditHandler.bind(this);
+        this.onCommentDeleteHandler = this.onCommentDeleteHandler.bind(this);
         this.requestMoreComments = this.requestMoreComments.bind(this);
 
         this.apiService = ApiServiceFactory.createCommentService();
@@ -95,6 +96,31 @@ class CommentManager extends Component {
         });
     }
 
+    onCommentDeleteHandler = (comment) => {
+
+        const self = this;
+
+        this.apiService.remove(
+            comment,
+            (result) => {
+                let comments = self.state.comments;
+                const deletedCommentIndex = comments.findIndex((currentComment) => {
+                    return (comment.id === currentComment.id);
+                });
+
+                if (deletedCommentIndex !== -1) {
+                    comments.splice(deletedCommentIndex, 1);
+                    this.setState({
+                        comments: comments
+                    });
+                }
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
+    }
+
 
     requestMoreComments()
     {
@@ -148,7 +174,13 @@ class CommentManager extends Component {
                     useWindow={true}
                 >
                     {comments.map((comment) => {
-                        return <CommentListItem key={comment.id} comment={comment} onEditHandler={this.onCommentEditHandler}/>
+                        return (
+                            <CommentListItem
+                                key={comment.id}
+                                comment={comment}
+                                onEditHandler={this.onCommentEditHandler}
+                                onDeleteHandler={this.onCommentDeleteHandler}
+                        />)
                     })}
                 </InfiniteScroll>
 

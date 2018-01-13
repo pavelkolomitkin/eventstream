@@ -25,7 +25,8 @@ class CommentListItem extends Component {
         this.onEditCompleteHandler = this.onEditCompleteHandler.bind(this);
 
         this.state = {
-            editing: false
+            editing: false,
+            deleting: false
         }
     }
 
@@ -41,6 +42,13 @@ class CommentListItem extends Component {
         });
     }
 
+    onDeleteHandler = () => {
+        this.setState({
+            deleting: true
+        });
+        this.props.onDeleteHandler(this.props.comment);
+    }
+
     onEditCompleteHandler = () => {
         this.setState({
             editing: false
@@ -49,19 +57,19 @@ class CommentListItem extends Component {
 
     render = () => {
 
-        const { editing } = this.state;
+        const { editing, deleting } = this.state;
 
         const { comment, onEditHandler } = this.props;
         const clonedComment = Object.assign({}, comment);
 
         return (
             <div className="comment-list-item">
-                { comment.isMine &&
+                { comment.isMine && !deleting &&
                     <div className="actions-container">
                         <Button onClick={this.onEditButtonClickHandler}>
                             <ModeEditIcon/>
                         </Button>
-                        <Button>
+                        <Button onClick={this.onDeleteHandler}>
                             <IconDelete/>
                         </Button>
                     </div>
@@ -85,7 +93,9 @@ class CommentListItem extends Component {
 
 CommentListItem.propTypes = {
     comment: PropTypes.object.isRequired,
-    onEditHandler: PropTypes.func.isRequired
+    onEditHandler: PropTypes.func.isRequired,
+    onDeleteHandler: PropTypes.func.isRequired
+
 };
 
 
