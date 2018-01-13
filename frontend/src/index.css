@@ -247,7 +247,8 @@ form legend
 }
 
 
-.profile-event-list .profile-event-item .event-actions-container
+.profile-event-list .profile-event-item .event-actions-container,
+.event-details-page .event-details-content .event-actions-container
 {
   position: absolute;
   top: 0px;
@@ -317,13 +318,76 @@ form legend
   height: 50px;
 }
 
-.profile-event-list .tag-list
+.tag-list
 {
   display: flex;
   flex-wrap: wrap;
 }
 
-.profile-event-list .tag-list .tag-item
+.tag-list .tag-item
 {
   margin: 2px;
+}
+
+.event-details-page
+{
+  padding: 5px;
+  position: relative;
+}
+
+.event-details-page .event-actions-container
+{
+  display: block !important;
+}
+
+.event-details-page .event-details-content
+{
+  padding: 25px;
+}
+
+.event-details-page .event-details-content .description
+{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.event-details-page .event-details-content .picture-list
+{
+  text-align: center;
+}
+
+.event-details-page .event-details-content .picture-list .picture-item-container
+{
+  padding: 5px;
+}
+
+.event-details-page .event-details-content .picture-list .picture-item-container .picture
+{
+  width: 100%;
+}
+
+.event-details-page .event-details-content .video-list
+{
+  text-align: center;
+}
+
+.event-details-page .event-details-content .video-list .video-item-container
+{
+
+}
+
+.event-details-page .event-details-content .video-list .video-item-container .video-content
+{
+
+}
+
+.event-details-page .event-details-content .video-list .video-item-container .video-content iframe
+{
+  max-width: 100%;
+}
+
+.MuiGrid-spacing-xs-16-145
+{
+  width: auto !important;
+  margin: 0 !important;
 }

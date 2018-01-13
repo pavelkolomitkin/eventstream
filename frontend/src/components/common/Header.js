@@ -14,6 +14,7 @@ import MenuIcon from 'material-ui-icons/Menu';
 import { NavLink, Link } from 'react-router-dom';
 
 import AddIcon from 'material-ui-icons/Add';
+import ListIcon from 'material-ui-icons/List';
 
 import AccountCircle from 'material-ui-icons/AccountCircle';
 
@@ -81,6 +82,9 @@ class Header extends Component {
                                 ?
                                 (
                                     <div>
+                                        <Button component={Link} to="/me/myevents/all" color="contrast">
+                                            <ListIcon/>&nbsp;My Events
+                                        </Button>
                                         <Button component={Link} to="/event/new" color="contrast">
                                             <AddIcon/>
                                             Add Event

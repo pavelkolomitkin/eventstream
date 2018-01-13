@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\EventListener;
+namespace AppBundle\Event\Subscriber;
 
 
 use JMS\Serializer\EventDispatcher\ObjectEvent;

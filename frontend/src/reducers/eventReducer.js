@@ -30,13 +30,13 @@ const eventReducer = (state = {}, action) => {
 
         case types.EVENT_GET_SUCCESS:
 
-            return {...state, event: action.event};
+            return {...state, event: action.event, eventGetError: null};
 
             break;
 
         case types.EVENT_GET_ERROR:
 
-            return {...state, error: action.error};
+            return {...state, event: null, eventGetError: action.error};
 
             break;
 
@@ -55,13 +55,13 @@ const eventReducer = (state = {}, action) => {
 
         case types.EVENT_UPDATE_SUCCESS:
 
-            return {...state, ownEvent: action.event, updateEventErrors: null};
+            return {...state, event: action.event, updateEventErrors: null};
 
             break;
 
         case types.EVENT_UPDATE_ERROR:
 
-            return {...state, updateEventErrors: action.error};
+            return {...state, event: null, updateEventErrors: action.error};
 
             break;
 

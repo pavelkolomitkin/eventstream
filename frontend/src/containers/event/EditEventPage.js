@@ -47,6 +47,11 @@ class EditEventPage extends Component {
         })
     };
 
+    componentWillUpdate(nextProps, nextState)
+    {
+
+    }
+
     componentWillReceiveProps(nextProps)
     {
         const {errors} = nextProps;
@@ -57,7 +62,7 @@ class EditEventPage extends Component {
             return;
         }
 
-        if (nextProps.loadEventError)
+        if (nextProps.loadEventError || (!nextProps.event.isMine))
         {
             this.props.history.replace('/notfound');
             return;
@@ -76,7 +81,7 @@ class EditEventPage extends Component {
 
     componentDidMount()
     {
-        this.props.actions.getOwnEvent(this.props.id);
+        this.props.actions.getEvent(this.props.id);
     }
 
     render = () => {
@@ -119,8 +124,8 @@ const mapStateToProps = (state, ownProps) => {
     return {
         id: parseInt(ownProps.match.params.id),
         errors: state.event.updateEventErrors,
-        event: state.event.ownEvent,
-        loadEventError: state.event.ownEventError
+        event: state.event.event,
+        loadEventError: state.event.eventGetError
     };
 }
 

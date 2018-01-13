@@ -23,8 +23,14 @@ services:
     public: true
 
   event_picture.serialize.listener:
-    class: AppBundle\EventListener\EventPictureSerializeSubscriber
+    class: AppBundle\Event\Subscriber\EventPictureSerializeSubscriber
     arguments: ['@vich_uploader.templating.helper.uploader_helper', '@liip_imagine.cache.manager']
+    public: true
+    tags: [jms_serializer.event_subscriber]
+
+  event.serialize.listener:
+    class: AppBundle\Event\Subscriber\EventSerializeSubscriber
+    arguments: ['@security.token_storage']
     public: true
     tags: [jms_serializer.event_subscriber]
 
