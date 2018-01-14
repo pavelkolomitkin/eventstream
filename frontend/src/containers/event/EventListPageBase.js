@@ -1,17 +1,9 @@
 import React, {Component} from 'react';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import { Link, NavLink } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import * as eventActions from '../../actions/eventActions';
-import URLSearchParams from 'url-search-params';
 import Pagination from '../common/Pagination';
 
 import CommonLayout from '../../components/layout/CommonPage';
 import EventListItem from '../../components/profile/EventListItem';
-
-import AppBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
+import Paper from 'material-ui/Paper';
 
 class EventListPageBase extends Component {
 
@@ -93,7 +85,11 @@ class EventListPageBase extends Component {
                                 return (<EventListItem key={event.id} event={event} />)
                             })
 
-                            : null
+                            : (<Paper>
+                                <div className="empty-content-container">
+                                    <span className="message">No events there!</span>
+                                </div>
+                            </Paper>)
                     }
 
                 </div>

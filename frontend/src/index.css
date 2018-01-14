@@ -482,3 +482,15 @@ form legend
 {
 
 }
+
+.empty-content-container
+{
+  padding: 25px;
+  text-align: center;
+}
+
+.empty-content-container .message
+{
+  font-weight: bold;
+  color: #504e4e;
+}
