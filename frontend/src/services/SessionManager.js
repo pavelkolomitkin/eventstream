@@ -6,7 +6,7 @@ const SessionManager = class {
         return JWT.get();
     }
 
-    static  isTokenValid()
+    static isTokenValid()
     {
         return JWT.validate(JWT.get());
     }
