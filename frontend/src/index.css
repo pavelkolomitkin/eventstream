@@ -292,6 +292,17 @@ form legend
   margin-bottom: 10px;
 }
 
+.profile-event-list .profile-event-item .numbers
+{
+
+}
+
+.profile-event-list .profile-event-item .numbers .item
+{
+  display: inline !important;
+  margin-right: 5px;
+}
+
 .profile-event-list .event-item-video-list
 {
 

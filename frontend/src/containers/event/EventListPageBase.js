@@ -115,21 +115,5 @@ class EventListPageBase extends Component {
 
 EventListPageBase.propTypes = {};
 
-// const mapStateToProps = (state, ownProps) => {
-//
-//     let queryParams = new URLSearchParams(ownProps.location.search);
-//     return {
-//         events: state.event.events ? state.event.events : [],
-//         eventsTotal: state.event.eventsTotal ? state.event.eventsTotal : 0,
-//         page: parseInt(queryParams.get('page') ? queryParams.get('page') : 1),
-//         eventsPerPage: 10
-//     };
-// }
-//
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         actions: bindActionCreators(eventActions, dispatch)
-//     }
-// }
 
 export default EventListPageBase;

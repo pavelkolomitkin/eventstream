@@ -346,7 +346,7 @@ class Event
         if ($this->members->contains($member))
         {
             $this->members->removeElement($member);
-            $this->decrementCommentNumber();
+            $this->decrementMemberNumber();
         }
 
         return $this;

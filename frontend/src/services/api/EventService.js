@@ -63,9 +63,11 @@ class EventService extends AuthorizedApiService
             {},
             (result) => {
 
-                const { events, total } = result.data;
-                events.forEach((event) => {
+                let { events, total } = result.data;
+                events = events.map((event) => {
+                    event = this.mergeWithExtrafields(event, 'eventObject');
                     this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+                    return event;
                 });
 
                 onSuccessHandler(events, total, page);
@@ -86,9 +88,12 @@ class EventService extends AuthorizedApiService
             {},
             (result) => {
 
-                const { events, total } = result.data;
-                events.forEach((event) => {
+                let { events, total } = result.data;
+                events = events.map((event) => {
+                    event = this.mergeWithExtrafields(event, 'eventObject');
                     this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                    return event;
                 });
 
                 onSuccessHandler(events, total, page);
@@ -106,9 +111,10 @@ class EventService extends AuthorizedApiService
             'event/' + id,
             {},
             (result) => {
-                const { event } = result.data;
-                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+                let { event } = result.data;
 
+                event = this.mergeWithExtrafields(event, 'eventObject');
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
                 onSuccessHandler(event);
             },
             (error) => {
@@ -124,7 +130,9 @@ class EventService extends AuthorizedApiService
             'event/own/' + id,
             {},
             (result) => {
-                const { event } = result.data;
+                let { event } = result.data;
+
+                event = this.mergeWithExtrafields(event, 'eventObject');
                 this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
 
                 onSuccessHandler(event);
@@ -138,11 +146,13 @@ class EventService extends AuthorizedApiService
     addMeMember(id, onSuccessHandler, onErrorHandler)
     {
         this.makeRequest(
-            'LINK',
+            'POST',
             'event/' + id + '/addmember',
             {},
             (result) => {
-                const { event } = result.data;
+                let { event } = result.data;
+
+                event = this.mergeWithExtrafields(event, 'eventObject');
                 this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
 
                 onSuccessHandler(event);
@@ -156,11 +166,13 @@ class EventService extends AuthorizedApiService
     removeMeMember(id, onSuccessHandler, onErrorHandler)
     {
         this.makeRequest(
-            'LINK',
+            'POST',
             'event/' + id + '/removemember',
             {},
             (result) => {
-                const { event } = result.data;
+                let { event } = result.data;
+
+                event = this.mergeWithExtrafields(event, 'eventObject');
                 this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
 
                 onSuccessHandler(event);

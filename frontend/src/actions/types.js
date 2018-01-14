@@ -40,6 +40,12 @@ export const EVENT_GET_OWN_ERROR = 'EVENT_GET_OWN_ERROR';
 export const EVENT_UPDATE_SUCCESS = 'EVENT_UPDATE_SUCCESS';
 export const EVENT_UPDATE_ERROR = 'EVENT_UPDATE_ERROR';
 
+export const EVENT_ADD_MEMBER_SUCCESS = 'EVENT_ADD_MEMBER_SUCCESS';
+export const EVENT_ADD_MEMBER_ERROR = 'EVENT_ADD_MEMBER_ERROR';
+
+export const EVENT_REMOVE_MEMBER_SUCCESS = 'EVENT_REMOVE_MEMBER_SUCCESS';
+export const EVENT_REMOVE_MEMBER_ERROR = 'EVENT_REMOVE_MEMBER_ERROR';
+
 /*===========================// EVENT ACTIONS =============================*/
 
 /*============================= EVENT PICTURE ACTIONS =============================*/
@@ -58,3 +64,6 @@ export const VIDEO_CREATE_SUCCESS = 'VIDEO_CREATE_SUCCESS';
 export const VIDEO_CREATE_ERROR = 'VIDEO_CREATE_ERROR';
 
 /*===========================// EVENT PICTURE ACTIONS =============================*/
+
+
+

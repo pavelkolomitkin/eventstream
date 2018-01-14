@@ -60,6 +60,14 @@ class BaseApiService
 
         return result;
     }
+
+    mergeWithExtrafields(dataSet, targetField)
+    {
+        let result = dataSet[targetField];
+        delete dataSet[targetField];
+
+        return Object.assign(result, dataSet);
+    }
 }
 
 export default BaseApiService;

@@ -71,11 +71,11 @@ class Header extends Component {
                         loading && <LinearProgress style={classes.progress}/>
                     }
                     <Toolbar>
-                        <IconButton style={classes.menuButton} color="contrast" aria-label="Menu">
+                        <IconButton style={classes.menuButton} color="contrast" aria-label="Menu" component={Link} to="/event/list/all">
                             <MenuIcon/>
                         </IconButton>
-                        <Typography type="title" color="inherit" style={classes.flex}>
-                            Event Stream
+                        <Typography type="title" color="inherit" style={classes.flex} >
+                            <Button component={NavLink} to="/event/list/all" color="contrast">Event Stream</Button>
                         </Typography>
                         {
                             userData

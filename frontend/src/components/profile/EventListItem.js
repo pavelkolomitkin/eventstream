@@ -35,11 +35,11 @@ const EventListItem = ({event, classes}) => {
     return (
         <div className="profile-event-item">
             {event.isMine &&
-            <div className="event-actions-container">
-                <Button component={Link} to={'/event/' + event.id + '/edit'}>
-                    <ModeEditIcon/> Edit
-                </Button>
-            </div>
+                <div className="event-actions-container">
+                    <Button component={Link} to={'/event/' + event.id + '/edit'}>
+                        <ModeEditIcon/> Edit
+                    </Button>
+                </div>
             }
             <Card>
                 <CardContent>
@@ -51,7 +51,10 @@ const EventListItem = ({event, classes}) => {
                     { event.pictures.length > 0 && <EventItemPictureList pictures={event.pictures} /> }
                     { event.videos.length > 0 && <EventItemVideoList videos={event.videos} />}
                     { event.tags.length > 0 && <EventItemTagList tags={event.tags} />}
-                    <Typography component="p" className={classes.pos}>{event.commentNumber} comment(s)</Typography>
+                    <div className="numbers">
+                        <Typography component="span" className={classes.pos + ' item'}>{event.commentNumber} comment(s)</Typography>
+                        <Typography component="span" className={classes.pos + ' item'}>{event.memberNumber} members(s)</Typography>
+                    </div>
                 </CardContent>
             </Card>
 

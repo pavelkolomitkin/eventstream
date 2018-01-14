@@ -32,15 +32,27 @@ class EventDetailsPage extends Component {
             needLoadComments: false
         };
 
+        this.onRemoveMemberHandler = this.onRemoveMemberHandler.bind(this);
+        this.onAddMemberHandler = this.onAddMemberHandler.bind(this);
+    }
+
+    onAddMemberHandler = (domEvent) => {
+        this.props.actions.addMeMemberToEvent(this.state.event.id);
+    }
+
+    onRemoveMemberHandler = (domEvent) => {
+        this.props.actions.removeMeMemberFromEvent(this.state.event.id);
     }
 
     componentDidMount()
     {
+        console.log('In componentDidMount!');
         this.props.actions.getEvent(this.props.id);
     }
 
     componentWillReceiveProps(nextProps)
     {
+        console.log('In componentWillReceiveProps');
         if (nextProps.error)
         {
             this.props.history.replace('/notfound');
@@ -55,7 +67,7 @@ class EventDetailsPage extends Component {
     render = () => {
 
         const {classes} = this.props;
-        const { event, needLoadComments } = this.state;
+        const { event } = this.state;
 
         if (!event)
         {
@@ -67,13 +79,23 @@ class EventDetailsPage extends Component {
                 <CommonLayout>
                     <div className="event-details-page">
                         <Paper className="event-details-content">
-                            {event.isMine &&
+
                                 <div className="event-actions-container">
+                                    {event.isMine ?
                                     <Button component={Link} to={'/event/' + event.id + '/edit'}>
                                         <ModeEditIcon/> Edit
                                     </Button>
+                                        :
+                                        (
+                                            event.isMember ?
+                                                <Button raised onClick={this.onRemoveMemberHandler}>I won't go!</Button>
+                                                :
+                                                <Button raised onClick={this.onAddMemberHandler}>I will go!</Button>
+                                        )
+
+                                    }
                                 </div>
-                            }
+
                             <Typography type="headline" component="h1">
                                 {event.title}
                             </Typography>
@@ -130,7 +152,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         id: ownProps.match.params.id,
         event: state.event.event,
-        error: state.event.error
+        error: state.event.eventGetError
     };
 }
 

@@ -89,7 +89,8 @@ class EventController extends FOSRestController
             ->getDoctrine()
             ->getRepository('AppBundle:Event')
             ->getEventListQuery([
-                'time_filter' => $timefilter
+                'time_filter' => $timefilter,
+                'isMember' => $this->getUser()
             ]);
 
         $paginator = $this->get('knp_paginator');
@@ -98,7 +99,6 @@ class EventController extends FOSRestController
             $eventListQuery,
             $request->query->getInt('page', 1)
         );
-
 
         $view = $this->view([
             'events' => $pagination->getItems(),
@@ -125,7 +125,8 @@ class EventController extends FOSRestController
             ->getDoctrine()
             ->getRepository('AppBundle:Event')
             ->getUserOwnEventsQuery($this->getUser(), [
-                'time_filter' => $timefilter
+                'time_filter' => $timefilter,
+                'isMember' => $this->getUser()
             ]);
 
         $paginator = $this->get('knp_paginator');
@@ -153,9 +154,12 @@ class EventController extends FOSRestController
      */
     public function getAction(Event $event)
     {
-        return $this->handleView($this->view([
-            'event' => $event
-        ]));
+        $eventData = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Event')
+            ->getEventWithExtraUserRelativeData($event->getId(), $this->getUser());
+
+        return $this->handleView($this->view(['event' => $eventData]));
     }
 
     /**
@@ -172,9 +176,12 @@ class EventController extends FOSRestController
             throw $this->createAccessDeniedException();
         }
 
-        return $this->handleView($this->view([
-            'event' => $event
-        ]));
+        $eventData = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Event')
+            ->getEventWithExtraUserRelativeData($event->getId(), $this->getUser());
+
+        return $this->handleView($this->view(['event' => $eventData]));
     }
 
     /**
@@ -182,7 +189,7 @@ class EventController extends FOSRestController
      * @ParamConverter("event", class="AppBundle\Entity\Event")
      * @Route(name="event_add_member", path="/event/{id}/addmember")
      * @return Response
-     * @Method({"LINK"})
+     * @Method({"POST"})
      */
     public function addMemberAction(Event $event)
     {
@@ -192,8 +199,13 @@ class EventController extends FOSRestController
                 ->get('event.manager')
                 ->addMember($event, $this->getUser());
 
+            $eventData = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:Event')
+                ->getEventWithExtraUserRelativeData($event->getId(), $this->getUser());
+
             return $this->handleView($this->view([
-                'event' => $event
+                'event' => $eventData
             ], Response::HTTP_OK));
         }
         catch (EventMemberException $exception)
@@ -210,7 +222,7 @@ class EventController extends FOSRestController
      * @ParamConverter("event", class="AppBundle\Entity\Event")
      * @Route(name="event_remove_member", path="/event/{id}/removemember")
      * @return Response
-     * @Method({"LINK"})
+     * @Method({"POST"})
      */
     public function removeMember(Event $event)
     {
@@ -220,8 +232,13 @@ class EventController extends FOSRestController
                 ->get('event.manager')
                 ->removeMember($event, $this->getUser());
 
+            $eventData = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:Event')
+                ->getEventWithExtraUserRelativeData($event->getId(), $this->getUser());
+
             return $this->handleView($this->view([
-                'event' => $event
+                'event' => $eventData
             ], Response::HTTP_OK));
         }
         catch (EventMemberException $exception)

@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\User;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -22,10 +23,12 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     {
         $queryBuilder = $this
             ->createQueryBuilder('event')
+            ->select('event as eventObject')
             ->where('event.owner = :user')
             ->setParameter('user', $user);
 
         $this->filterEventsByTime($queryBuilder, $criteria);
+        $this->addMemberInfo($queryBuilder, $criteria);
 
         $queryBuilder->orderBy('event.timeStart', 'DESC');
 
@@ -35,13 +38,46 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     public function getEventListQuery(array $criteria = [])
     {
         $queryBuilder = $this
-            ->createQueryBuilder('event');
+            ->createQueryBuilder('event')
+            ->select('event as eventObject');
 
         $this->filterEventsByTime($queryBuilder, $criteria);
+        $this->addMemberInfo($queryBuilder, $criteria);
 
         $queryBuilder->orderBy('event.timeStart', 'DESC');
 
         return $queryBuilder->getQuery();
+    }
+
+    public function getEventWithExtraUserRelativeData($eventId, User $user)
+    {
+        $queryBuilder = $this
+            ->createQueryBuilder('event')
+            ->select('event as eventObject');
+
+        $this->addMemberInfo($queryBuilder, [
+            'isMember' => $user
+        ]);
+
+        $queryBuilder
+            ->andWhere('event.id = :eventId')
+            ->setParameter('eventId', $eventId);
+
+        return $queryBuilder->getQuery()->getOneOrNullResult();
+    }
+
+    private function addMemberInfo(QueryBuilder $builder, array $criteria)
+    {
+        if (isset($criteria['isMember']) && ($criteria['isMember'] instanceof User))
+        {
+            $builder
+                ->leftJoin('event.members', 'currentUserMember', 'WITH', 'currentUserMember.id = :userId')
+                ->setParameter('userId', $criteria['isMember']->getId())
+                //->addSelect("(case when currentUserMember.id is NULL then FALSE else TRUE end) as isMember");
+                ->addSelect("currentUserMember.id as isMember");
+        }
+
+        return $builder;
     }
 
     /**
@@ -76,11 +112,10 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
     {
         $existingMember = $this
             ->createQueryBuilder('event')
-            ->join('event.members', 'member')
-            ->where('event = :currentEvent')
-            ->setParameter('currentEvent', $event)
-            ->andWhere('member = :currentMember')
-            ->setParameter('currentMember', $member)
+            ->innerJoin('event.members', 'member')
+            //->setParameter('memberId', $member->getId())
+            ->andWhere('event = :eventObject')
+            ->setParameter('eventObject', $event)
             ->getQuery()
             ->getOneOrNullResult();
 

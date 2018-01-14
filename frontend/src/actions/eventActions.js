@@ -126,6 +126,44 @@ export function updateEvent(event) {
     }
 }
 
+export function addMeMemberToEvent(id) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.addMeMember(
+            id,
+            (event) => {
+                dispatch(addMeMemberSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(addMeMemberError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        )
+    }
+}
+
+export function removeMeMemberFromEvent(id) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.removeMeMember(
+            id,
+            (event) => {
+                dispatch(removeMeMemberSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(removeMeMemberError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        )
+    }
+}
+
 export function createEventSuccess(data) {
     return { type: types.EVENT_CREATE_SUCCESS, eventData: data };
 }
@@ -172,4 +210,20 @@ export function updateEventSuccess(event) {
 
 export function updateEventError(error) {
     return { type: types.EVENT_UPDATE_ERROR, error: error };
+}
+
+export function addMeMemberSuccess(event) {
+    return { type: types.EVENT_ADD_MEMBER_SUCCESS, event: event };
+}
+
+export function addMeMemberError(error) {
+    return { type: types.EVENT_ADD_MEMBER_ERROR, error: error };
+}
+
+export function removeMeMemberSuccess(event) {
+    return { type: types.EVENT_REMOVE_MEMBER_SUCCESS, event: event };
+}
+
+export function removeMeMemberError(error) {
+    return { type: types.EVENT_REMOVE_MEMBER_ERROR, error: error };
 }

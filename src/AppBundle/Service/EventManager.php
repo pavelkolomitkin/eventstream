@@ -85,10 +85,16 @@ class EventManager
 
     private function hasEventMember(Event $event, User $member)
     {
-        return $this
-            ->entityManager
-            ->getRepository('AppBundle:Event')
-            ->hasEventMember($event, $member);
+        $user = $this->entityManager->getRepository('AppBundle:User')
+            ->createQueryBuilder('user')
+            ->join('user.participateEvents', 'event', 'WITH', 'event = :currentEvent')
+            ->setParameter('currentEvent', $event)
+            ->andWhere('user = :member')
+            ->setParameter('member', $member)
+            ->getQuery()
+            ->getOneOrNullResult();
+        return !empty($user);
+
     }
 
     public function create(array $fields, User $owner)
@@ -112,6 +118,8 @@ class EventManager
 
     public function addMember(Event $event, User $newMember)
     {
+        $event->getMembers()->contains($newMember);
+
         if ($this->hasEventMember($event, $newMember))
         {
             throw new EventMemberException('event_member.already_exists');
