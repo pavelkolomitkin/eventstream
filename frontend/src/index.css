@@ -415,6 +415,17 @@ form legend
   max-width: 100%;
 }
 
+.event-details-page .event-actions-container .numbers
+{
+  margin-top: 5px;
+}
+
+.event-details-page .event-actions-container .numbers .number
+{
+  display: inline !important;
+  margin-right: 17px;
+}
+
 .MuiGrid-spacing-xs-16-145, .MuiGrid-spacing-xs-16-126
 {
   width: auto !important;

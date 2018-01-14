@@ -72,13 +72,16 @@ class EventDetailsPage extends Component {
 
     componentDidMount()
     {
-        console.log('In componentDidMount!');
         this.props.actions.getEvent(this.props.id);
+    }
+
+    componentDidUpdate()
+    {
+        window.scrollTo(0, 0);
     }
 
     componentWillReceiveProps(nextProps)
     {
-        console.log('In componentWillReceiveProps');
         if (nextProps.error)
         {
             this.props.history.replace('/notfound');
@@ -163,6 +166,10 @@ class EventDetailsPage extends Component {
 
                                 <div className="event-actions-container">
                                     {this.getControls()}
+                                    <div className="numbers">
+                                        <Typography className={classes.pos + ' number'}>{event.memberNumber} member(s)</Typography>
+                                        <Typography className={classes.pos + ' number'}>{event.likeNumber} likes(s)</Typography>
+                                    </div>
                                 </div>
 
                             <Typography type="headline" component="h1">
