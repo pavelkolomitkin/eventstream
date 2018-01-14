@@ -88,9 +88,9 @@ class EventDetailsPage extends Component {
                                         :
                                         (
                                             event.isMember ?
-                                                <Button raised onClick={this.onRemoveMemberHandler}>I won't go!</Button>
+                                                <Button raised onClick={this.onRemoveMemberHandler}>Leave</Button>
                                                 :
-                                                <Button raised onClick={this.onAddMemberHandler}>I will go!</Button>
+                                                <Button raised onClick={this.onAddMemberHandler}>Join</Button>
                                         )
 
                                     }
