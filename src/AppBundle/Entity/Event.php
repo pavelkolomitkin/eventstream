@@ -97,6 +97,14 @@ class Event
     private $members;
 
     /**
+     * @var int
+     * @ORM\Column(name="memberNumber", type="integer", nullable=false, options={"default" : 0})
+     * @JMSSerializer\Expose
+     * @JMSSerializer\SerializedName("memberNumber")
+     */
+    private $memberNumber = 0;
+
+    /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\User", inversedBy="likeEvents")
      * @ORM\JoinTable(name="user_like_event",
@@ -321,6 +329,7 @@ class Event
         if (!$this->members->contains($member))
         {
             $this->members->add($member);
+            $this->incrementMemberNumber();
         }
 
         return $this;
@@ -337,6 +346,7 @@ class Event
         if ($this->members->contains($member))
         {
             $this->members->removeElement($member);
+            $this->decrementCommentNumber();
         }
 
         return $this;
@@ -516,6 +526,38 @@ class Event
     public function decrementCommentNumber()
     {
         $this->commentNumber--;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMemberNumber()
+    {
+        return $this->memberNumber;
+    }
+
+    /**
+     * @param int $memberNumber
+     * @return Event
+     */
+    public function setMemberNumber($memberNumber)
+    {
+        $this->memberNumber = $memberNumber;
+        return $this;
+    }
+
+    public function incrementMemberNumber()
+    {
+        $this->memberNumber++;
+
+        return $this;
+    }
+
+    public function decrementMemberNumber()
+    {
+        $this->memberNumber--;
 
         return $this;
     }

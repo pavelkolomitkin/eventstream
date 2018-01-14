@@ -7,6 +7,7 @@ use AppBundle\Entity\Event;
 use AppBundle\Entity\EventTag;
 use AppBundle\Entity\User;
 use AppBundle\Exception\EventException;
+use AppBundle\Exception\EventMemberException;
 use AppBundle\Form\Type\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
@@ -82,6 +83,14 @@ class EventManager
         $this->entityManager->flush();
     }
 
+    private function hasEventMember(Event $event, User $member)
+    {
+        return $this
+            ->entityManager
+            ->getRepository('AppBundle:Event')
+            ->hasEventMember($event, $member);
+    }
+
     public function create(array $fields, User $owner)
     {
         $result = new Event();
@@ -99,5 +108,57 @@ class EventManager
         }
 
         $this->updateEvent($event, $editor, $fields);
+    }
+
+    public function addMember(Event $event, User $newMember)
+    {
+        if ($this->hasEventMember($event, $newMember))
+        {
+            throw new EventMemberException('event_member.already_exists');
+        }
+
+        $entityManager = $this->entityManager;
+        $entityManager->beginTransaction();
+
+        try
+        {
+            $event->addMember($newMember);
+
+            $entityManager->persist($event);
+            $entityManager->flush();
+
+            $entityManager->commit();
+        }
+        catch (\Exception $exception)
+        {
+            $entityManager->rollback();
+            throw $exception;
+        }
+    }
+
+    public function removeMember(Event $event, User $member)
+    {
+        if (!$this->hasEventMember($event, $member))
+        {
+            throw new EventMemberException('event_member.doesnt_exist');
+        }
+
+        $entityManager = $this->entityManager;
+        $entityManager->beginTransaction();
+
+        try
+        {
+            $event->removeMember($member);
+
+            $entityManager->persist($event);
+            $entityManager->flush();
+
+            $entityManager->commit();
+        }
+        catch (\Exception $exception)
+        {
+            $entityManager->rollback();
+            throw $exception;
+        }
     }
 }

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
 use AppBundle\Exception\EventException;
+use AppBundle\Exception\EventMemberException;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -73,6 +74,43 @@ class EventController extends FOSRestController
     /**
      * @param Request $request
      * @Route(
+     *     name="event_list",
+     *     path="/event/list/{timefilter}",
+     *     defaults={"timefilter" = "all"},
+     *     requirements={"timefilter" = "all|past|future"}
+     * )
+     * @Method({"GET"})
+     * @param $timefilter
+     * @return Response
+     */
+    public function listAction(Request $request, $timefilter)
+    {
+        $eventListQuery = $this
+            ->getDoctrine()
+            ->getRepository('AppBundle:Event')
+            ->getEventListQuery([
+                'time_filter' => $timefilter
+            ]);
+
+        $paginator = $this->get('knp_paginator');
+
+        $pagination = $paginator->paginate(
+            $eventListQuery,
+            $request->query->getInt('page', 1)
+        );
+
+
+        $view = $this->view([
+            'events' => $pagination->getItems(),
+            'total' => $pagination->getTotalItemCount()
+        ]);
+
+        return $this->handleView($view);
+    }
+
+    /**
+     * @param Request $request
+     * @Route(
      *     name="event_user_own_event",
      *     path="/event/ownlist/{timefilter}",
      *     defaults={"timefilter" = "all"},
@@ -137,5 +175,61 @@ class EventController extends FOSRestController
         return $this->handleView($this->view([
             'event' => $event
         ]));
+    }
+
+    /**
+     * @param Event $event
+     * @ParamConverter("event", class="AppBundle\Entity\Event")
+     * @Route(name="event_add_member", path="/event/{id}/addmember")
+     * @return Response
+     * @Method({"LINK"})
+     */
+    public function addMemberAction(Event $event)
+    {
+        try
+        {
+            $this
+                ->get('event.manager')
+                ->addMember($event, $this->getUser());
+
+            return $this->handleView($this->view([
+                'event' => $event
+            ], Response::HTTP_OK));
+        }
+        catch (EventMemberException $exception)
+        {
+            return $this->handleView($this->view([
+                'error' => $this->get('translator')->trans($exception->getMessage())
+            ], Response::HTTP_BAD_REQUEST)
+            );
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @ParamConverter("event", class="AppBundle\Entity\Event")
+     * @Route(name="event_remove_member", path="/event/{id}/removemember")
+     * @return Response
+     * @Method({"LINK"})
+     */
+    public function removeMember(Event $event)
+    {
+        try
+        {
+            $this
+                ->get('event.manager')
+                ->removeMember($event, $this->getUser());
+
+            return $this->handleView($this->view([
+                'event' => $event
+            ], Response::HTTP_OK));
+        }
+        catch (EventMemberException $exception)
+        {
+            return $this->handleView($this->view([
+                'error' => $this->get('translator')->trans($exception->getMessage())
+            ], Response::HTTP_BAD_REQUEST)
+            );
+        }
     }
 }

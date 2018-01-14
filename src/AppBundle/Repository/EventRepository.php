@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Event;
 use AppBundle\Entity\User;
 use Doctrine\ORM\QueryBuilder;
 
@@ -23,6 +24,18 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             ->createQueryBuilder('event')
             ->where('event.owner = :user')
             ->setParameter('user', $user);
+
+        $this->filterEventsByTime($queryBuilder, $criteria);
+
+        $queryBuilder->orderBy('event.timeStart', 'DESC');
+
+        return $queryBuilder->getQuery();
+    }
+
+    public function getEventListQuery(array $criteria = [])
+    {
+        $queryBuilder = $this
+            ->createQueryBuilder('event');
 
         $this->filterEventsByTime($queryBuilder, $criteria);
 
@@ -57,5 +70,20 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $builder;
+    }
+
+    public function hasEventMember(Event $event, User $member)
+    {
+        $existingMember = $this
+            ->createQueryBuilder('event')
+            ->join('event.members', 'member')
+            ->where('event = :currentEvent')
+            ->setParameter('currentEvent', $event)
+            ->andWhere('member = :currentMember')
+            ->setParameter('currentMember', $member)
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return !empty($existingMember);
     }
 }

@@ -34,11 +34,13 @@ const styles = theme => ({
 const EventListItem = ({event, classes}) => {
     return (
         <div className="profile-event-item">
+            {event.isMine &&
             <div className="event-actions-container">
                 <Button component={Link} to={'/event/' + event.id + '/edit'}>
-                    <ModeEditIcon /> Edit
+                    <ModeEditIcon/> Edit
                 </Button>
             </div>
+            }
             <Card>
                 <CardContent>
                     <h2 className="header"><Link to={'/event/' + event.id}>{ event.title }</Link></h2>

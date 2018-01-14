@@ -53,6 +53,29 @@ class EventService extends AuthorizedApiService
         );
     }
 
+    getList(timeFilter, page, onSuccessHandler, onErrorHandler)
+    {
+        const url = 'event/list/' + timeFilter + '?page=' + page;
+
+        this.makeRequest(
+            'GET',
+            url,
+            {},
+            (result) => {
+
+                const { events, total } = result.data;
+                events.forEach((event) => {
+                    this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+                });
+
+                onSuccessHandler(events, total, page);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
+
     getOwnList(timeFilter, page, onSuccessHandler, onErrorHandler)
     {
         const url = 'event/ownlist/' + timeFilter + '?page=' + page;
@@ -99,6 +122,42 @@ class EventService extends AuthorizedApiService
         this.makeRequest(
             'GET',
             'event/own/' + id,
+            {},
+            (result) => {
+                const { event } = result.data;
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
+
+    addMeMember(id, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'LINK',
+            'event/' + id + '/addmember',
+            {},
+            (result) => {
+                const { event } = result.data;
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
+
+    removeMeMember(id, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'LINK',
+            'event/' + id + '/removemember',
             {},
             (result) => {
                 const { event } = result.data;

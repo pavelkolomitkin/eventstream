@@ -49,6 +49,26 @@ export function getOwnEvents(timeFilter, page = 1) {
     }
 }
 
+export function getEvents(timeFilter, page = 1) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.getList(
+            timeFilter,
+            page,
+            (events, total, page) => {
+                dispatch(getEventsSuccess(events, total, page));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(getEventsError(error, page));
+                dispatch(serverActions.serverResponse());
+            }
+        );
+    }
+}
+
 export function getEvent(id) {
     return (dispatch) => {
         dispatch(serverActions.serverRequest());
@@ -120,6 +140,14 @@ export function getOwnEventsSuccess(events, total, page) {
 
 export function getOwnEventsError(error, page) {
     return { type: types.EVENTS_OWN_LIST_LOAD_ERROR, error: error, page: page };
+}
+
+export function getEventsSuccess(events, total, page) {
+    return { type: types.EVENT_LIST_LOAD_SUCCESS, events: events, total:total, page: page };
+}
+
+export function getEventsError(error, page) {
+    return { type: types.EVENT_LIST_LOAD_ERROR, error: error, page: page };
 }
 
 export function getEventSuccess(event) {
