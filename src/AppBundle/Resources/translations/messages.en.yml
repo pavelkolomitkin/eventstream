@@ -19,3 +19,11 @@ video:
         accessDeny: 'You can not delete this video!'
 
     unsupported_source: 'Unsupported video source!'
+
+event_member:
+    already_exists: 'You are already joined this event!'
+    doesnt_exist: 'You can not leave this event!'
+
+event_like:
+    already_exists: 'You are already like this event!'
+    doesnt_exists: 'You can not dislike event yet!'

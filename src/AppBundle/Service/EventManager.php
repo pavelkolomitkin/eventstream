@@ -7,6 +7,7 @@ use AppBundle\Entity\Event;
 use AppBundle\Entity\EventTag;
 use AppBundle\Entity\User;
 use AppBundle\Exception\EventException;
+use AppBundle\Exception\EventLikeException;
 use AppBundle\Exception\EventMemberException;
 use AppBundle\Form\Type\EventType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -85,7 +86,9 @@ class EventManager
 
     private function hasEventMember(Event $event, User $member)
     {
-        $user = $this->entityManager->getRepository('AppBundle:User')
+        $user = $this
+            ->entityManager
+            ->getRepository('AppBundle:User')
             ->createQueryBuilder('user')
             ->join('user.participateEvents', 'event', 'WITH', 'event = :currentEvent')
             ->setParameter('currentEvent', $event)
@@ -94,7 +97,23 @@ class EventManager
             ->getQuery()
             ->getOneOrNullResult();
         return !empty($user);
+    }
 
+    private function hasEventUserLike(Event $event, User $user)
+    {
+        $user = $this
+            ->entityManager
+            ->getRepository('AppBundle:User')
+            ->createQueryBuilder('user')
+            ->join('user.likeEvents', 'event', 'WITH', 'event = :currentEvent')
+            ->setParameter('currentEvent', $event)
+            ->andWhere('user = :liker')
+            ->setParameter('liker', $user)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return !empty($user);
     }
 
     public function create(array $fields, User $owner)
@@ -118,18 +137,16 @@ class EventManager
 
     public function addMember(Event $event, User $newMember)
     {
-        $event->getMembers()->contains($newMember);
-
-        if ($this->hasEventMember($event, $newMember))
-        {
-            throw new EventMemberException('event_member.already_exists');
-        }
-
         $entityManager = $this->entityManager;
         $entityManager->beginTransaction();
 
         try
         {
+            if ($this->hasEventMember($event, $newMember))
+            {
+                throw new EventMemberException('event_member.already_exists');
+            }
+
             $event->addMember($newMember);
 
             $entityManager->persist($event);
@@ -146,22 +163,77 @@ class EventManager
 
     public function removeMember(Event $event, User $member)
     {
-        if (!$this->hasEventMember($event, $member))
-        {
-            throw new EventMemberException('event_member.doesnt_exist');
-        }
-
         $entityManager = $this->entityManager;
         $entityManager->beginTransaction();
 
         try
         {
+            if (!$this->hasEventMember($event, $member))
+            {
+                throw new EventMemberException('event_member.doesnt_exist');
+            }
+
             $event->removeMember($member);
 
             $entityManager->persist($event);
             $entityManager->flush();
 
             $entityManager->commit();
+        }
+        catch (\Exception $exception)
+        {
+            $entityManager->rollback();
+            throw $exception;
+        }
+    }
+
+    public function addLike(Event $event, User $user)
+    {
+        $entityManager = $this->entityManager;
+        $entityManager->beginTransaction();
+
+        try
+        {
+            if ($this->hasEventUserLike($event, $user))
+            {
+                throw new EventLikeException('event_like.already_exists');
+            }
+
+            $event->addLike($user);
+
+            $entityManager->persist($event);
+            $entityManager->flush();
+
+            $entityManager->commit();
+
+        }
+        catch (\Exception $exception)
+        {
+            $entityManager->rollback();
+            throw $exception;
+        }
+    }
+
+
+    public function removeLike(Event $event, User $user)
+    {
+        $entityManager = $this->entityManager;
+        $entityManager->beginTransaction();
+
+        try
+        {
+            if (!$this->hasEventUserLike($event, $user))
+            {
+                throw new EventLikeException('event_like.doesnt_exists');
+            }
+
+            $event->removeLike($user);
+
+            $entityManager->persist($event);
+            $entityManager->flush();
+
+            $entityManager->commit();
+
         }
         catch (\Exception $exception)
         {

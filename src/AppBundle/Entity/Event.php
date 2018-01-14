@@ -114,6 +114,14 @@ class Event
     private $likes;
 
     /**
+     * @var integer
+     * @ORM\Column(name="likeNumber", type="integer", nullable=false, options={"default" : 0})
+     * @JMSSerializer\Expose
+     * @JMSSerializer\SerializedName("likeNumber")
+     */
+    private $likeNumber = 0;
+
+    /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\EventPicture", mappedBy="event", cascade={"persist", "remove"})
      * @JMSSerializer\Expose
@@ -373,6 +381,7 @@ class Event
         if (!$this->likes->contains($user))
         {
             $this->likes->add($user);
+            $this->incrementLikeNumber();
         }
 
         return $this;
@@ -389,6 +398,7 @@ class Event
         if ($this->likes->contains($user))
         {
             $this->likes->removeElement($user);
+            $this->decrementLikeNumber();
         }
 
         return $this;
@@ -558,6 +568,38 @@ class Event
     public function decrementMemberNumber()
     {
         $this->memberNumber--;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLikeNumber()
+    {
+        return $this->likeNumber;
+    }
+
+    /**
+     * @param int $likeNumber
+     * @return Event
+     */
+    public function setLikeNumber(int $likeNumber)
+    {
+        $this->likeNumber = $likeNumber;
+        return $this;
+    }
+
+    public function incrementLikeNumber()
+    {
+        $this->likeNumber++;
+
+        return $this;
+    }
+
+    public function decrementLikeNumber()
+    {
+        $this->likeNumber--;
 
         return $this;
     }

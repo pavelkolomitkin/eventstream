@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
 use AppBundle\Exception\EventException;
+use AppBundle\Exception\EventLikeException;
 use AppBundle\Exception\EventMemberException;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -242,6 +243,68 @@ class EventController extends FOSRestController
             ], Response::HTTP_OK));
         }
         catch (EventMemberException $exception)
+        {
+            return $this->handleView($this->view([
+                'error' => $this->get('translator')->trans($exception->getMessage())
+            ], Response::HTTP_BAD_REQUEST)
+            );
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @ParamConverter("event", class="AppBundle\Entity\Event")
+     * @Route(name="event_add_like", path="/event/{id}/addlike")
+     * @return Response
+     * @Method({"POST"})
+     */
+    public function addLike(Event $event)
+    {
+        try
+        {
+            $this->get('event.manager')->addLike($event, $this->getUser());
+
+            $eventData = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:Event')
+                ->getEventWithExtraUserRelativeData($event->getId(), $this->getUser());
+
+            return $this->handleView($this->view([
+                'event' => $eventData
+            ], Response::HTTP_OK));
+        }
+        catch (EventLikeException $exception)
+        {
+            return $this->handleView($this->view([
+                'error' => $this->get('translator')->trans($exception->getMessage())
+            ], Response::HTTP_BAD_REQUEST)
+            );
+        }
+    }
+
+    /**
+     * @param Event $event
+     * @ParamConverter("event", class="AppBundle\Entity\Event")
+     * @Route(name="event_remove_like", path="/event/{id}/removelike")
+     * @return Response
+     * @Method({"POST"})
+     */
+    public function removeLike(Event $event)
+    {
+        try
+        {
+            $this->get('event.manager')->removeLike($event, $this->getUser());
+
+            $eventData = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:Event')
+                ->getEventWithExtraUserRelativeData($event->getId(), $this->getUser());
+
+            return $this->handleView($this->view([
+                'event' => $eventData
+            ], Response::HTTP_OK));
+        }
+        catch (EventLikeException $exception)
         {
             return $this->handleView($this->view([
                 'error' => $this->get('translator')->trans($exception->getMessage())

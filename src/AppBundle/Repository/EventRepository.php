@@ -59,6 +59,10 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
             'isMember' => $user
         ]);
 
+        $this->addLikerInfo($queryBuilder, [
+            'isLiker' => $user
+        ]);
+
         $queryBuilder
             ->andWhere('event.id = :eventId')
             ->setParameter('eventId', $eventId);
@@ -75,6 +79,19 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
                 ->setParameter('userId', $criteria['isMember']->getId())
                 //->addSelect("(case when currentUserMember.id is NULL then FALSE else TRUE end) as isMember");
                 ->addSelect("currentUserMember.id as isMember");
+        }
+
+        return $builder;
+    }
+
+    private function addLikerInfo(QueryBuilder $builder, array $criteria)
+    {
+        if (isset($criteria['isLiker']) && ($criteria['isLiker'] instanceof User))
+        {
+            $builder
+                ->leftJoin('event.likes', 'liker', 'WITH', 'liker.id = :userId')
+                ->setParameter('userId', $criteria['isLiker']->getId())
+                ->addSelect("liker.id as isLiker");
         }
 
         return $builder;
