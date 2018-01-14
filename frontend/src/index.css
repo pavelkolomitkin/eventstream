@@ -329,6 +329,11 @@ form legend
   height: 50px;
 }
 
+.profile-event-list .tag-list
+{
+  margin-bottom: 10px;
+}
+
 .tag-list
 {
   display: flex;
@@ -399,7 +404,7 @@ form legend
   max-width: 100%;
 }
 
-.MuiGrid-spacing-xs-16-145
+.MuiGrid-spacing-xs-16-145, .MuiGrid-spacing-xs-16-126
 {
   width: auto !important;
   margin: 0 !important;

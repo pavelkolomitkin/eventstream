@@ -126,6 +126,14 @@ class Event
      */
     private $comments;
 
+    /**
+     * @var int
+     * @ORM\Column(name="commentNumber", type="integer", nullable=false, options={"default" : 0})
+     * @JMSSerializer\Expose
+     * @JMSSerializer\SerializedName("commentNumber")
+     */
+    private $commentNumber = 0;
+
 
     public function __construct()
     {
@@ -480,7 +488,37 @@ class Event
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getCommentNumber()
+    {
+        return $this->commentNumber;
+    }
 
+    /**
+     * @param int $commentNumber
+     * @return Event
+     */
+    public function setCommentNumber(int $commentNumber)
+    {
+        $this->commentNumber = $commentNumber;
+        return $this;
+    }
+
+    public function incrementCommentNumber()
+    {
+        $this->commentNumber++;
+
+        return $this;
+    }
+
+    public function decrementCommentNumber()
+    {
+        $this->commentNumber--;
+
+        return $this;
+    }
 
 }
 

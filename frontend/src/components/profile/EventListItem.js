@@ -49,6 +49,7 @@ const EventListItem = ({event, classes}) => {
                     { event.pictures.length > 0 && <EventItemPictureList pictures={event.pictures} /> }
                     { event.videos.length > 0 && <EventItemVideoList videos={event.videos} />}
                     { event.tags.length > 0 && <EventItemTagList tags={event.tags} />}
+                    <Typography component="p" className={classes.pos}>{event.commentNumber} comment(s)</Typography>
                 </CardContent>
             </Card>
 

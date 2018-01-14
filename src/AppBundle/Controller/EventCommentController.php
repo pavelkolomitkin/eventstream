@@ -4,8 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Event;
 use AppBundle\Entity\EventComment;
+use AppBundle\Exception\EventCommentException;
 use AppBundle\Exception\EventException;
 use AppBundle\Form\Type\EventCommentType;
+use Doctrine\ORM\EntityManager;
 use FOS\RestBundle\Controller\FOSRestController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,32 +59,22 @@ class EventCommentController extends FOSRestController
      */
     public function createAction(Request $request, Event $event)
     {
-        $comment = new EventComment();
-
-        $form = $this->createForm(EventCommentType::class, $comment);
-        $form->submit($request->request->all(), false);
-
-        if ($form->isValid())
+        try
         {
-            /** @var EventComment $comment */
-            $comment = $form->getData();
-
-            $comment->setAuthor($this->getUser());
-            $comment->setEvent($event);
-
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            $comment = $this
+                ->get('event_comment.manager')
+                ->create($this->getUser(), $event, $request->request->all());
 
             return $this->handleView($this->view([
                 'comment' => $comment
-            ], Response::HTTP_OK));
+            ],Response::HTTP_OK));
         }
-
-        return $this->handleView($this->view([
-            'errors' => $this->get('form_error_extractor.helper')->extract($form)
-        ], Response::HTTP_BAD_REQUEST));
+        catch (EventCommentException $exception)
+        {
+            return $this->handleView($this->view([
+                'errors' => $exception->getErrors()
+            ], Response::HTTP_BAD_REQUEST));
+        }
     }
 
     /**
@@ -95,30 +87,22 @@ class EventCommentController extends FOSRestController
      */
     public function updateAction(Request $request, EventComment $comment)
     {
-        if ($comment->getAuthor()->getId() !== $this->getUser()->getId())
+        try
         {
-            throw $this->createAccessDeniedException();
-        }
-
-        $form = $this->createForm(EventCommentType::class, $comment);
-        $form->submit($request->request->all(), false);
-
-        if ($form->isValid())
-        {
-            $entityManager = $this->getDoctrine()->getManager();
-
-            $entityManager->persist($comment);
-            $entityManager->flush();
+            $this
+                ->get('event_comment.manager')
+                ->update($comment, $this->getUser(), $request->request->all());
 
             return $this->handleView($this->view([
                 'comment' => $comment
-            ], Response::HTTP_OK));
+            ],Response::HTTP_OK));
         }
-
-
-        return $this->handleView($this->view([
-            'errors' => $this->get('form_error_extractor.helper')->extract($form)
-        ], Response::HTTP_BAD_REQUEST));
+        catch (EventCommentException $exception)
+        {
+            return $this->handleView($this->view([
+                'errors' => $exception->getErrors()
+            ], Response::HTTP_BAD_REQUEST));
+        }
     }
 
     /**
@@ -130,19 +114,7 @@ class EventCommentController extends FOSRestController
      */
     public function deleteAction(EventComment $comment)
     {
-        if ($comment->getAuthor()->getId() !== $this->getUser()->getId())
-        {
-            throw $this->createAccessDeniedException(
-                $this
-                    ->get('translator')
-                    ->trans('event_comment.delete.accessDeny')
-            );
-        }
-
-        $entityManager = $this->getDoctrine()->getManager();
-
-        $entityManager->remove($comment);
-        $entityManager->flush();
+        $this->get('event_comment.manager')->delete($comment, $this->getUser());
 
         return $this->handleView($this->view([
             'message' => $this->get('translator')->trans('event_comment.delete.success')
