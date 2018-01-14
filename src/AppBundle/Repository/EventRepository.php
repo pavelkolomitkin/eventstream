@@ -29,6 +29,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
 
         $this->filterEventsByTime($queryBuilder, $criteria);
         $this->addMemberInfo($queryBuilder, $criteria);
+        $this->addLikerInfo($queryBuilder, $criteria);
 
         $queryBuilder->orderBy('event.timeStart', 'DESC');
 
@@ -43,6 +44,7 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
 
         $this->filterEventsByTime($queryBuilder, $criteria);
         $this->addMemberInfo($queryBuilder, $criteria);
+        $this->addLikerInfo($queryBuilder, $criteria);
 
         $queryBuilder->orderBy('event.timeStart', 'DESC');
 
@@ -130,7 +132,6 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         $existingMember = $this
             ->createQueryBuilder('event')
             ->innerJoin('event.members', 'member')
-            //->setParameter('memberId', $member->getId())
             ->andWhere('event = :eventObject')
             ->setParameter('eventObject', $event)
             ->getQuery()

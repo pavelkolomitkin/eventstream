@@ -101,6 +101,31 @@ const eventReducer = (state = {}, action) => {
 
             break;
 
+
+        case types.EVENT_ADD_LIKE_SUCCESS:
+
+            return {...state, event: action.event, error: null};
+
+            break;
+
+        case types.EVENT_ADD_LIKE_ERROR:
+
+            return {...state, event: null, error: action.error};
+
+            break;
+
+        case types.EVENT_REMOVE_LIKE_SUCCESS:
+
+            return {...state, event: action.event, error: null};
+
+            break;
+
+        case types.EVENT_REMOVE_LIKE_ERROR:
+
+            return {...state, event: null, error: action.error};
+
+            break;
+
         default:
 
             return state;

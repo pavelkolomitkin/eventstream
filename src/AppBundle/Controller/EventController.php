@@ -91,7 +91,8 @@ class EventController extends FOSRestController
             ->getRepository('AppBundle:Event')
             ->getEventListQuery([
                 'time_filter' => $timefilter,
-                'isMember' => $this->getUser()
+                'isMember' => $this->getUser(),
+                'isLiker' => $this->getUser()
             ]);
 
         $paginator = $this->get('knp_paginator');

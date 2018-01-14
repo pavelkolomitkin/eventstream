@@ -12,6 +12,9 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import EventTagList from  '../../components/tag/EventItemTagList';
 import CommentManager from '../comment/CommentManager';
+import FavoriteIcon from 'material-ui-icons/Favorite';
+import FavoriteBorderIcon from 'material-ui-icons/FavoriteBorder';
+import IconButton from 'material-ui/IconButton';
 
 const styles = theme => ({
 
@@ -29,19 +32,42 @@ class EventDetailsPage extends Component {
 
         this.state = {
             event: null,
-            needLoadComments: false
+            needLoadComments: false,
+            saving: false
         };
 
         this.onRemoveMemberHandler = this.onRemoveMemberHandler.bind(this);
         this.onAddMemberHandler = this.onAddMemberHandler.bind(this);
+        this.onAddLikeHandler = this.onAddLikeHandler.bind(this);
+        this.onRemoveLikeHandler = this.onRemoveLikeHandler.bind(this);
     }
 
     onAddMemberHandler = (domEvent) => {
+        this.setState({
+            saving: true
+        });
         this.props.actions.addMeMemberToEvent(this.state.event.id);
     }
 
     onRemoveMemberHandler = (domEvent) => {
+        this.setState({
+            saving: true
+        });
         this.props.actions.removeMeMemberFromEvent(this.state.event.id);
+    }
+
+    onAddLikeHandler = (domEvent) => {
+        this.setState({
+            saving: true
+        });
+        this.props.actions.addUserLikeToEvent(this.state.event.id);
+    }
+
+    onRemoveLikeHandler = (domEvent) => {
+        this.setState({
+            saving: true
+        });
+        this.props.actions.removeLikeFromEvent(this.state.event.id);
     }
 
     componentDidMount()
@@ -60,8 +86,63 @@ class EventDetailsPage extends Component {
         }
 
         this.setState({
-            event: nextProps.event
+            event: nextProps.event,
+            saving: false
         });
+    }
+
+    getControls()
+    {
+        const { isMine } = this.state.event;
+
+        if (isMine)
+        {
+            return this.getOwnerControls();
+        }
+        else
+        {
+            return this.getUserRelationControls();
+        }
+    }
+
+    getOwnerControls()
+    {
+        const {event} = this.state;
+
+        return (<Button component={Link} to={'/event/' + event.id + '/edit'}>
+            <ModeEditIcon/> Edit
+        </Button>);
+
+    }
+
+
+    getUserRelationControls()
+    {
+        const result = [];
+
+        const { isMember, isLiker } = this.state.event;
+        const { saving } = this.state;
+
+        if (isMember)
+        {
+            result.push(<Button disabled={saving} raised color="primary" onClick={this.onRemoveMemberHandler}>Leave</Button>);
+        }
+        else
+        {
+            result.push(<Button disabled={saving} raised color="primary" onClick={this.onAddMemberHandler}>Join</Button>);
+        }
+
+
+        if (isLiker)
+        {
+            result.push(<Button disabled={saving} onClick={this.onRemoveLikeHandler} raised color="primary">Dislike</Button>);
+        }
+        else
+        {
+            result.push(<Button disabled={saving} onClick={this.onAddLikeHandler} raised color="primary">Like</Button>);
+        }
+
+        return result;
     }
 
     render = () => {
@@ -81,19 +162,7 @@ class EventDetailsPage extends Component {
                         <Paper className="event-details-content">
 
                                 <div className="event-actions-container">
-                                    {event.isMine ?
-                                    <Button component={Link} to={'/event/' + event.id + '/edit'}>
-                                        <ModeEditIcon/> Edit
-                                    </Button>
-                                        :
-                                        (
-                                            event.isMember ?
-                                                <Button raised onClick={this.onRemoveMemberHandler}>Leave</Button>
-                                                :
-                                                <Button raised onClick={this.onAddMemberHandler}>Join</Button>
-                                        )
-
-                                    }
+                                    {this.getControls()}
                                 </div>
 
                             <Typography type="headline" component="h1">

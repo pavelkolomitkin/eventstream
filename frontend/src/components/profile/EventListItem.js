@@ -54,6 +54,7 @@ const EventListItem = ({event, classes}) => {
                     <div className="numbers">
                         <Typography component="span" className={classes.pos + ' item'}>{event.commentNumber} comment(s)</Typography>
                         <Typography component="span" className={classes.pos + ' item'}>{event.memberNumber} members(s)</Typography>
+                        <Typography component="span" className={classes.pos + ' item'}>{event.likeNumber} like(s)</Typography>
                     </div>
                 </CardContent>
             </Card>

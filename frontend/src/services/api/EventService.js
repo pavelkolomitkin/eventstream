@@ -182,6 +182,46 @@ class EventService extends AuthorizedApiService
             }
         );
     }
+
+    addLike(id, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'POST',
+            'event/' + id + '/addlike',
+            {},
+            (result) => {
+                let { event } = result.data;
+
+                event = this.mergeWithExtrafields(event, 'eventObject');
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
+
+    removeLike(id, onSuccessHandler, onErrorHandler)
+    {
+        this.makeRequest(
+            'POST',
+            'event/' + id + '/removelike',
+            {},
+            (result) => {
+                let { event } = result.data;
+
+                event = this.mergeWithExtrafields(event, 'eventObject');
+                this.transformObjectTimestampFieldsToDate(event, EventService.eventDatetimeFields);
+
+                onSuccessHandler(event);
+            },
+            (error) => {
+                onErrorHandler(error.response.data);
+            }
+        );
+    }
 }
 
 export default EventService;

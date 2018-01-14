@@ -164,6 +164,44 @@ export function removeMeMemberFromEvent(id) {
     }
 }
 
+export function addUserLikeToEvent(id) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.addLike(
+            id,
+            (event) => {
+                dispatch(addLikeSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(addLikeError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        )
+    }
+}
+
+export function removeLikeFromEvent(id) {
+    return (dispatch) => {
+        dispatch(serverActions.serverRequest());
+
+        const apiService = ApiServiceFactory.createEventService();
+        apiService.removeLike(
+            id,
+            (event) => {
+                dispatch(removeLikeSuccess(event));
+                dispatch(serverActions.serverResponse());
+            },
+            (error) => {
+                dispatch(removeLikeError(error));
+                dispatch(serverActions.serverResponse());
+            }
+        )
+    }
+}
+
 export function createEventSuccess(data) {
     return { type: types.EVENT_CREATE_SUCCESS, eventData: data };
 }
@@ -226,4 +264,20 @@ export function removeMeMemberSuccess(event) {
 
 export function removeMeMemberError(error) {
     return { type: types.EVENT_REMOVE_MEMBER_ERROR, error: error };
+}
+
+export function addLikeSuccess(event) {
+    return { type: types.EVENT_ADD_LIKE_SUCCESS, event: event };
+}
+
+export function addLikeError(error) {
+    return { type: types.EVENT_ADD_MEMBER_ERROR, error: error };
+}
+
+export function removeLikeSuccess(event) {
+    return { type: types.EVENT_REMOVE_MEMBER_SUCCESS, event: event };
+}
+
+export function removeLikeError(error) {
+    return { type: types.EVENT_REMOVE_LIKE_ERROR, error };
 }

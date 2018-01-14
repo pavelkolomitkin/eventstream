@@ -46,6 +46,12 @@ export const EVENT_ADD_MEMBER_ERROR = 'EVENT_ADD_MEMBER_ERROR';
 export const EVENT_REMOVE_MEMBER_SUCCESS = 'EVENT_REMOVE_MEMBER_SUCCESS';
 export const EVENT_REMOVE_MEMBER_ERROR = 'EVENT_REMOVE_MEMBER_ERROR';
 
+export const EVENT_ADD_LIKE_SUCCESS = 'EVENT_ADD_LIKE_SUCCESS';
+export const EVENT_ADD_LIKE_ERROR = 'EVENT_ADD_LIKE_ERROR';
+
+export const EVENT_REMOVE_LIKE_SUCCESS = 'EVENT_REMOVE_LIKE_SUCCESS';
+export const EVENT_REMOVE_LIKE_ERROR = 'EVENT_REMOVE_LIKE_ERROR';
+
 /*===========================// EVENT ACTIONS =============================*/
 
 /*============================= EVENT PICTURE ACTIONS =============================*/
