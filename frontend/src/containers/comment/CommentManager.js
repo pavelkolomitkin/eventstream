@@ -173,6 +173,7 @@ class CommentManager extends Component {
                             </div>
                     }
                     useWindow={true}
+
                 >
                     {comments.map((comment) => {
                         return (

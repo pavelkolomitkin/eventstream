@@ -6,7 +6,7 @@ const eventReducer = (state = {}, action) => {
     {
         case types.EVENT_CREATE_SUCCESS:
 
-            return {...state, createdEvent: action.eventData};
+            return {...state, createdEvent: action.eventData, createEventError: null};
 
             break;
 

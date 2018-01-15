@@ -72,11 +72,13 @@ class EventDetailsPage extends Component {
 
     componentDidMount()
     {
+        window.scrollTo(0, 0);
         this.props.actions.getEvent(this.props.id);
     }
 
     componentDidUpdate()
     {
+        //debugger
         window.scrollTo(0, 0);
     }
 
@@ -128,21 +130,20 @@ class EventDetailsPage extends Component {
 
         if (isMember)
         {
-            result.push(<Button disabled={saving} raised color="primary" onClick={this.onRemoveMemberHandler}>Leave</Button>);
+            result.push(<Button key="removeMemberButton" disabled={saving} raised color="primary" onClick={this.onRemoveMemberHandler}>Leave</Button>);
         }
         else
         {
-            result.push(<Button disabled={saving} raised color="primary" onClick={this.onAddMemberHandler}>Join</Button>);
+            result.push(<Button key="addMemberButton" disabled={saving} raised color="primary" onClick={this.onAddMemberHandler}>Join</Button>);
         }
-
 
         if (isLiker)
         {
-            result.push(<Button disabled={saving} onClick={this.onRemoveLikeHandler} raised color="primary">Dislike</Button>);
+            result.push(<Button key="removeLikeButton" disabled={saving} onClick={this.onRemoveLikeHandler} raised color="primary">Dislike</Button>);
         }
         else
         {
-            result.push(<Button disabled={saving} onClick={this.onAddLikeHandler} raised color="primary">Like</Button>);
+            result.push(<Button key="addLikeButton" disabled={saving} onClick={this.onAddLikeHandler} raised color="primary">Like</Button>);
         }
 
         return result;

@@ -16,7 +16,11 @@ class CreateEventPage extends Component {
         timeStart: new Date(),
         timeEnd: new Date(),
         tags: [],
-        submitted: false
+        submitted: false,
+        errors: {},
+        unlinkedPictures: [],
+        unlinkedVideos: []
+
     }
 
     constructor(props, context)
@@ -70,6 +74,20 @@ class CreateEventPage extends Component {
             this.props.history.push('/event/' + nextProps.event.id);
             return;
         }
+
+        const newState = {
+            unlinkedPictures: nextProps.unlinkedPictures,
+            unlinkedVideos: nextProps.unlinkedVideos
+
+        };
+
+        if (nextProps.errors)
+        {
+            newState.errors = nextProps.errors;
+
+        }
+
+        this.setState(newState);
     }
 
     componentDidMount()
@@ -82,7 +100,7 @@ class CreateEventPage extends Component {
         return (
             <CommonLayout>
                 <EventForm
-                    errors={this.props.errors}
+                    errors={this.state.errors}
                     title={this.state.title}
                     description={this.state.description}
                     timeStart={this.state.timeStart}
@@ -90,9 +108,9 @@ class CreateEventPage extends Component {
                     tags={this.state.tags}
                     onFieldChangeHandler={this.onFieldChangeHandler}
                     onSubmitHandler={this.onSubmitHandler}
-                    images={this.props.unlinkedPictures}
+                    images={this.state.unlinkedPictures}
                     maxUploadedImageSize={5242880}
-                    videos={this.props.unlinkedVideos}
+                    videos={this.state.unlinkedVideos}
                 />
             </CommonLayout>
             );
@@ -103,7 +121,7 @@ CreateEventPage.propTypes = {};
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        errors: state.event.createEventError ? state.event.createEventError : {},
+        errors: state.event.createEventError,
         event: state.event.createdEvent,
         unlinkedPictures: state.eventPicture.unlinkedPictures ? state.eventPicture.unlinkedPictures : [],
         unlinkedVideos: state.video.unlinkedVideos ? state.video.unlinkedVideos : []

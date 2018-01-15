@@ -46,7 +46,9 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         $this->addMemberInfo($queryBuilder, $criteria);
         $this->addLikerInfo($queryBuilder, $criteria);
 
-        $queryBuilder->orderBy('event.timeStart', 'DESC');
+        $queryBuilder
+            ->orderBy('event.timeStart', 'DESC')
+            ->distinct();
 
         return $queryBuilder->getQuery();
     }
@@ -67,7 +69,10 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
 
         $queryBuilder
             ->andWhere('event.id = :eventId')
-            ->setParameter('eventId', $eventId);
+            ->setParameter('eventId', $eventId)
+            ->distinct();
+
+        //$sql = $queryBuilder->getQuery()->getSQL();
 
         return $queryBuilder->getQuery()->getOneOrNullResult();
     }
@@ -77,7 +82,12 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         if (isset($criteria['isMember']) && ($criteria['isMember'] instanceof User))
         {
             $builder
-                ->leftJoin('event.members', 'currentUserMember', 'WITH', 'currentUserMember.id = :userId')
+                ->leftJoin(
+                    'event.members',
+                    'currentUserMember',
+                    Expr\Join::WITH,
+                    'currentUserMember.id = :userId'
+                )
                 ->setParameter('userId', $criteria['isMember']->getId())
                 //->addSelect("(case when currentUserMember.id is NULL then FALSE else TRUE end) as isMember");
                 ->addSelect("currentUserMember.id as isMember");
@@ -91,7 +101,12 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         if (isset($criteria['isLiker']) && ($criteria['isLiker'] instanceof User))
         {
             $builder
-                ->leftJoin('event.likes', 'liker', 'WITH', 'liker.id = :userId')
+                ->leftJoin(
+                    'event.likes',
+                    'liker',
+                    Expr\Join::WITH,
+                    'liker.id = :userId'
+                )
                 ->setParameter('userId', $criteria['isLiker']->getId())
                 ->addSelect("liker.id as isLiker");
         }
