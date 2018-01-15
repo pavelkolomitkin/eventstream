@@ -63,7 +63,7 @@ const mapStateToProps = (state, ownProps) => {
     let queryParams = new URLSearchParams(ownProps.location.search);
     return {
         events: state.event.events,
-        eventsTotal: state.event.eventsTotal,
+        eventsTotal: state.event.eventsTotal ? state.event.eventsTotal : 0,
         timeFilter: ownProps.match.params.timeFilter,
         page: parseInt(queryParams.get('page') ? queryParams.get('page') : 1),
         eventsPerPage: 10

@@ -81,7 +81,7 @@ class EventListPageBase extends Component {
 
                 <div className="profile-event-list">
                     {
-                        events !== null ?
+                        !!events ?
                         (
                             events.length > 0 ?
 
