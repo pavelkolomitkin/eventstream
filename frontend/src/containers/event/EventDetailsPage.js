@@ -172,7 +172,7 @@ class EventDetailsPage extends Component {
                                     </div>
                                 </div>
 
-                            <Typography type="headline" component="h1">
+                            <Typography className="header" type="headline" component="h1">
                                 {event.title}
                             </Typography>
                             <Typography className={classes.pos}>

@@ -44,11 +44,11 @@ class MyEventListPage extends EventListPageBase {
         this.props.actions.getOwnEvents(timeFilter, page);
     }
 
-    needLoadEvents(prevProps)
+    needLoadEvents(nextProps)
     {
         const { timeFilter, page } = this.props;
 
-        return (prevProps.timeFilter !== timeFilter) || (prevProps.page !== page);
+        return (nextProps.timeFilter !== timeFilter) || (nextProps.page !== page);
     }
 
 
@@ -63,8 +63,8 @@ const mapStateToProps = (state, ownProps) => {
 
     let queryParams = new URLSearchParams(ownProps.location.search);
     return {
-        events: state.event.events ? state.event.events : [],
-        eventsTotal: state.event.eventsTotal ? state.event.eventsTotal : 0,
+        events: state.event.events,
+        eventsTotal: state.event.eventsTotal,
         timeFilter: ownProps.match.params.timeFilter,
         page: parseInt(queryParams.get('page') ? queryParams.get('page') : 1),
         eventsPerPage: 10

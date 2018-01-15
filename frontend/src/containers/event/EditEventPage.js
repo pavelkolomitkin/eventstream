@@ -86,8 +86,7 @@ class EditEventPage extends Component {
 
     render = () => {
 
-        const { event } = this.state;
-        const { rawTags } = this.state;
+        const { event, rawTags } = this.state;
 
         if (!event)
         {

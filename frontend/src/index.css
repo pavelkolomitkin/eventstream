@@ -363,6 +363,11 @@ form legend
   margin-bottom: 25px;
 }
 
+.event-details-page .header
+{
+  padding-right: 150px;
+}
+
 .event-details-page .event-actions-container
 {
   display: block !important;

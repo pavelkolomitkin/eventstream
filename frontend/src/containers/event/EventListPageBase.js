@@ -8,7 +8,7 @@ import Paper from 'material-ui/Paper';
 class EventListPageBase extends Component {
 
     state = {
-        events: [],
+        events: null,
         eventsTotal: 0,
         page: 1
     };
@@ -43,13 +43,10 @@ class EventListPageBase extends Component {
 
     }
 
-    needLoadEvents(prevProps)
-    {
-
-    }
-
     componentDidUpdate(prevProps, prevState)
     {
+        console.log('componentDidUpdate', prevProps);
+
         if (this.needLoadEvents(prevProps)) {
 
             this.loadEvents();
@@ -60,9 +57,15 @@ class EventListPageBase extends Component {
         }
     }
 
+    needLoadEvents(nextProps)
+    {
+
+    }
+
 
     componentDidMount()
     {
+        console.log('componentDidMount');
         this.loadEvents();
     }
 
@@ -77,20 +80,27 @@ class EventListPageBase extends Component {
                 {this.getFilter()}
 
                 <div className="profile-event-list">
-
                     {
-                        events.length > 0 ?
+                        events !== null ?
+                        (
+                            events.length > 0 ?
 
-                            events.map((event) => {
-                                return (<EventListItem key={event.id} event={event} />)
-                            })
+                                events.map((event) => {
+                                    return (<EventListItem key={event.id} event={event}/>)
+                                })
 
-                            : (<Paper>
-                                <div className="empty-content-container">
-                                    <span className="message">No events there!</span>
-                                </div>
-                            </Paper>)
+                                :
+
+                                    (<Paper>
+                                        <div className="empty-content-container">
+                                            <span className="message">No events there!</span>
+                                        </div>
+                                    </Paper>)
+
+                        ):
+                            null
                     }
+
 
                 </div>
 
