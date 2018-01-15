@@ -31,7 +31,9 @@ class EventRepository extends \Doctrine\ORM\EntityRepository
         $this->addMemberInfo($queryBuilder, $criteria);
         $this->addLikerInfo($queryBuilder, $criteria);
 
-        $queryBuilder->orderBy('event.timeStart', 'DESC');
+        $queryBuilder
+            ->orderBy('event.timeStart', 'DESC')
+            ->distinct();
 
         return $queryBuilder->getQuery();
     }
